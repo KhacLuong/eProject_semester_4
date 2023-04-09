@@ -3,6 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import PrivateRoute from "./privateRoute.jsx";
 import {adminRouters} from "./adminRouters.jsx";
 import {customerRouters} from "./customerRouters.jsx";
+import HomePage from "../pages/admin/HomePage.jsx";
 
 const RenderRouter = () => {
     const RecursiveRouter = (routers) => {
@@ -29,7 +30,7 @@ const RenderRouter = () => {
             <Route path={`/`}>
                 {RecursiveRouter(customerRouters)}
             </Route>
-            <Route path={`admin/v1`}>
+            <Route path={`admin/v1`} element={<HomePage/>}>
                 {RecursiveRouter(adminRouters)}
             </Route>
         </Routes>

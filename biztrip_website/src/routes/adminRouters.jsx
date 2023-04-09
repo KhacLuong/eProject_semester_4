@@ -11,8 +11,14 @@ export const adminRouters = [
         isAuthentication: true,
     },
     {
+        path: "",
+        page: <DashBoardPage/>,
+        isIndex: true,
+        isAuthentication: true,
+    },
+    {
         path: "dashboard",
-        page: <HomePage/>,
+        page: <DashBoardPage/>,
         isIndex: true,
         isAuthentication: true,
     },
