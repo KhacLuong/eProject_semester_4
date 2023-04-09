@@ -5,7 +5,9 @@ const PrivateRoute = (props) => {
     // const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const isAuthenticated = true;
     return (
-        isAuthenticated ? props.children : <Navigate to={'/login'}></Navigate>
+        isAuthenticated
+            ? props.children
+            : <Navigate to={'/login'}></Navigate>
     );
 };
 
