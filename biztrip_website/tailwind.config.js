@@ -12,7 +12,7 @@ export default {
             },
             colors: {
                 transparent: 'transparent',
-                primaryColor: '#3f87f5',
+                primaryColor: '#1861c5',
                 primaryColor_hover: '#2274f5',
                 successColor: '#00c9a7',
                 violetColor: '#886cff',

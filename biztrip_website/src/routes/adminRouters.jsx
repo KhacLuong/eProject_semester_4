@@ -1,9 +1,19 @@
 import {lazy} from "react";
 
-const HomePage = lazy(() => import("../pages/admin/HomePage.jsx"))
+const ErrorPage = lazy(() => import("../pages/404.jsx"))
 const DashBoardPage = lazy(() => import("../pages/admin/Dashboard.jsx"))
+const UserListPage = lazy(() => import("../pages/admin/users/UserList.jsx"))
+const UserCreatePage = lazy(() => import("../pages/admin/users/UserCreate.jsx"))
+const UserEditPage = lazy(() => import("../pages/admin/users/UserEdit.jsx"))
+const CoachCarListPage = lazy(() => import("../pages/admin/coach_car/CoachCarList.jsx"))
 
 export const adminRouters = [
+    {
+        path: "*",
+        page: <ErrorPage/>,
+        isIndex: false,
+        isAuthentication: true,
+    },
     {
         path: "login",
         page: "",
@@ -24,37 +34,25 @@ export const adminRouters = [
     },
     {
         path: "users",
-        page: "",
+        page: <UserListPage/>,
         isIndex: false,
         isAuthentication: true,
     },
     {
         path: "users/create",
-        page: "",
-        isIndex: false,
-        isAuthentication: true,
-    },
-    {
-        path: "users/detail/:id",
-        page: "",
+        page: <UserCreatePage/>,
         isIndex: false,
         isAuthentication: true,
     },
     {
         path: "users/edit/:id",
-        page: "",
+        page: <UserEditPage/>,
         isIndex: false,
         isAuthentication: true,
     },
     {
-        path: "users/update/:id",
-        page: "",
-        isIndex: false,
-        isAuthentication: true,
-    },
-    {
-        path: "*",
-        page: "",
+        path: ":slug/:id    /danh-sach-xe",
+        page: <CoachCarListPage/>,
         isIndex: false,
         isAuthentication: true,
     },

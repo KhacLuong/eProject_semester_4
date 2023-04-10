@@ -4,20 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --primary: rebeccapurple;
-    --secondary: cornflowerblue;
-}
 
 * {
     margin: 0;
     box-sizing: border-box !important;
     text-decoration: none;
-}
-
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--secondary) var(--primary);
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 /* Chrome, Edge, and Safari */
@@ -34,5 +26,14 @@
     background-color: #e1e1e1;
     border-radius: 14px;
 }
+*::-webkit-scrollbar-thumb:horizontal{
+    background-color: #e1e1e1;
+    border-radius: 14px;
 
+}
+*::-webkit-scrollbar:horizontal{
+    height: 0.4rem;
+    padding: 20px;
+    margin: 20px;
+}
 
