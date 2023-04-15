@@ -2,8 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {HiArrowNarrowUp} from "react-icons/hi";
 import {IoIosArrowDown, IoIosArrowForward} from "react-icons/io";
 import Widget from "../../components/admin/Widget.jsx";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Dashboard = () => {
+    useEffect(() => {
+        AOS.init();
+        AOS.refresh();
+    }, []);
     return (
         <main>
             <div className={`px-4 pt-6`}>
@@ -28,7 +34,8 @@ const Dashboard = () => {
                         <div className={`flex justify-between items-center pt-3 mt-5 border-t border-gray-700 sm:pt-6`}>
                             <div>
                                 <button
-                                    className={`inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 rounded-2xl hover:text-white"`}>Trong 7 ngày gần nhất <IoIosArrowDown className={`ml-2 w-4 h-4`}/></button>
+                                    className={`inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 rounded-2xl hover:text-white"`}>Trong
+                                    7 ngày gần nhất <IoIosArrowDown className={`ml-2 w-4 h-4`}/></button>
                                 <div
                                     className={`z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-200 hidden`}
                                     data-popper-placement={`bottom`} style={{
@@ -237,11 +244,17 @@ const Dashboard = () => {
                         <div className="flex justify-between items-center pt-3 border-t sm:pt-6">
                             <div>
                                 <button
-                                    className={`inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 rounded-2xl hover:text-white"`}>Trong 7 ngày gần nhất <IoIosArrowDown className={`ml-2 w-4 h-4`}/></button>
+                                    className={`inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 rounded-2xl hover:text-white"`}>Trong
+                                    7 ngày gần nhất <IoIosArrowDown className={`ml-2 w-4 h-4`}/></button>
                                 <div
                                     className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-200"
                                     id="transactions-dropdown"
-                                    style={{position: "absolute", inset: "auto auto 0px 0px", margin: "0px", transform: "translate3d(344px, 1184.8px, 0px)"}}
+                                    style={{
+                                        position: "absolute",
+                                        inset: "auto auto 0px 0px",
+                                        margin: "0px",
+                                        transform: "translate3d(344px, 1184.8px, 0px)"
+                                    }}
                                     data-popper-placement="top" data-popper-reference-hidden="" data-popper-escaped="">
                                     <div className="py-3 px-4" role="none">
                                         <p className="text-sm font-medium text-gray-900 truncate" role="none">
