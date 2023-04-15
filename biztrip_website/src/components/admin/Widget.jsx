@@ -5,8 +5,12 @@ import {TbBus} from "react-icons/tb";
 
 const Widget = () => {
     return (
-        <div className={`grid grid-cols-1 gap-6 mb-6 w-full xl:grid-cols-2 2xl:grid-cols-4`}>
-            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}>
+        <div className={`grid grid-cols-1 gap-6 mb-6 w-full xl:grid-cols-2 2xl:grid-cols-4`} >
+            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}
+                 data-aos="fade-up"
+                 data-aos-delay="100"
+                 data-aos-duration="1000"
+                 data-aos-easing="ease-in-out">
                 <div className={`flex items-center`}>
                     <div
                         className={`inline-flex flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-primaryColor rounded-lg shadow-md shadow-gray-300`}>
@@ -23,7 +27,11 @@ const Widget = () => {
                     </div>
                 </div>
             </div>
-            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}>
+            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}
+                 data-aos="fade-up"
+                 data-aos-delay="300"
+                 data-aos-duration="1000"
+                 data-aos-easing="ease-in-out">
                 <div className={`flex items-center`}>
                     <div
                         className={`inline-flex flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-primaryColor rounded-lg shadow-md shadow-gray-300`}>
@@ -40,7 +48,11 @@ const Widget = () => {
                     </div>
                 </div>
             </div>
-            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}>
+            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}
+                 data-aos="fade-up"
+                 data-aos-delay="500"
+                 data-aos-duration="1000"
+                 data-aos-easing="ease-in-out">
                 <div className={`flex items-center`}>
                     <div
                         className={`inline-flex flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-primaryColor rounded-lg shadow-md shadow-gray-300`}>
@@ -57,7 +69,11 @@ const Widget = () => {
                     </div>
                 </div>
             </div>
-            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}>
+            <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}
+                 data-aos="fade-up"
+                 data-aos-delay="700"
+                 data-aos-duration="1000"
+                 data-aos-easing="ease-in-out">
                 <div className={`flex items-center`}>
                     <div
                         className={`inline-flex flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-primaryColor rounded-lg shadow-md shadow-gray-300`}>
