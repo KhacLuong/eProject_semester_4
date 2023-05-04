@@ -19,7 +19,7 @@ const HomePage = () => {
                     <Footer/>
                     <p className="my-10 text-sm text-center text-gray-500">
                         © 2019-2023 Built with ❤️ by
-                        <a href="#" className="hover:underline" target="_blank"> Creative Team 2</a>. All
+                        <a href="#" className="hover:underline" target="_blank"> Creative BizTrip Team</a>. All
                         rights reserved.
                     </p>
                 </div>
