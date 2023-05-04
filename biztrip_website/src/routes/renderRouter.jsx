@@ -35,8 +35,6 @@ const RenderRouter = () => {
             </Route>
         </Routes>
     );
-
-
 };
 
 export default RenderRouter;

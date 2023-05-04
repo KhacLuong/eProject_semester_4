@@ -51,7 +51,7 @@ export const adminRouters = [
         isAuthentication: true,
     },
     {
-        path: ":slug/:id    /danh-sach-xe",
+        path: ":slug/:id/danh-sach-xe",
         page: <CoachCarListPage/>,
         isIndex: false,
         isAuthentication: true,
