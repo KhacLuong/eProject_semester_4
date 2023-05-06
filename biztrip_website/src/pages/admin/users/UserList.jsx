@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import Table from "../../../components/admin/Table.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
 import {BiPlus, TbFileExport} from "react-icons/all.js";
+import Paginate from "../../../components/admin/Paginate.jsx";
 
 const UserList = () => {
+    useDocumentTitle("List user")
+    const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
+
     const theadData = [
         '#', 'Tên người dùng', 'Email', 'Điện thoại', 'Vai trò', 'Action'
     ]
@@ -21,6 +25,19 @@ const UserList = () => {
         {
             items: ["Quang Anh", "test4@gmail.com", "078273322", "Admin"]
         },
+        {
+            items: ["Duc Anh", "test1@gmail.com", "091238723", "Admin"]
+        },
+        {
+            items: ["Minh Hong", "test2@gmail.com", "087423232", "Admin"]
+        },
+        {
+            items: ["Tuan Duc", "test3@gmail.com", "098200212", "Customer"]
+        },
+        {
+            items: ["Quang Anh", "test4@gmail.com", "078273322", "Admin"]
+        },
+
     ]
     const tbodyAction = ['edit', 'delete']
     const dataBreadcrumb = [
@@ -33,7 +50,13 @@ const UserList = () => {
             path: ""
         }
     ]
-    useDocumentTitle("List user")
+
+    const handleClickToPage = (event) => {
+        if (+event.selected + 1 === 1) {
+            setTurnOffPrevNextBtn(true)
+        }
+    }
+
     return (
         <>
             <div
@@ -70,6 +93,7 @@ const UserList = () => {
                 </div>
             </div>
             <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction}/>
+            <Paginate handleClickToPage={handleClickToPage} pageCount={100} pageRangeDisplayed={3} marginPagesDisplayed={2} turnOffPrevNextBtn={turnOffPrevNextBtn} firstIndexPerPage={1} lastIndexPerPage={20} totalItems={1200}/>
         </>
     );
 };
