@@ -6,6 +6,9 @@ export default {
     ],
     theme: {
         extend: {
+            boxShadow: {
+                signIn: '0 10px 15px rgb(0 0 0 / 30%)'
+            },
             fontFamily: {
                 sora: ['Sora'],
                 sansSerif: ['"sans-serif"']
