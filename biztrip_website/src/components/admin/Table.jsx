@@ -1,20 +1,48 @@
 import React from 'react';
-import {FaPencilAlt, FaSort, FaTrashAlt, MdPageview} from "react-icons/all.js";
+import {FaPencilAlt, FaSort, FaTrashAlt} from "react-icons/all.js";
 import {Link} from "react-router-dom";
+import {AiFillEye} from "react-icons/ai";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import {toast} from "react-toastify";
 
-const Table = ({theadData, tbodyData, tbodyAction}) => {
+const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
+    const MySwal = withReactContent(Swal)
+    const handleDelete = async (id) => {
+        MySwal.fire({
+            title: 'Bạn có chắc chắn không?',
+            text: "Nếu xác nhận, Bạn sẽ không thể khôi phục dữ liệu này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#057a55',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận!',
+            cancelButtonText: 'Hủy'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await fetchDelete(id)
+                if (res && res.code === '200') {
+                    toast.success(res.message)
+                    await fetchList()
+                }
+            }
+        })
+    }
     return (
-        <div className={`flex flex-col my-6 mx-4 rounded-2xl shadow-xl shadow-gray-200`}>
+        <div className={`flex flex-col my-6 mx-4 rounded-2xl shadow-xl shadow-gray-200`}
+             data-aos="fade-right"
+             data-aos-delay="300">
             <div className={`overflow-x-auto rounded-2xl`}>
                 <div className={`inline-block min-w-full align-middle`}>
                     <div className={`overflow-hidden shadow-lg`}>
                         <table className={`w-full text-sm text-left text-gray-500 dark:text-gray-400`}>
-                            <thead className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400`}>
+                            <thead
+                                className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400`}>
                             <tr>
                                 {
                                     theadData.map((item, index) => {
                                         return (
-                                            <th key={`th-${index}`} scope={`col`} className={`px-6 py-3 w-[${item?.width}]`}
+                                            <th key={`th-${index}`} scope={`col`} className={`px-6 py-3`}
                                                 title={item.name}>
                                                 <div className={`flex items-center`}>
                                                     {item}
@@ -40,9 +68,30 @@ const Table = ({theadData, tbodyData, tbodyAction}) => {
                                             <td className="px-6 py-3">{index + 1}</td>
                                             {
                                                 data.items.map((item, index) => {
-                                                    return (
-                                                        <td key={`td-${index}`} className={`px-6 py-3 w-[${item?.width}]`}>{item}</td>
-                                                    )
+                                                    if (typeof item === "string") {
+                                                        switch (item.toLowerCase()) {
+                                                            case "active":
+                                                                return (
+                                                                    <td key={`td-${index}`}
+                                                                        className={`px-6 py-3 text-successColor`}>{item}</td>
+                                                                )
+                                                            case "disable":
+                                                                return (
+                                                                    <td key={`td-${index}`}
+                                                                        className={`px-6 py-3 text-dangerColor-default_2`}>{item}</td>
+                                                                )
+                                                            default:
+                                                                return (
+                                                                    <td key={`td-${index}`}
+                                                                        className={`px-6 py-3`}>{item}</td>
+                                                                )
+                                                        }
+                                                    } else {
+                                                        return <td key={`td-${index}`} className={`px-6 py-3 w-44`}>
+                                                            <img src={item.imgPath} alt={item.imgName}
+                                                                 className={`aspect-square object-cover`}/>
+                                                        </td>
+                                                    }
                                                 })
                                             }
                                             <td className="px-6 py-3">
@@ -51,7 +100,7 @@ const Table = ({theadData, tbodyData, tbodyAction}) => {
                                                         tbodyAction.map((action, index) => {
                                                             return (
                                                                 <div key={`td-${index}`}
-                                                                     className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'hover:bg-primaryColor bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3'}`}>
+                                                                     className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'hover:bg-primaryColor bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
                                                                     {
                                                                         action === 'edit' ?
                                                                             <Link to={``} state={{id: data?.id}}>
@@ -59,9 +108,10 @@ const Table = ({theadData, tbodyData, tbodyAction}) => {
                                                                             </Link> :
                                                                             action === 'view' ?
                                                                                 <button>
-                                                                                    <MdPageview className={`w-5 h-5`}/>
+                                                                                    <AiFillEye className={`w-5 h-5`}/>
                                                                                 </button> :
-                                                                                <button onClick={() => data.handleDelete(data.id)}>
+                                                                                <button
+                                                                                    onClick={() => handleDelete(data?.id)}>
                                                                                     <FaTrashAlt className={`w-5 h-5`}/>
                                                                                 </button>
                                                                     }

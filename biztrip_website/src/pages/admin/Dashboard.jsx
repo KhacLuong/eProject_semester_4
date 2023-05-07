@@ -1,17 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {HiArrowNarrowUp} from "react-icons/hi";
 import {IoIosArrowDown, IoIosArrowForward} from "react-icons/io";
 import Widget from "../../components/admin/Widget.jsx";
-import AOS from "aos";
 import "aos/dist/aos.css";
 import Footer from "../../layouts/admin/Footer.jsx";
 import {BiMinus} from "react-icons/all.js";
 
 const Dashboard = () => {
-    useEffect(() => {
-        AOS.init();
-        AOS.refresh();
-    }, []);
+
     return (
         <>
             <main>

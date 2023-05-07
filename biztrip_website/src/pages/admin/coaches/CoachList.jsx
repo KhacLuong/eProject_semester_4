@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CoachCarList = () => {
+const CoachList = () => {
     return (
         <div>
             This is coach car page
@@ -8,4 +8,4 @@ const CoachCarList = () => {
     );
 };
 
-export default CoachCarList;
+export default CoachList;

@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Sidebar from "../../layouts/admin/Sidebar.jsx";
 import Navbar from "../../layouts/admin/Navbar.jsx";
 import {Outlet} from "react-router-dom";
-
+import AOS from "aos";
+import "aos/dist/aos.css"
 
 const HomePage = () => {
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 0,
+            easing: 'ease-in-out',
+            delay: 0,
+            mirror: false,
+            disable: false,
+            startEvent: 'DOMContentLoaded'
+        })
+        AOS.refresh()
+    }, [])
     return (
         <>
             <nav className={`fixed z-30 w-full bg-gray-50`}>

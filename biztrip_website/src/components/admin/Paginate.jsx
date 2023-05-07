@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactPaginate from "react-paginate";
 import {MdOutlineKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
+
 const Paginate = (props) => {
     const {
-        handleClickToPage,
+        setTurnOffPrevNextBtn,
         pageCount,
         pageRangeDisplayed,
         marginPagesDisplayed,
@@ -12,9 +13,16 @@ const Paginate = (props) => {
         lastIndexPerPage,
         totalItems
     } = props
+
+    const handleClickToPage = (event) => {
+        if (+event.selected + 1 === 1) {
+            setTurnOffPrevNextBtn(true)
+        }
+    }
     return (
-        <div
-            className={`items-center p-4 my-4 mx-4 bg-white rounded-2xl shadow-xl shadow-gray-200 sm:flex sm:justify-between`}>
+        <div className={`items-center p-4 my-4 mx-4 bg-white rounded-2xl shadow-xl shadow-gray-200 sm:flex sm:justify-between`}
+             data-aos="fade-left"
+             data-aos-delay="500">
             <div className={`flex items-center mb-4 sm:mb-0`}>
                 <span className={`text-sm font-normal text-gray-500`}>
                     Hiển thị <span className={`font-semibold text-gray-900`}>{firstIndexPerPage}-{lastIndexPerPage}</span> trong <span className={`font-semibold text-gray-900`}>{totalItems}</span>
