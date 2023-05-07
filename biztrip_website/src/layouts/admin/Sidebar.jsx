@@ -1,15 +1,6 @@
 import React from 'react';
-import {MdOutlineSpaceDashboard, MdOutlineWarehouse} from "react-icons/md";
-import {FiUsers} from "react-icons/fi";
-import {BiDollarCircle, BiNews} from "react-icons/bi";
-import {HiOutlineTicket} from "react-icons/hi";
-import {TbBus, TbRoad} from "react-icons/tb";
-import {FaRegMoneyBillAlt} from "react-icons/fa";
-import {GrServices} from "react-icons/gr";
-import {AiOutlineLike} from "react-icons/ai";
-
-import {dataNavbarAdmin} from "../../utils/data.jsx";
 import {Link} from "react-router-dom";
+import {apiSidebarAdmin} from "../../utils/api.jsx";
 
 const Sidebar = () => {
     return (
@@ -18,7 +9,7 @@ const Sidebar = () => {
                 <div className={`flex-1 px-3 bg-gray-50`} id={`sidebar-items`}>
                     <ul className={`pb-2 pt-1`}>
                         {
-                            dataNavbarAdmin.map((item, index) => {
+                            apiSidebarAdmin.map((item, index) => {
                                 const Icon = item.icon
                                 if (item.isSubcategory) {
                                     return (

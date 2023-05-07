@@ -1,13 +1,49 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {HiOutlineSearch, HiOutlineEye} from "react-icons/hi";
 import {IoNotificationsSharp} from "react-icons/io5";
 import {HiOutlineBars3CenterLeft} from "react-icons/hi2";
 import {MdOutlineClose} from "react-icons/md";
 import {RiSettings3Fill} from "react-icons/ri";
-
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 import avatar from "../../assets/image/avatar/me.jpg"
+import {Link, useNavigate} from "react-router-dom";
 
 const Navbar = () => {
+    const MySwal = withReactContent(Swal)
+    const navigate = useNavigate()
+    const menuRef = useRef();
+    const [openMenu, setOpenMenu] = useState(false)
+
+    useEffect(() => {
+        const handler = (event) => {
+            if (openMenu && menuRef.current && !menuRef.current.contains(event.target)) {
+                setOpenMenu(false)
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        document.addEventListener("touchstart", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+            document.removeEventListener("touchstart", handler);
+        }
+    }, [openMenu])
+    const handleLogout = (e) => {
+        e.preventDefault()
+        MySwal.fire({
+            title: 'Bạn có chắc chắn muốn đăng suất?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#057a55',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, tiếp tục!',
+            cancelButtonText: 'Hủy'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+               navigate("/admin/v1/sign-in")
+            }
+        })
+    }
     return (
         <div className={`py-3 px-3 lg:px-5 lg:pl-3`}>
             <div className={`flex justify-between items-center`}>
@@ -17,10 +53,10 @@ const Navbar = () => {
                         <HiOutlineBars3CenterLeft className={`w-6 h-6 text-black`}/>
                         <MdOutlineClose className="w-6 h-6 hidden text-black"/>
                     </button>
-                    <a className={`text-md lg:ml-4 font-semibold flex items-center lg:mr-1.5`}>
+                    <Link to={""} className={`text-md lg:ml-4 font-semibold flex items-center lg:mr-1.5`}>
                         <span
                             className={`hidden md:inline-block self-center text-xl font-bold whitespace-nowrap`}>BizTrip</span>
-                    </a>
+                    </Link>
                     <form action={`#`} method={`GET`} className={`hidden lg:block lg:pl-8`}>
                         <label htmlFor={`topbar-search`} className={`sr-only`}>Search</label>
                         <div className={`relative mt-1 lg:w-80`}>
@@ -118,51 +154,42 @@ const Navbar = () => {
                             </div>
                         </a>
                     </div>
-                    <div className={`ml-3`}>
-                        <div>
-                            <button type={`button`}
-                                    className={`flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300`}
-                                    aria-expanded={`false`} data-dropdown-toggle={`dropdown-2`}>
-                                <span className={`sr-only`}>Danh mục người dùng</span>
-                                <img src={avatar} className={`w-8 h-8 rounded-full`} alt={`user avatar`}/>
-                            </button>
-                        </div>
-                        <div
-                            className="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-300 hidden"
-                            id="dropdown-2"
-                            style={{
-                                position: "absolute",
-                                inset: "0px auto auto 0px",
-                                margin: "0px",
-                                transform: "translate3d(628px, 58px, 0px)"
-                            }}
-                            data-popper-placement="bottom">
-                            <div className="py-3 px-4" role="none">
-                                <p className="text-sm" role="none">
-                                    Đức Anh
-                                </p>
-                                <p className="text-sm font-medium text-gray-900 truncate" role="none">
-                                    admin@amdin.com
-                                </p>
+                    <div className={`ml-3 relative`}>
+                        <div onClick={() => setOpenMenu(!openMenu)} ref={menuRef}>
+                            <div>
+                                <button type={`button`}
+                                        className={`flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300`}
+                                        aria-expanded={`false`} data-dropdown-toggle={`dropdown-2`}>
+                                    <span className={`sr-only`}>Danh mục người dùng</span>
+                                    <img src={avatar} className={`w-8 h-8 rounded-full`} alt={`user avatar`}/>
+                                </button>
                             </div>
-                            <ul className="py-1" role="none">
-                                <li>
-                                    <a href="#" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                       role="menuitem">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                       role="menuitem">Cài đặt</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                       role="menuitem">Dark Mode</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                       role="menuitem">Đăng xuất</a>
-                                </li>
-                            </ul>
+                            <div className={`${openMenu ? '' : 'hidden'} absolute -left-32 z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-300 dark:shadow-gray-600`}
+                                 id="dropdown-2"
+                                 data-popper-placement="bottom">
+                                <div className="py-3 px-4" role="none">
+                                    <p className="text-sm" role="none">
+                                        Đức Anh
+                                    </p>
+                                    <p className="text-sm font-medium text-gray-900 truncate" role="none">
+                                        admin@amdin.com
+                                    </p>
+                                </div>
+                                <ul className="py-1" role="none">
+                                    <li>
+                                        <button className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem">Cài đặt</button>
+                                    </li>
+                                    <li>
+                                        <button className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem">Dark Mode</button>
+                                    </li>
+                                    <li>
+                                        <button onClick={(e) => handleLogout(e)} className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem">Đăng xuất</button>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,12 @@ const postCreateUser = (name, email, password, confirmPassword, userType) => {
     return instance.post('/admin/v1/register', data)
 }
 
-
+const getListUser = () => {
+    return instance.get(`/admin/v1/users`)
+}
+const deleteUser = (id) => {
+    return instance.delete(`/admin/v1/users/${id}`)
+}
 
 
 
@@ -24,4 +29,4 @@ const postCreateUser = (name, email, password, confirmPassword, userType) => {
 
 
 
-export {postCreateUser}
+export {postCreateUser, getListUser, deleteUser}

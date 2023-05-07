@@ -8,18 +8,19 @@ import HomePage from "../pages/admin/HomePage.jsx";
 const RenderRouter = () => {
     const RecursiveRouter = (routers) => {
         return (
-            routers.map(({page, isIndex, path, isAuthentication}, index) => {
+            routers.map(({page: Page, isIndex, path, isAuthentication, children}, index) => {
                 return (
                     <Route key={index} index={isIndex} path={path} element={
                         isAuthentication ?
                             <PrivateRoute>
                                 <Suspense fallback={<div>Loading...</div>}>
-                                    {page}
+                                    <Page/>
                                 </Suspense>
                             </PrivateRoute> :
                             <Suspense fallback={<div>Loading...</div>}>
-                                {page}
+                                <Page/>
                             </Suspense>}>
+                        {(children && children.length > 0) && RecursiveRouter(children)}
                     </Route>
                 )
             })
@@ -27,10 +28,10 @@ const RenderRouter = () => {
     }
     return (
         <Routes>
-            <Route path={`/`}>
-                {RecursiveRouter(customerRouters)}
-            </Route>
-            <Route path={`admin/v1`} element={<HomePage/>}>
+            {/*<Route path={`/`}>*/}
+            {/*    {RecursiveRouter(customerRouters)}*/}
+            {/*</Route>*/}
+            <Route path={`admin/v1`} >
                 {RecursiveRouter(adminRouters)}
             </Route>
         </Routes>

@@ -6,6 +6,9 @@ export default {
     ],
     theme: {
         extend: {
+            boxShadow: {
+                signIn: '0 10px 15px rgb(0 0 0 / 30%)'
+            },
             fontFamily: {
                 sora: ['Sora'],
                 sansSerif: ['"sans-serif"']
@@ -14,7 +17,8 @@ export default {
                 transparent: 'transparent',
                 primaryColor: '#1861c5',
                 primaryColor_hover: '#2274f5',
-                successColor: '#00c9a7',
+                successColor: '#28a745',
+                successColor_hover: '#2F9649FF',
                 violetColor: '#886cff',
                 dangerColor: {
                     default_1: '#de4436',

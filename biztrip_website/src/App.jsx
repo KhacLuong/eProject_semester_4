@@ -1,7 +1,6 @@
 import './App.css'
 import {BrowserRouter} from "react-router-dom";
 import RenderRouter from "./routes/renderRouter.jsx";
-import ToastifyComponent from "./components/toastifyComponent.jsx";
 import {useEffect, useState} from "react";
 
 const App = () => {

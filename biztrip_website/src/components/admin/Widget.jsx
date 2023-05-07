@@ -8,9 +8,7 @@ const Widget = () => {
         <div className={`grid grid-cols-1 gap-6 mb-6 w-full xl:grid-cols-2 2xl:grid-cols-4`} >
             <div className={`bg-white shadow-lg shadow-gray-200 rounded-2xl p-4`}
                  data-aos="fade-up"
-                 data-aos-delay="100"
-                 data-aos-duration="1000"
-                 data-aos-easing="ease-in-out">
+                 data-aos-delay="100">
                 <div className={`flex items-center`}>
                     <div
                         className={`inline-flex flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-primaryColor rounded-lg shadow-md shadow-gray-300`}>
