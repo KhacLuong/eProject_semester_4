@@ -28,10 +28,11 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
             }
         })
     }
+    const handleEdit = async (id) => {
+
+    }
     return (
-        <div className={`flex flex-col my-6 mx-4 rounded-2xl shadow-xl shadow-gray-200`}
-             data-aos="fade-right"
-             data-aos-delay="300">
+        <div className={`flex flex-col my-6 mx-4 rounded-2xl shadow-xl shadow-gray-200`}>
             <div className={`overflow-x-auto rounded-2xl`}>
                 <div className={`inline-block min-w-full align-middle`}>
                     <div className={`overflow-hidden shadow-lg`}>
@@ -43,7 +44,7 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
                                     theadData.map((item, index) => {
                                         return (
                                             <th key={`th-${index}`} scope={`col`} className={`px-6 py-3`}
-                                                title={item.name}>
+                                                title={item}>
                                                 <div className={`flex items-center`}>
                                                     {item}
                                                     <div className={`flex items-center`}>
@@ -87,6 +88,21 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
                                                                 )
                                                         }
                                                     } else {
+                                                        if (item.iconName) {
+                                                            const Icon = item.iconName
+                                                            return <td key={`td-${index}`} className={`px-6 py-3`}>
+                                                                <div
+                                                                    className={`rounded-lg p-2 bg-primaryColor inline-block text-white`}>
+                                                                    <Icon className={`w-8 h-8`}/>
+                                                                </div>
+                                                            </td>
+                                                        } else if (item.content) {
+                                                            return (<td key={`td-${index}`}
+                                                                        className={`px-6 py-3 w-80`}>
+                                                                    {item.content}
+                                                                </td>
+                                                            )
+                                                        }
                                                         return <td key={`td-${index}`} className={`px-6 py-3 w-44`}>
                                                             <img src={item.imgPath} alt={item.imgName}
                                                                  className={`aspect-square object-cover`}/>

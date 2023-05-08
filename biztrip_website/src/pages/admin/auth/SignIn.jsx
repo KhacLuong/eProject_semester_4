@@ -4,8 +4,10 @@ import {useNavigate} from "react-router-dom";
 import space from "../../../assets/image/space_man.jpg"
 import {validateEmail} from "../../../utils/helper.jsx";
 import {message} from "../../../utils/message.jsx";
+import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 
 const SignIn = () => {
+    useDocumentTitle("CMS - Đăng nhập", true)
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -61,7 +63,6 @@ const SignIn = () => {
                                 </p>
                             </div>
                         </h1>
-
                         <form className="space-y-6 md:space-y-8">
                             <div className="relative mb-6">
                                 <input
@@ -102,7 +103,7 @@ const SignIn = () => {
                                 <label
                                     htmlFor="password"
                                     className="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-6"
-                                >Password
+                                >Mật khẩu
                                 </label>
                             </div>
                             <div className="flex items-center justify-end">

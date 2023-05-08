@@ -5,7 +5,7 @@ import Paginate from "../../../components/admin/Paginate.jsx";
 import Banner from "../../../components/admin/Banner.jsx";
 
 const SettingList = () => {
-    useDocumentTitle("List setting")
+    useDocumentTitle("Quản lý cài đặt", true)
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
 
     const theadData = [
@@ -55,12 +55,15 @@ const SettingList = () => {
     return (
         <>
             <Banner dataBreadcrumb={dataBreadcrumb} title={"Danh sách cài đặt"} pathCreate={"create"} isExport={false}/>
-            <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction}/>
-            <Paginate pageCount={100} pageRangeDisplayed={3}
-                      marginPagesDisplayed={2}
-                      turnOffPrevNextBtn={turnOffPrevNextBtn} firstIndexPerPage={1}
-                      lastIndexPerPage={20} totalItems={1200}
-                      setTurnOffPrevNextBtn={setTurnOffPrevNextBtn}/>
+            <div data-aos="fade-right"
+                 data-aos-delay="300">
+                <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction}/>
+                <Paginate pageCount={100} pageRangeDisplayed={3}
+                          marginPagesDisplayed={2}
+                          turnOffPrevNextBtn={turnOffPrevNextBtn} firstIndexPerPage={1}
+                          lastIndexPerPage={20} totalItems={1200}
+                          setTurnOffPrevNextBtn={setTurnOffPrevNextBtn}/>
+            </div>
         </>
     );
 };

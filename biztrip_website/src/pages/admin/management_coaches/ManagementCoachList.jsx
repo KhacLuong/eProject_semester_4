@@ -5,7 +5,7 @@ import Banner from "../../../components/admin/Banner.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
 import Table from "../../../components/admin/Table.jsx";
 const ManagementCoachList = () => {
-    useDocumentTitle("Quản lý nhà xe")
+    useDocumentTitle("Quản lý nhà xe", true)
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
 
     const theadData = [
@@ -33,8 +33,12 @@ const ManagementCoachList = () => {
     return (
         <>
             <Banner dataBreadcrumb={dataBreadcrumb} title={"Danh sách nhà xe"} pathCreate={""} isExport={false}/>
-            <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction}/>
-            <Paginate pageCount={100} pageRangeDisplayed={3} marginPagesDisplayed={2} turnOffPrevNextBtn={turnOffPrevNextBtn} firstIndexPerPage={1} lastIndexPerPage={20} totalItems={1200} setTurnOffPrevNextBtn={setTurnOffPrevNextBtn}/>
+            <div data-aos="fade-right"
+                 data-aos-delay="300">
+                <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction}/>
+                <Paginate pageCount={100} pageRangeDisplayed={3} marginPagesDisplayed={2} turnOffPrevNextBtn={turnOffPrevNextBtn} firstIndexPerPage={1} lastIndexPerPage={20} totalItems={1200} setTurnOffPrevNextBtn={setTurnOffPrevNextBtn}/>
+            </div>
+
         </>
     );
 };

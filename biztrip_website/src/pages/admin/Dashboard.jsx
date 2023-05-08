@@ -5,9 +5,11 @@ import Widget from "../../components/admin/Widget.jsx";
 import "aos/dist/aos.css";
 import Footer from "../../layouts/admin/Footer.jsx";
 import {BiMinus} from "react-icons/all.js";
+import useDocumentTitle from "../../hooks/useDocumentTitle.jsx";
+import {ADMIN_DOCUMENT_TITLE} from "../../utils/data.jsx";
 
 const Dashboard = () => {
-
+    useDocumentTitle(ADMIN_DOCUMENT_TITLE, true)
     return (
         <>
             <main>

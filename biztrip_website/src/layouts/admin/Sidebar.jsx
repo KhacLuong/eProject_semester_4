@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {apiSidebarAdmin} from "../../utils/api.jsx";
+import {dataSidebarAdmin} from "../../utils/data.jsx";
 
 const Sidebar = () => {
     return (
@@ -9,7 +9,7 @@ const Sidebar = () => {
                 <div className={`flex-1 px-3 bg-gray-50`} id={`sidebar-items`}>
                     <ul className={`pb-2 pt-1`}>
                         {
-                            apiSidebarAdmin.map((item, index) => {
+                            dataSidebarAdmin.map((item, index) => {
                                 const Icon = item.icon
                                 if (item.isSubcategory) {
                                     return (

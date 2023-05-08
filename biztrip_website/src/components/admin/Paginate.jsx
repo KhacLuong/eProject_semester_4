@@ -20,9 +20,7 @@ const Paginate = (props) => {
         }
     }
     return (
-        <div className={`items-center p-4 my-4 mx-4 bg-white rounded-2xl shadow-xl shadow-gray-200 sm:flex sm:justify-between`}
-             data-aos="fade-left"
-             data-aos-delay="500">
+        <div className={`items-center p-4 my-4 mx-4 bg-white rounded-2xl shadow-xl shadow-gray-200 sm:flex sm:justify-between`}>
             <div className={`flex items-center mb-4 sm:mb-0`}>
                 <span className={`text-sm font-normal text-gray-500`}>
                     Hiển thị <span className={`font-semibold text-gray-900`}>{firstIndexPerPage}-{lastIndexPerPage}</span> trong <span className={`font-semibold text-gray-900`}>{totalItems}</span>
