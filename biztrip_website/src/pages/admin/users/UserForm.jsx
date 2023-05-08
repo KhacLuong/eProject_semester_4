@@ -8,7 +8,7 @@ import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 
 const UserForm = () => {
-    useDocumentTitle("Thêm mới người dùng")
+    useDocumentTitle("Thêm mới người dùng", true)
     const navigate = useNavigate();
     const userId = useLocation().state?.userId
     const inputAvatarRef = useRef(null);

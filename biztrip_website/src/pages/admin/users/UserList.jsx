@@ -6,7 +6,7 @@ import Banner from "../../../components/admin/Banner.jsx";
 import {deleteUser, getListUser} from "../../../middleware/services/apiService.jsx";
 
 const UserList = () => {
-    useDocumentTitle("Quản lý người dùng")
+    useDocumentTitle("Quản lý người dùng", true)
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
 
     const theadData = [
@@ -45,7 +45,6 @@ const UserList = () => {
             id: 8,
             items: ["Quang Anh", "test4@gmail.com", "078273322", "Admin"]
         },
-
     ]
     const tbodyAction = ['edit', 'delete']
 
@@ -62,9 +61,27 @@ const UserList = () => {
 
     return (
         <>
-            <Banner dataBreadcrumb={dataBreadcrumb} title={"Danh sách người dùng"} pathCreate={"create"} isExport={true}/>
-            <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction} fetchDelete={deleteUser} fetchList={getListUser}/>
-            <Paginate pageCount={100} pageRangeDisplayed={3} marginPagesDisplayed={2} turnOffPrevNextBtn={turnOffPrevNextBtn} firstIndexPerPage={1} lastIndexPerPage={20} totalItems={1200} setTurnOffPrevNextBtn={setTurnOffPrevNextBtn}/>
+            <Banner dataBreadcrumb={dataBreadcrumb}
+                    title={"Danh sách người dùng"}
+                    pathCreate={"create"}
+                    isExport={true}/>
+            <div data-aos="fade-right"
+                 data-aos-delay="300">
+                <Table
+                    theadData={theadData}
+                    tbodyData={tbodyData}
+                    tbodyAction={tbodyAction}
+                    fetchDelete={deleteUser}
+                    fetchList={getListUser}/>
+                <Paginate pageCount={100}
+                          pageRangeDisplayed={3}
+                          marginPagesDisplayed={2}
+                          turnOffPrevNextBtn={turnOffPrevNextBtn}
+                          firstIndexPerPage={1}
+                          lastIndexPerPage={20}
+                          totalItems={1200}
+                          setTurnOffPrevNextBtn={setTurnOffPrevNextBtn}/>
+            </div>
         </>
     );
 };

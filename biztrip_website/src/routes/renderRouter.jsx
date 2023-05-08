@@ -1,9 +1,7 @@
 import React, {Suspense} from 'react';
 import {Route, Routes} from "react-router-dom";
 import PrivateRoute from "./privateRoute.jsx";
-import {adminRouters} from "./adminRouters.jsx";
-import {customerRouters} from "./customerRouters.jsx";
-import HomePage from "../pages/admin/HomePage.jsx";
+import {dataRouters} from "./dataRouters.jsx";
 
 const RenderRouter = () => {
     const RecursiveRouter = (routers) => {
@@ -28,11 +26,8 @@ const RenderRouter = () => {
     }
     return (
         <Routes>
-            {/*<Route path={`/`}>*/}
-            {/*    {RecursiveRouter(customerRouters)}*/}
-            {/*</Route>*/}
-            <Route path={`admin/v1`} >
-                {RecursiveRouter(adminRouters)}
+            <Route path={`/`}>
+                {RecursiveRouter(dataRouters)}
             </Route>
         </Routes>
     );

@@ -1,17 +1,28 @@
-import {lazy} from "react";
+import {
+    ErrorPage,
+    SignInPage,
+    AdminHomePage,
+    DashBoardPage,
+    TicketListPage,
+    PolicyListPage,
+    UtilityListPage,
+    ScheduleListPage,
+    CoachListPage,
+    NewsListPage,
+    BookingListPage,
+    RevenuePage,
+    SettingFormPage,
+    SettingListPage,
+    TestimonialListPage,
+    UserFormPage,
+    UserListPage,
+    ManagementCoachListPage,
+    CoachCarListPage,
+    StaffListPage,
+    CustomerHomePage
+} from "../utils/location.jsx";
 
-const ErrorPage = lazy(() => import("../pages/404.jsx"))
-const DashBoardPage = lazy(() => import("../pages/admin/Dashboard.jsx"))
-const UserListPage = lazy(() => import("../pages/admin/users/UserList.jsx"))
-const UserFormPage = lazy(() => import("../pages/admin/users/UserForm.jsx"))
-const CoachCarListPage = lazy(() => import("../pages/admin/coaches/CoachList.jsx"))
-const SignInPage = lazy(() => import("../pages/admin/auth/SignIn.jsx"))
-const HomePage = lazy(() => import("../pages/admin/HomePage.jsx"))
-const SettingListPage = lazy(() => import("../pages/admin/settings/SettingList.jsx"))
-const SettingFormPage = lazy(() => import("../pages/admin/settings/SettingForm.jsx"))
-const ManagementCoachListPage = lazy(() => import("../pages/admin/management_coaches/ManagementCoachList.jsx"))
-const CoachListPage = lazy(() => import("../pages/admin/coaches/CoachList.jsx"))
-export const adminRouters = [
+export const dataRouters = [
     {
         path: "*",
         page: ErrorPage,
@@ -26,7 +37,13 @@ export const adminRouters = [
     },
     {
         path: "",
-        page: HomePage,
+        page: CustomerHomePage,
+        isIndex: false,
+        isAuthentication: true,
+    },
+    {
+        path: "admin/v1",
+        page: AdminHomePage,
         isIndex: false,
         isAuthentication: true,
         children: [
@@ -95,7 +112,61 @@ export const adminRouters = [
                 page: CoachListPage,
                 isIndex: false,
                 isAuthentication: true
-            }
+            },
+            {
+                path: "bookings",
+                page: BookingListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "revenues",
+                page: RevenuePage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "news",
+                page: NewsListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "testimonials",
+                page: TestimonialListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "utilities",
+                page: UtilityListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "schedules",
+                page: ScheduleListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "tickets",
+                page: TicketListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "policies",
+                page: PolicyListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "staffs",
+                page: StaffListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
         ]
     },
 ]
