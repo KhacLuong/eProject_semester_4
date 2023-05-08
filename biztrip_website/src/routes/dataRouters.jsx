@@ -40,6 +40,14 @@ export const dataRouters = [
         page: CustomerHomePage,
         isIndex: false,
         isAuthentication: true,
+        children: [
+            {
+                path: "",
+                page: "",
+                isIndex: true,
+                isAuthentication: true,
+            }
+        ]
     },
     {
         path: "admin/v1",
