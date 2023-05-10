@@ -5,7 +5,9 @@ import {Link} from "react-router-dom";
 
 const Banner = (props) => {
     const {dataBreadcrumb, title, pathCreate, isExport} = props
+    const handleSearch = () => {
 
+    }
     return (
         <div
             className={`block justify-between items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}

@@ -3,26 +3,19 @@ import AOS from "aos";
 import "aos/dist/aos.css"
 import useDocumentTitle from "../../hooks/useDocumentTitle.jsx";
 import {CUSTOMER_DOCUMENT_TITLE} from "../../utils/data.jsx";
+import Header from "../../layouts/customer/Header.jsx";
+import Footer from "../../layouts/customer/Footer.jsx";
+import {Outlet} from "react-router-dom";
 
 const CustomerHomePage = () => {
     useDocumentTitle(CUSTOMER_DOCUMENT_TITLE, true)
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 0,
-            easing: 'ease-in-out',
-            delay: 0,
-            mirror: false,
-            disable: false,
-        })
-        AOS.refresh()
-    }, [])
 
     return (
-        <div>
-
-        </div>
+        <>
+            <Header/>
+            {/*<Outlet/>*/}
+            <Footer/>
+        </>
     );
 };
 

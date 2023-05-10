@@ -98,7 +98,7 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
                                                             </td>
                                                         } else if (item.content) {
                                                             return (<td key={`td-${index}`}
-                                                                        className={`px-6 py-3 w-80`}>
+                                                                        className={`px-6 py-3 w-96 text-justify`}>
                                                                     {item.content}
                                                                 </td>
                                                             )

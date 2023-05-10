@@ -28,11 +28,9 @@ export default {
 
                 },
                 warningColor: '#ffc021',
-                whiteColor: '#ffffff',
                 bgWhiteColor: '#f6f6f6',
                 grayColor: '#f9fbfd',
                 darkColor: '#223143',
-                blackColor: '#000',
                 footerBgColor: '#282828',
                 borderColor: '#E6E6E6',
                 lightColor: '#999999',
@@ -105,6 +103,12 @@ export default {
             },
             rotate: {
                 '360': '360deg',
+            },
+            width: {
+                '15': '15%',
+                '20': '20%',
+                '30': '30%',
+
             }
 
         },

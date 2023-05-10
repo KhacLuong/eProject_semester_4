@@ -41,7 +41,7 @@ const Paginate = (props) => {
                            breakLabel="..."
                            breakClassName="breakLinkClassName text-xl font-medium"
                            containerClassName="flex items-center justify-center inline-flex -space-x-px"
-                           activeLinkClassName="text-whiteColor bg-primaryColor"
+                           activeLinkClassName="text-white bg-primaryColor"
                            renderOnZeroPageCount={null}
                            disabledClassName={turnOffPrevNextBtn ? 'hidden' : ''}
                            disabledLinkClassName={turnOffPrevNextBtn ? 'hidden' : ''}
