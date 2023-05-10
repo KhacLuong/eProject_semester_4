@@ -12,7 +12,6 @@ const Footer = () => {
     const companyItems = ['About us', 'Delivery Information', 'Privacy Policy', 'Terms & Conditions', 'Contact Us', 'Support Center']
     const corporateItems = ['Become a Vendor', 'Affiliate Program', 'Our Suppliers', 'Accessibility', 'Promotions', 'Careers']
     const ourServiceItems = ['Help Center', 'Returns', 'Product', 'Recalls', 'Accessibility', 'Contact Us', 'Store Pickup']
-    const textClassFooter = 'text-sm font-light hover:text-dangerColor-hover_2 cursor-pointer'
     const navigate = useNavigate();
     return (
         <footer className={`block`}>
@@ -26,7 +25,7 @@ const Footer = () => {
                                     className={`border-r-[1px] border-borderColor mr-20 pr-4 flex relative w-full flex-wrap content-start`}>
                                     <div className={`pb-9`}>
                                         <Link to={``}>
-                                            <span className={`text-3xl font-bold`}>BizTrip</span>
+                                            <span className={`text-3xl font-bold text-gray-800`}>BizTrip</span>
                                         </Link>
                                     </div>
                                     <div className={`text-darkColor w-full`}>
@@ -37,14 +36,14 @@ const Footer = () => {
                                         </div>
                                     </div>
                                     <div className={`w-full relative`}>
-                                        <h2 className={`text-black text-lg font-light leading-6`}>biztrip@gmail.com</h2>
+                                        <h2 className={`text-darkColor text-lg font-light leading-6`}>biztrip@gmail.com</h2>
                                     </div>
                                 </div>
                             </div>
                             <div className={`md:w-15 relative min-h-[1px] flex`}>
                                 <div className={`px-[15px] flex relative w-full flex-wrap content-start`}>
                                     <div className={`leading-6 pb-[15px]`}>
-                                        <h2 className={`text-black text-base font-semibold leading-5 capitalize`}>Company</h2>
+                                        <h2 className={`text-base font-semibold text-gray-800 leading-5 capitalize`}>Company</h2>
                                     </div>
                                     <div className={`w-full relative`}>
                                         <ul className={`list-none`}>
@@ -54,7 +53,7 @@ const Footer = () => {
                                                         <li key={`li-${index}`}
                                                             className={`flex content-center pb-[calc(6px/2)]`}>
                                                             <Link to={``}
-                                                                  className={`text-sm w-full flex items-center hover:text-primaryColor_hover duration-300`}>
+                                                                  className={`footerTextHover`}>
                                                                 <span>
                                                                      {item}
                                                                 </span>
@@ -70,7 +69,7 @@ const Footer = () => {
                             <div className={`md:w-15 relative min-h-[1px] flex`}>
                                 <div className={`px-[15px] flex relative w-full flex-wrap content-start`}>
                                     <div className={`leading-6 pb-[15px]`}>
-                                        <h2 className={`text-black text-base font-semibold leading-5 capitalize`}>Our
+                                        <h2 className={`text-gray-800 text-base font-semibold leading-5 capitalize`}>Our
                                             Service</h2>
                                     </div>
                                     <div className={`w-full relative`}>
@@ -81,7 +80,7 @@ const Footer = () => {
                                                         <li key={`li-${index}`}
                                                             className={`flex content-center pb-[calc(6px/2)]`}>
                                                             <Link to={``}
-                                                                  className={`text-sm w-full flex items-center hover:text-primaryColor_hover duration-300`}>
+                                                                  className={`footerTextHover`}>
                                                                 <span>
                                                                      {item}
                                                                 </span>
@@ -97,7 +96,7 @@ const Footer = () => {
                             <div className={`md:w-15 relative min-h-[1px] flex`}>
                                 <div className={`px-[15px] flex relative w-full flex-wrap content-start`}>
                                     <div className={`leading-6 pb-[15px]`}>
-                                        <h2 className={`text-black text-base font-semibold leading-5 capitalize`}>Corporate</h2>
+                                        <h2 className={`text-gray-800 text-base font-semibold leading-5 capitalize`}>Corporate</h2>
                                     </div>
                                     <div className={`w-full relative`}>
                                         <ul className={`list-none`}>
@@ -107,7 +106,7 @@ const Footer = () => {
                                                         <li key={`li-${index}`}
                                                             className={`flex content-center pb-[calc(6px/2)]`}>
                                                             <Link to={``}
-                                                                  className={`text-sm w-full flex items-center hover:text-primaryColor_hover duration-300 `}>
+                                                                  className={`footerTextHover`}>
                                                                 <span>
                                                                      {item}
                                                                 </span>
@@ -123,7 +122,7 @@ const Footer = () => {
                             <div className={`md:w-[24.704%] relative min-h-[1px] flex`}>
                                 <div className={`pr-[15px] pl-10 flex relative w-full flex-wrap content-start`}>
                                     <div className={`pb-5 text-right w-full`}>
-                                        <h2 className={`text-black text-base font-semibold leading-5 capitalize`}>Install
+                                        <h2 className={`text-gray-700 text-base font-semibold leading-5 capitalize`}>Install
                                             app</h2>
                                     </div>
                                     <div className={`text-right text-sm w-full`}>
@@ -181,7 +180,7 @@ const Footer = () => {
                                                 <BiPhoneCall className={`w-6 h-6`}/>
                                             </span>
                                             <span className={`pl-2.5`}>
-                                                Hotline: <strong className={`text-dangerColor-default_2`}>+1 840 - 841 25 69</strong>
+                                                Hotline: <strong className={`text-primaryColor`}>+1 840 - 841 25 69</strong>
                                             </span>
                                         </Link>
                                     </div>
