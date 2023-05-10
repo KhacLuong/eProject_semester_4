@@ -20,16 +20,17 @@ public class UserEntity {
     @Column(name = "id")
     private long id;
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
+    @Size(max = 100)
     @NotEmpty(message = "Email không được bỏ trống!")
     private String email;
     @Basic
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true, nullable = false)
+    @Size(max = 20, message = "Số điện thoại tối đa từ 10 đến 12 chữ số")
     @NotEmpty(message = "Số điện thoại không được bỏ trống!")
-    @Size(min = 10, max = 12, message = "Số điện thoại tối đa từ 10 đến 12 chữ số")
     private String phoneNumber;
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     @NotEmpty(message = "Mật khẩu không được bỏ trống!")
     @Size(min = 8, message = "Mật khẩu phải có tối thiểu 8 ký tự")
     private String password;
@@ -38,7 +39,6 @@ public class UserEntity {
     private String passwordResetToken;
     @Basic
     @Column(name = "password_reset_expired")
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date passwordResetExpired;
     @Basic
@@ -46,7 +46,6 @@ public class UserEntity {
     private String smsToken;
     @Basic
     @Column(name = "sms_expired")
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date smsExpired;
     @Basic
@@ -54,7 +53,6 @@ public class UserEntity {
     private String verifyToken;
     @Basic
     @Column(name = "verify_at")
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date verifyAt;
     @Basic
@@ -62,25 +60,22 @@ public class UserEntity {
     private String refreshToken;
     @Basic
     @Column(name = "refresh_token_created_at")
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date refreshTokenCreatedAt;
     @Basic
     @Column(name = "refresh_token_expired")
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date refreshTokenExpired;
     @Basic
     @Column(name = "type")
+    @Size(max = 45)
     private String type;
     @Basic
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at" ,columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
     @Basic
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 }
