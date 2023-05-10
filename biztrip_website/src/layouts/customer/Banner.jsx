@@ -9,7 +9,7 @@ const Banner = () => {
       background-repeat: no-repeat;
       background-size: cover;
       transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
-      padding: 225px 0 210px 0;
+      padding: 400px 0 200px 0;
       z-index: 0;
       width: 100%;
       height: 90vh;

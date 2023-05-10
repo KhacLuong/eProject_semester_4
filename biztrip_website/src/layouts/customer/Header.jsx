@@ -1,40 +1,64 @@
 import React from 'react';
-import {BsFillTelephoneFill} from "react-icons/all.js";
+import {BsFillTelephoneFill, RiMenu3Fill} from "react-icons/all.js";
+import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
-        <header className={`absolute w-full z-30`}>
-            <section className={`mt-8`}>
+        <header className={`absolute w-full z-30 hidden md:block`}>
+            <section className={`mt-10`}>
                 <div className={`max-w-7xl flex mx-auto relative`}>
-                    <div className={`md:w-full relative min-h-[1px] flex`}>
-                        <div className={`relative w-full flex-wrap content-start`}>
-                            <div className={`bg-white rounded-xl shadow-lg p-0`}>
-                                <div className={`max-w-7xl flex relative justify-between`}>
-                                    <div className={`px-4 py-6 text-3xl leading-0 font-semibold text-gray-600`}>
-                                        BizTrip
-                                    </div>
-                                    <div className={`flex px-4 py-6 w-3/6 items-center justify-between font-semibold text-sm capitalize text-gray-600`}>
-                                        <span className={`text-primaryColor`}>Trang chủ</span>
-                                        <span>Về chúng tôi</span>
-                                        <span>Dịch vụ</span>
-                                        <span>Các chuyến xe</span>
-                                        <span>Tin tức</span>
-                                        <span>Liên hệ</span>
-                                    </div>
-                                    <div className={`rounded-r-xl px-4 flex items-center justify-end bg-primaryColor -mr-[1.1px]`}>
-                                        <div className={`relative`}>
-                                            <div className={`absolute p-3 rounded-full bg-primaryColor -left-[9%] top-1/2 -translate-y-1/2  -translate-x-1/2 `}>
-                                                <BsFillTelephoneFill className={`text-white w-4 h-4`}/>
-                                            </div>
-                                            <div className={`text-white mx-6 flex flex-col items-center  justify-end`}>
-                                                <h2 className={`font-semibold text-lg mb-2`}>Liên hệ ngay</h2>
-                                                <p className={`text-sm`}>(+62) 81587 6218</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div className={`md:w-full relative min-h-[1px] `}>
+                        <nav className="bg-white rounded-xl">
+                            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                                <Link to={``}
+                                      className="col-span-1 flex rounded-l-xl items-center px-4 bg-white h-full">
+                                    <h2
+                                        className="self-center whitespace-nowrap text-3xl leading-0 font-semibold text-gray-800">BizTrip</h2>
+                                </Link>
+                                <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+                                     id="navbar-cta">
+                                    <ul className="text-base text-gray-700 flex items-center justify-center font-semibold w-full rounded-lg md:space-x-8">
+                                        <li>
+                                            <Link to={``}
+                                                  className="block py-2 pl-3 pr-4 text-primaryColor md:p-0"
+                                                  aria-current="page">Trang chủ</Link>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                               className="block py-2 pl-3 pr-4 md:p-0 hover:text-primaryColor_hover duration-300">Đặt
+                                                vé</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                               className="block py-2 pl-3 pr-4 md:p-0 hover:text-primaryColor_hover duration-300">Dịch
+                                                vụ</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                               className="block py-2 pl-3 pr-4 md:p-0 hover:text-primaryColor_hover duration-300">Về
+                                                chúng tôi</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                               className="block py-2 pl-3 pr-4 md:p-0 hover:text-primaryColor_hover duration-300">Liên
+                                                hệ</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="flex md:order-2">
+                                    <button type="button"
+                                            className="text-white duration-300 font-semibold bg-primaryColor hover:bg-primaryColor_hover rounded-lg text-sm px-4 py-3 text-center mr-3 md:mr-0">
+                                        Đăng nhập
+                                    </button>
+                                    <button data-collapse-toggle="navbar-cta" type="button"
+                                            className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                            aria-controls="navbar-cta" aria-expanded="false">
+                                        <span className="sr-only">Open main menu</span>
+                                        <RiMenu3Fill className={`w-6 h-6`}/>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </nav>
                     </div>
                 </div>
             </section>
