@@ -31,7 +31,7 @@ const Navbar = () => {
     const handleLogout = (e) => {
         e.preventDefault()
         MySwal.fire({
-            title: 'Bạn có chắc chắn muốn đăng suất?',
+            title: 'Bạn có chắc chắn muốn đăng xuất?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#057a55',
@@ -44,11 +44,14 @@ const Navbar = () => {
             }
         })
     }
+    const handleOpenSidebar = () => {
+
+    }
     return (
         <div className={`py-3 px-3 lg:px-5 lg:pl-3`}>
             <div className={`flex justify-between items-center`}>
                 <div className="flex justify-start items-center">
-                    <button id={`toggleSidebarMobile`} aria-expanded={true} aria-controls={`sidebar`}
+                    <button onClick={handleOpenSidebar} id={`toggleSidebarMobile`} aria-expanded={true} aria-controls={`sidebar`}
                             className={`p-2 mr-2 text-gray-600 rounded cursor-pointer lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100`}>
                         <HiOutlineBars3CenterLeft className={`w-6 h-6 text-black`}/>
                         <MdOutlineClose className="w-6 h-6 hidden text-black"/>

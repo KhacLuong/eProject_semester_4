@@ -2,6 +2,7 @@ import './App.css'
 import {BrowserRouter} from "react-router-dom";
 import RenderRouter from "./routes/renderRouter.jsx";
 import {useEffect, useState} from "react";
+import AOS from "aos";
 
 const App = () => {
     const [theme, setTheme] = useState("light")
@@ -13,6 +14,16 @@ const App = () => {
         } else {
             setTheme('light')
         }
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 0,
+            easing: 'ease-in-out',
+            delay: 0,
+            mirror: false,
+            disable: false,
+        })
+        AOS.refresh()
     }, [])
 
     useEffect(() => {

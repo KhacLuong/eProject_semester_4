@@ -5,6 +5,7 @@ import Paginate from "../../../components/admin/Paginate.jsx";
 import Banner from "../../../components/admin/Banner.jsx";
 import avatar from "../../../assets/image/avatar/me.jpg"
 import {deleteUser, getListUser} from "../../../middleware/services/apiService.jsx";
+import {tbodyActionDefault} from "../../../utils/data.jsx";
 
 const StaffList = () => {
     useDocumentTitle("Quản lý nhân viên", true)
@@ -42,7 +43,6 @@ const StaffList = () => {
             }, "Quang Anh", "staff004@gmail.com", "093459345", "Phụ xe", "28-02-1999", "Hà Nội", "Thử việc", "10 ngày", "1"]
         },
     ]
-    const tbodyAction = ['edit', 'delete']
     const dataBreadcrumb = [
         {
             name: "Dashboard",
@@ -61,7 +61,7 @@ const StaffList = () => {
                <Table
                    theadData={theadData}
                    tbodyData={tbodyData}
-                   tbodyAction={tbodyAction}
+                   tbodyAction={tbodyActionDefault}
                    fetchDelete={deleteUser}
                    fetchList={getListUser}/>
                <Paginate pageCount={100}

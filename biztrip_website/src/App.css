@@ -8,14 +8,14 @@
     @apply inline-block rounded-md text-darkColor
 }
 .pageLinkClassName {
-    @apply mx-[4px] w-[30px] h-[30px] text-sm font-normal leading-8 uppercase inline-block text-center hover:bg-primaryColor hover:text-whiteColor rounded-md transition duration-300
+    @apply mx-[4px] w-[30px] h-[30px] text-sm font-normal leading-8 uppercase inline-block text-center hover:bg-primaryColor hover:text-white rounded-md transition duration-300
 }
 .previousClassName, .nextClassName {
     @apply flex justify-center flex-wrap list-none
 }
 .previousLinkClassName, .nextLinkClassName {
-    @apply mx-[4px] flex items-center text-center text-sm font-normal uppercase text-darkColor leading-8 rounded-3xl px-[15px] bg-[#f0f0f0] hover:bg-primaryColor hover:text-whiteColor rounded-md transition duration-300
+    @apply mx-[4px] flex items-center text-center text-sm font-normal uppercase text-darkColor leading-8 rounded-3xl px-[15px] bg-[#f0f0f0] hover:bg-primaryColor hover:text-white rounded-md transition duration-300
 }
 .breakLinkClassName {
-    @apply mx-[4px] w-[30px] h-[30px] text-sm font-normal leading-8 text-darkColor uppercase inline-block text-center hover:bg-primaryColor hover:text-whiteColor rounded-md transition duration-300
+    @apply mx-[4px] w-[30px] h-[30px] text-sm font-normal leading-8 text-darkColor uppercase inline-block text-center hover:bg-primaryColor hover:text-white rounded-md transition duration-300
 }

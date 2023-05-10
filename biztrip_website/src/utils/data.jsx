@@ -81,7 +81,7 @@ export const dataSidebarAdmin = [
         icon: BsPersonVcard,
     },
     {
-        name: "Tuyến đường",
+        name: "Lộ trình",
         isSubcategory: true,
         url: `${FINAL_URL_ADMIN}/schedules`,
         icon: TbRoad,
@@ -117,3 +117,5 @@ export const dataSidebarAdmin = [
         icon: GrServices,
     },
 ]
+export const tbodyActionDefault = ['edit', 'delete']
+export const tbodyActionSpecial = ['view', 'edit', 'delete']

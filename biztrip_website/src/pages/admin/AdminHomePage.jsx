@@ -9,18 +9,7 @@ import {ADMIN_DOCUMENT_TITLE} from "../../utils/data.jsx";
 
 const AdminHomePage = () => {
     useDocumentTitle(ADMIN_DOCUMENT_TITLE, true)
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 0,
-            easing: 'ease-in-out',
-            delay: 0,
-            mirror: false,
-            disable: false,
-        })
-        AOS.refresh()
-    }, [])
+
     return (
         <>
             <nav className={`fixed z-30 w-full bg-gray-50`}>
@@ -28,7 +17,7 @@ const AdminHomePage = () => {
             </nav>
             <div className={`flex overflow-hidden bg-white pt-16 h-screen`}>
                 <aside id={`sidebar`}
-                       className={`flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 w-64 h-full duration-200 lg:flex transition-width lg:w-64 ps`}
+                       className={`flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 w-64 h-full duration-200 lg:flex transition-width lg:w-64 ps hidden`}
                        aria-label={`Sidebar`}>
                     <Sidebar/>
                 </aside>
