@@ -6,6 +6,7 @@ import Header from "../../layouts/customer/Header.jsx";
 import Footer from "../../layouts/customer/Footer.jsx";
 import {Outlet} from "react-router-dom";
 import Banner from "../../layouts/customer/Banner.jsx";
+import Booking from "../../layouts/customer/Booking.jsx";
 
 const CustomerHomePage = () => {
     useDocumentTitle(CUSTOMER_DOCUMENT_TITLE, true)

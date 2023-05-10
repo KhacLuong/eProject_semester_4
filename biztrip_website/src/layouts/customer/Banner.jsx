@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import scenery_2 from "../../assets/image/wallpaper/scenery_2.jpg"
+import Booking from "./Booking.jsx";
 const Banner = () => {
     const BannerLayout = styled.section`
       background-image: url(${scenery_2});
@@ -24,10 +25,12 @@ const Banner = () => {
       left: 0;
       position: absolute;
       z-index: 0;
+      background-image: linear-gradient(90deg, #00000080 0%, #000000 42%);
     `
     return (
         <BannerLayout>
             <BannerOverlay/>
+            <Booking/>
         </BannerLayout>
     );
 };
