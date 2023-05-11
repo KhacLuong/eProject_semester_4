@@ -113,6 +113,7 @@ export default {
 
         },
     },
+    important: true,
     plugins: [
         require('flowbite/plugin'),
     ]
