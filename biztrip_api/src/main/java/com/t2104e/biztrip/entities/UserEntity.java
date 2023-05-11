@@ -8,6 +8,7 @@ import lombok.*;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Builder
 @Entity(name = "users")
 @Table(name = "users", schema = "biztrip_database", catalog = "")
 @Getter // rút gọn getter

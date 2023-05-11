@@ -68,46 +68,22 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
                                             className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}>
                                             <td className="px-6 py-3">{index + 1}</td>
                                             {
-                                                data.items.map((item, index) => {
-                                                    if (typeof item === "string") {
-                                                        switch (item.toLowerCase()) {
-                                                            case "active":
-                                                                return (
-                                                                    <td key={`td-${index}`}
-                                                                        className={`px-6 py-3 text-successColor`}>{item}</td>
-                                                                )
-                                                            case "disable":
-                                                                return (
-                                                                    <td key={`td-${index}`}
-                                                                        className={`px-6 py-3 text-dangerColor-default_2`}>{item}</td>
-                                                                )
-                                                            default:
-                                                                return (
-                                                                    <td key={`td-${index}`}
-                                                                        className={`px-6 py-3`}>{item}</td>
-                                                                )
-                                                        }
-                                                    } else {
-                                                        if (item.iconName) {
-                                                            const Icon = item.iconName
-                                                            return <td key={`td-${index}`} className={`px-6 py-3`}>
-                                                                <div
-                                                                    className={`rounded-lg p-2 bg-primaryColor inline-block text-white`}>
-                                                                    <Icon className={`w-8 h-8`}/>
-                                                                </div>
-                                                            </td>
-                                                        } else if (item.content) {
-                                                            return (<td key={`td-${index}`}
-                                                                        className={`px-6 py-3 w-96 text-justify`}>
-                                                                    {item.content}
+                                                data.items.map((itemParent, indexParent) => {
+                                                    itemParent.map((item, indexChildren) => {
+                                                        if (item.key === "imagePath") {
+                                                            return(
+                                                                <td key={`td-${indexParent}`} className={`px-6 py-3 w-44`}>
+                                                                    <img src={item.value} alt={item.value}
+                                                                         className={`aspect-square object-cover object-center`}/>
                                                                 </td>
                                                             )
+                                                        } else {
+                                                            return (
+                                                                <td key={`td-${indexParent}`}
+                                                                    className={`px-6 py-3 text-successColor`}>{item.value}</td>
+                                                            )
                                                         }
-                                                        return <td key={`td-${index}`} className={`px-6 py-3 w-44`}>
-                                                            <img src={item.imgPath} alt={item.imgName}
-                                                                 className={`aspect-square object-cover`}/>
-                                                        </td>
-                                                    }
+                                                    })
                                                 })
                                             }
                                             <td className="px-6 py-3">

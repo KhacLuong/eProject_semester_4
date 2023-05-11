@@ -5,6 +5,7 @@ import {persistStore, persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage" // defaults to localStorage for web
 import {configureStore} from "@reduxjs/toolkit";
 import counterSlice from "./slices/counterSlice.jsx";
+import coachUtilitySlice from "./slices/coachUtilitySlice.jsx";
 
 const persistConfig = {
     key: 'root',
@@ -12,6 +13,7 @@ const persistConfig = {
 }
 export const store = configureStore({
     reducer: {
-        counter: counterSlice
+        counter: counterSlice,
+        coachUtility: coachUtilitySlice
     }
 })

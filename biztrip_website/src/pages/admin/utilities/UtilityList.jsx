@@ -1,53 +1,46 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import Banner from "../../../components/admin/Banner.jsx";
 import Table from "../../../components/admin/Table.jsx";
 import {deleteUser, getListUser} from "../../../middleware/services/apiService.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
-import {MdAirlineSeatReclineExtra} from "react-icons/md"
-import {FaRegLightbulb} from "react-icons/fa"
-import {BiCurrentLocation} from "react-icons/bi"
-import {TbFlipFlops} from "react-icons/tb"
-import {ImManWoman} from "react-icons/im"
+import {useSelector, useDispatch} from 'react-redux'
+import {fetchAllCoachUtility} from "../../../redux/slices/coachUtilitySlice.jsx";
+import {produce} from "immer"
 
 const UtilityList = () => {
     useDocumentTitle("Quản lý tiện ích", true)
+    const dispatch = useDispatch()
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
     const theadData = [
         '#', 'Icon', 'Tên', 'Miêu tả', 'Trạng thái', 'Ngày thêm vào', 'Ngày cập nhật', 'Action'
     ]
-    const tbodyData = [
-        {
-            id: 1,
-            items: [{
-                iconName: BiCurrentLocation
-            }, "Ghế massage", "Ghế massage giúp cho hành khách ngồi trên xe thoải mái trong thời gian dài", "active", "08-05-2023", "08-05-2023"]
-        },
-        {
-            id: 2,
-            items: [{
-                iconName: ImManWoman
-            }, "Toilet", "Có nhà vệ sinh trên xe", "active", "08-05-2023", "08-05-2023"]
-        },
-        {
-            id: 3,
-            items: [{
-                iconName: MdAirlineSeatReclineExtra
-            }, "Xem vị trí trực tuyến", 'Cho phép hành khách nhìn thấy được lộ trình và thời gian di chuyển của chiếc xe khách mình đã đặt vé', "active", "08-05-2023", "08-05-2023"]
-        },
-        {
-            id: 4,
-            items: [{
-                iconName: FaRegLightbulb
-            }, "Đèn đọc sách", "Hỗ trợ hành khách đọc sách dễ dàng và an toàn khi ngồi trên xe", "active", "08-05-2023", "08-05-2023"]
-        },
-        {
-            id: 5,
-            items: [{
-                iconName: TbFlipFlops
-            }, "Dép", "Khi dừng ở trạm dừng chân sẽ có dép của nhà xe cho hành khách xuống xe", "active", "08-05-2023", "08-05-2023"]
-        },
-    ]
+    const [tbodyData, setTbodyData] = useState([])
+    const coachUtility = useSelector((state) => state.coachUtility.listCoachUtility)
+    const isLoading = useSelector((state) => state.coachUtility.isLoading)
+    const isError = useSelector((state) => state.coachUtility.isError)
+
+    useEffect(() => {
+        const test = async () => {
+            await handleGetCoachUtility();
+        }
+        test()
+    }, [dispatch])
+    const handleGetCoachUtility = async () => {
+        const res = await dispatch(fetchAllCoachUtility()).unwrap()
+        const newData = []
+        if (res && res.code === 200) {
+            const nextState = produce(newData, draft => {
+                coachUtility.data.map((item, index) => {
+                    draft.push({id: item.id, items: [Object.entries(item).map(([key, value]) => ({key,value}))]})
+                })
+            })
+            setTbodyData(nextState)
+            console.log(tbodyData)
+        } else {
+            setTbodyData([])
+        }
+    }
     const tbodyAction = ['edit', 'delete']
     const dataBreadcrumb = [
         {
