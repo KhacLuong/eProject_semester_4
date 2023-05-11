@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
-        <header className={`absolute w-full z-30 hidden md:block`}>
+        <header className={`absolute w-full z-20 hidden md:block`}>
             <section className={`mt-10`}>
                 <div className={`max-w-7xl flex mx-auto relative`}>
                     <div className={`md:w-full relative min-h-[1px] `}>
