@@ -7,9 +7,9 @@ import com.t2104e.biztrip.services.eloquents.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -41,6 +41,23 @@ public class CoachUtilityController {
             RESPONSE_DTO.setStatus("SUCCESS");
             RESPONSE_DTO.setMessage("Create coach utility successfully");
             RESPONSE_DTO.setData(coachUtility);
+            return ResponseEntity.ok(RESPONSE_DTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+    @DeleteMapping("")
+    public ResponseEntity<?> delete(@RequestParam("id") int id) {
+        try {
+            Optional<CoachUtilityEntity> op = coachUtilityImplService.getOneCoachUtilityById(id);
+            if (op.isPresent()) {
+                ResponseDTO responseDTO = new ResponseDTO();
+                coachUtilityImplService.deleteCoachUtility(op.get());
+                RESPONSE_DTO.setCode(200);
+                RESPONSE_DTO.setStatus("SUCCESS");
+                RESPONSE_DTO.setMessage("Delete coach utility successfully");
+                RESPONSE_DTO.setData(null);
+            }
             return ResponseEntity.ok(RESPONSE_DTO);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
