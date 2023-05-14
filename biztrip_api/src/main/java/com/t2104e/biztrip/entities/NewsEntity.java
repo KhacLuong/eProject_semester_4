@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity(name = "news")
 @Table(name = "news", schema = "biztrip_database", catalog = "")
-public class NewEntity {
+public class NewsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

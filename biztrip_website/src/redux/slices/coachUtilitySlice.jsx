@@ -1,36 +1,53 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
-
-export const initialState = {
-    list: [],
-    isLoading: false,
-    isError: false,
-    isCreating: false,
-}
+import {initialState} from "../../utils/helper.jsx";
 
 export const fetchAllCoachUtility = createAsyncThunk(
-    'utility/getCoachUtility',
-    async () => {
+    'utility/fetchCoachUtility',
+    async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
+        const response = await instance.get(`coach-utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
+        return response.data
+    }
+)
+export const fetchGetCoachUtilityById = createAsyncThunk(
+    'utility/getCoachUtilityById',
+    async ({id}) => {
         try {
-            const response = await instance.get("http://localhost:9090/api/v1/coach-utilities")
-            return response.data
-        } catch (error) {
-            console.error(error);
+            const response = await instance.get(`coach-utilities/${id}`)
+            return response.data;
+        } catch (err) {
+            console.error(err);
         }
     }
 )
-
 export const fetchRemoveCoachUtility = createAsyncThunk(
     "utility/removeCoachUtility",
-    async ({id}) => {
+    async ({id, toast}) => {
         try {
-            const response = await instance.delete(`http://localhost:9090/api/v1/coach-utilities?id=${id}`);
+            const response = await instance.delete(`coach-utilities?id=${id}`);
+            toast.success(response.data.message)
             return response.data;
         } catch (err) {
             console.error(err);
         }
     }
 );
+export const fetchSaveCoachUtility = createAsyncThunk(
+    "utility/saveCoachUtility",
+    async ({dataUtility, navigate, toast}) => {
+        try {
+            const response = await instance.post(`coach-utilities`, dataUtility);
+            if (response.data.code === 200) {
+                toast.success(response.data.message)
+                await navigate("/admin/v1/utilities")
+            }
+            return response.data
+        } catch (err) {
+            console.log(err)
+        }
+    }
+)
+
 export const coachUtilitySlice = createSlice({
     name: 'CoachUtility',
     initialState,
@@ -39,37 +56,47 @@ export const coachUtilitySlice = createSlice({
         // Add reducers for additional action types here, and handle loading state as needed
         builder
             .addCase(fetchAllCoachUtility.pending, (state, action) => {
-                state.isLoading = true
-                state.isError = false
+                state.status = 'loading'
             })
             .addCase(fetchAllCoachUtility.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isError = false
                 state.list = action.payload.data
+                state.totalItems = action.payload.totalItems
+                state.totalPages = action.payload.totalPages
+                state.status = 'succeeded'
             })
             .addCase(fetchAllCoachUtility.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
+                state.status = 'failed'
+            })
+            .addCase(fetchGetCoachUtilityById.pending,(state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchGetCoachUtilityById.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+            })
+            .addCase(fetchGetCoachUtilityById.rejected, (state, action) => {
+                state.status = 'failed'
             })
             .addCase(fetchRemoveCoachUtility.pending, (state, action) => {
-                state.isLoading = true
-                state.isError = false
+                state.status = 'loading'
             })
             .addCase(fetchRemoveCoachUtility.fulfilled, (state, action) => {
-                const {arg: id} = action.meta
-                state.list = state.list.filter((item) => {
-                    return item.id !== id
-                })
-                state.isLoading = false
-                state.isError = false
+                const {arg: data} = action.meta
+                state.list = state.list.filter((item) => item.id !== data.id)
+                state.status = 'succeeded'
             })
             .addCase(fetchRemoveCoachUtility.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
+                state.status = 'failed'
+            })
+            .addCase(fetchSaveCoachUtility.pending,(state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchSaveCoachUtility.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+            })
+            .addCase(fetchSaveCoachUtility.rejected, (state, action) => {
+                state.status = 'failed'
             })
     },
 })
 export const selectCoachUtility = state => state.coachUtility.list;
-export const isLoading = (state) => state.coachUtility.isLoading
-export const isError = (state) => state.coachUtility.isError
 export default coachUtilitySlice.reducer

@@ -6,6 +6,8 @@ import storage from "redux-persist/lib/storage" // defaults to localStorage for 
 import {configureStore} from "@reduxjs/toolkit";
 import counterSlice from "./slices/counterSlice.jsx";
 import coachUtilitySlice from "./slices/coachUtilitySlice.jsx";
+import ticketSlice from "./slices/ticketSlice.jsx";
+import fileSlice from "./slices/fileSlice.jsx";
 
 const persistConfig = {
     key: 'root',
@@ -14,6 +16,8 @@ const persistConfig = {
 export const store = configureStore({
     reducer: {
         counter: counterSlice,
-        coachUtility: coachUtilitySlice
+        coachUtility: coachUtilitySlice,
+        ticket: ticketSlice,
+        file: fileSlice,
     }
 })

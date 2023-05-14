@@ -6,6 +6,7 @@ import {
     TicketListPage,
     PolicyListPage,
     UtilityListPage,
+    UtilityFormPage,
     ScheduleListPage,
     NewsListPage,
     BookingListPage,
@@ -17,7 +18,7 @@ import {
     UserListPage,
     CoachCarListPage,
     StaffListPage,
-    CustomerHomePage, CoachCarFormPage
+    CustomerHomePage, CoachCarFormPage,
 } from "../utils/import.jsx";
 
 export const dataRouters = [
@@ -152,6 +153,18 @@ export const dataRouters = [
             {
                 path: "utilities",
                 page: UtilityListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "utilities/create",
+                page: UtilityFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "utilities/edit",
+                page: UtilityFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
