@@ -5,7 +5,27 @@ export const validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
+export const initialState = {
+    list: [],
+    totalPages: 0,
+    totalItems: 0,
+    status: 'idle',
+}
+export const handleChangeImage = (e, setImageDefault, setImageName) => {
+    const fileObj = e.target.files && e.target.files[0];
 
+    if (!fileObj) {
+        return;
+    }
+    setImageDefault(window.URL.createObjectURL(fileObj))
+    setImageName(fileObj)
+
+    // 👇️ reset file input
+    e.target.value = null;
+}
+export const handleOpenFileInput = (inputImageRef) => {
+    inputImageRef.current.click()
+}
 export const THIS_YEAR = +(new Date().getFullYear())
 
 export const THIS_MONTH = +(new Date().getMonth()) + 1;

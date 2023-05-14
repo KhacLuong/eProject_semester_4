@@ -2,7 +2,7 @@ import axios from "axios"
 import NProgress from "nprogress"
 
 const instance = axios.create({
-    baseURL: 'https://localhost:9876/api',
+    baseURL: 'http://localhost:9090/api/v1/',
 })
 NProgress.configure({
     showSpinner: false,

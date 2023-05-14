@@ -1,37 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactPaginate from "react-paginate";
 import {MdOutlineKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
+import {HiOutlineArrowNarrowRight} from "react-icons/all.js";
+import {useDispatch} from "react-redux";
 
-const Paginate = (props) => {
-    const {
-        setTurnOffPrevNextBtn,
-        pageCount,
-        pageRangeDisplayed,
-        marginPagesDisplayed,
-        turnOffPrevNextBtn,
-        firstIndexPerPage,
-        lastIndexPerPage,
-        totalItems
-    } = props
+const Paginate = ({sortField, sortDir, fetchData, totalPages, perPage, totalItems, setPageNumber}) => {
+    const dispatch = useDispatch()
+    const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
 
+    const [firstItemPerPage, setFirstItemPerPage] = useState(1)
+    const [lastItemPerPage, setLastItemPerPage] = useState(perPage)
     const handleClickToPage = (event) => {
-        if (+event.selected + 1 === 1) {
+        const keyword = ""
+        const pageNumber = +event.selected + 1
+        setPageNumber(pageNumber)
+        dispatch(fetchData({pageNumber, perPage, sortField, sortDir, keyword}))
+        setFirstItemPerPage(perPage*(pageNumber-1) + 1)
+        setLastItemPerPage(perPage*pageNumber)
+        if (+event.selected + 1 === totalPages) {
             setTurnOffPrevNextBtn(true)
+            setLastItemPerPage(totalItems)
         }
     }
     return (
         <div className={`items-center p-4 my-4 mx-4 bg-white rounded-2xl shadow-xl shadow-gray-200 sm:flex sm:justify-between`}>
             <div className={`flex items-center mb-4 sm:mb-0`}>
-                <span className={`text-sm font-normal text-gray-500`}>
-                    Hiển thị <span className={`font-semibold text-gray-900`}>{firstIndexPerPage}-{lastIndexPerPage}</span> trong <span className={`font-semibold text-gray-900`}>{totalItems}</span>
+                <span className={`text-sm font-normal text-gray-500 flex`}>
+                    Hiển thị từ <span className={`font-semibold text-gray-900 flex items-center mx-1`}>{firstItemPerPage} <HiOutlineArrowNarrowRight className={`mx-1`}/> {totalItems === 1 ? 1 : lastItemPerPage}</span> / <span className={`font-semibold text-gray-900 mx-1`}>{totalItems}</span> kết quả
                 </span>
             </div>
-            <ReactPaginate pageCount={pageCount}
+            <ReactPaginate pageCount={totalPages}
                            nextLabel={<div className={`flex items-center`}>Sau <MdKeyboardArrowRight className={`w-5 h-5 ml-2`}/></div>}
                            previousLabel={<div className={`flex items-center`}><MdOutlineKeyboardArrowLeft className={`w-5 h-5 mr-2`}/> Trước</div>}
                            onPageChange={handleClickToPage}
-                           pageRangeDisplayed={pageRangeDisplayed}
-                           marginPagesDisplayed={marginPagesDisplayed}
+                           pageRangeDisplayed={3}
+                           marginPagesDisplayed={2}
                            pageClassName="pageClassName"
                            pageLinkClassName="pageLinkClassName font-medium"
                            previousClassName="previousClassName"

@@ -1,7 +1,7 @@
 export const ADMIN_DOCUMENT_TITLE = "CMS - BizTrip"
 export const CUSTOMER_DOCUMENT_TITLE = "BizTrip"
 
-import {MdOutlineSpaceDashboard, MdOutlineWarehouse, MdOutlinePolicy} from "react-icons/md";
+import {MdOutlineSpaceDashboard, MdOutlinePolicy} from "react-icons/md";
 import {FiUsers} from "react-icons/fi";
 import {BiDollarCircle, BiNews, BiCommentDetail} from "react-icons/bi";
 import {HiOutlineTicket} from "react-icons/hi";
@@ -61,12 +61,6 @@ export const dataSidebarAdmin = [
         isSubcategory: false,
         url: "",
         icon: <></>,
-    },
-    {
-        name: "Nhà xe",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/management-coaches`,
-        icon: MdOutlineWarehouse,
     },
     {
         name: "Xe",

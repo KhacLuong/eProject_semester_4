@@ -13,6 +13,16 @@ export const message = {
             name_has_number: 'Invalid user name',
             name_is_empty: 'Username is required'
         },
+        title: {
+            isEmpty: 'Tiêu đề không được để trống!',
+        },
+        status: {
+            isEmpty: 'Status không được để trống!'
+        },
+        file: {
+            isEmpty: 'Ảnh không được để trống!',
+            max: 'Dung lượng ảnh không được vượt quá 6MB!'
+        }
     },
     success: 'Successfully added new'
 }

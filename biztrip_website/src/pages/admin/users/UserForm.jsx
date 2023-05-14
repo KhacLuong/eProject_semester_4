@@ -6,21 +6,23 @@ import {toast} from "react-toastify";
 import image_add from "../../../assets/image/image_add.png"
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
+import {handleChangeImage, handleOpenFileInput} from "../../../utils/helper.jsx";
 
 const UserForm = () => {
     useDocumentTitle("Thêm mới người dùng", true)
     const navigate = useNavigate();
-    const userId = useLocation().state?.userId
-    const inputAvatarRef = useRef(null);
+    const userId = useLocation().state?.id
+    const inputImageRef = useRef(null);
 
-    const [avatarDefault, setAvatarDefault] = useState(image_add)
-    const [avatarName, setAvatarName] = useState(null)
+    const [imageDefault, setImageDefault] = useState(image_add)
+    const [imageName, setImageName] = useState(null)
     const [email, setEmail] = useState("")
     const [fullName, setFullName] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [type, setType] = useState("")
     const [createdAt, setCreatedAt] = useState("")
+    const [updatedAt, setUpdatedAt] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -35,23 +37,6 @@ const UserForm = () => {
     }
     const handleToggleConfirmPassword = () => {
         setShowConfirmPassword((showConfirmPassword) => !showConfirmPassword)
-    }
-
-    const handleChangeAvatar = (e) => {
-
-        const fileObj = e.target.files && e.target.files[0];
-
-        if (!fileObj) {
-            return;
-        }
-        setAvatarDefault(window.URL.createObjectURL(fileObj))
-        setAvatarName(fileObj.name)
-
-        // 👇️ reset file input
-        e.target.value = null;
-    }
-    const handleOpenFileInput = () => {
-        inputAvatarRef.current.click()
     }
 
     const handleResetForm = () => {
@@ -84,7 +69,7 @@ const UserForm = () => {
             </div>
             <div data-aos="fade-right"
                  data-aos-delay="300"
-                 className={`flex flex-col p-4 my-4 mx-4 rounded-2xl shadow-xl shadow-gray-200 dark:bg-gray-700`}>
+                 className={`flex flex-col p-4 my-4 mx-4 rounded-2xl shadow-xl shadow-gray-200 `}>
                 <form className={``}>
                     <div className="grid md:grid-cols-2 md:gap-6">
                         <div className="w-full">
@@ -92,13 +77,13 @@ const UserForm = () => {
                                 <input type="email"
                                        name="email"
                                        id="email"
-                                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                        placeholder=" "
                                        autoComplete={`off`}
                                        required
                                        defaultValue={email ? email : ''}/>
                                 <label htmlFor="email"
-                                       className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                       className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Email
                                 </label>
                             </div>
@@ -106,23 +91,23 @@ const UserForm = () => {
                                 <input type="text"
                                        name="full_name"
                                        id="full_name"
-                                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                        placeholder=" "
                                        autoComplete={`off`}
                                        required
                                        defaultValue={fullName ? fullName : ''}/>
                                 <label htmlFor="full_name"
-                                       className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                       className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Họ và tên
                                 </label>
                             </div>
                             <div className={`group relative z-0 w-full mb-6`}>
                                 <label htmlFor="role"
-                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                       className="block mb-2 text-sm font-medium text-gray-900">
                                     Lựa chọn vai trò
                                 </label>
                                 <select id="role"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         defaultValue={""}>
                                     <option value={""}>-- Chọn --</option>
                                     <option value={"customer"}>Khách hàng</option>
@@ -137,7 +122,7 @@ const UserForm = () => {
                                             <input  type={showPassword ? "text" : "password"}
                                                    name="password"
                                                    id="password"
-                                                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer relative"
+                                                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer relative"
                                                    placeholder=" "
                                                    required
                                                    autoComplete={`off`}/>
@@ -151,13 +136,13 @@ const UserForm = () => {
                                                 }
                                             </span>
                                             <label htmlFor="password"
-                                                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                                                   className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                                         </div>
                                         <div className={`group relative z-0 w-full mb-6`}>
                                             <input type={showConfirmPassword ? "text" : "password"}
                                                    name="repeat_password"
                                                    id="repeat_password"
-                                                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                    placeholder=" "
                                                    required
                                                    autoComplete={`off`}/>
@@ -171,7 +156,7 @@ const UserForm = () => {
                                                 }
                                             </span>
                                             <label htmlFor="repeat_password"
-                                                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
+                                                   className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
                                                 password</label>
                                         </div>
                                     </> :
@@ -179,17 +164,17 @@ const UserForm = () => {
                             }
                             <div className={`flex items-center justify-end`}>
                                 <button type="submit"
-                                        className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-successColor dark:hover:bg-successColor_hover dark:focus:ring-blue-800">Tạo
+                                        className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Tạo
                                 </button>
                                 <button type="reset"
-                                        className="ml-4 duration-300 text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:text-black dark:bg-gray-50 dark:hover:bg-gray-200 dark:focus:ring-blue-800">Reset
+                                        className="ml-4 duration-300 text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
                                 </button>
                             </div>
                         </div>
                         <div className={`col-span-1 h-full w-full`}>
                             <input className={`hidden`}
-                                   onChange={(e) => handleChangeAvatar(e)} accept="image/png"
-                                   ref={inputAvatarRef}
+                                   onChange={(e) => handleChangeImage(e, setImageDefault, setImageName)} accept="image/png"
+                                   ref={inputImageRef}
                                    type={`file`}/>
                             <div className={`flex items-center justify-center cursor-pointer`}>
                                 <img style={{
@@ -197,10 +182,10 @@ const UserForm = () => {
                                     backgroundPosition: "center",
                                     objectFit: "cover"
                                 }}
-                                     className="aspect-square rounded-full w-1/2 h-1/2 bg-gray-50 shadow-xl shadow-gray-200 dark:shadow-gray-700"
-                                     src={avatarDefault}
+                                     className="aspect-square rounded-full w-1/2 h-1/2 bg-gray-50 shadow-xl shadow-gray-200"
+                                     src={imageDefault}
                                      alt="Extra large avatar"
-                                     onClick={() => handleOpenFileInput()}/>
+                                     onClick={() => handleOpenFileInput(inputImageRef)}/>
                             </div>
                         </div>
                     </div>

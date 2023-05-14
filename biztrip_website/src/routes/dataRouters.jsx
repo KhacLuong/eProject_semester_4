@@ -6,8 +6,8 @@ import {
     TicketListPage,
     PolicyListPage,
     UtilityListPage,
+    UtilityFormPage,
     ScheduleListPage,
-    CoachListPage,
     NewsListPage,
     BookingListPage,
     RevenuePage,
@@ -16,11 +16,10 @@ import {
     TestimonialListPage,
     UserFormPage,
     UserListPage,
-    ManagementCoachListPage,
     CoachCarListPage,
     StaffListPage,
-    CustomerHomePage
-} from "../utils/location.jsx";
+    CustomerHomePage, CoachCarFormPage,
+} from "../utils/import.jsx";
 
 export const dataRouters = [
     {
@@ -110,14 +109,20 @@ export const dataRouters = [
                 isAuthentication: true
             },
             {
-                path: "management-coaches",
-                page: ManagementCoachListPage,
+                path: "coaches",
+                page: CoachCarListPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "coaches",
-                page: CoachListPage,
+                path: "coaches/create",
+                page: CoachCarFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/edit",
+                page: CoachCarFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
@@ -148,6 +153,18 @@ export const dataRouters = [
             {
                 path: "utilities",
                 page: UtilityListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "utilities/create",
+                page: UtilityFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "utilities/edit",
+                page: UtilityFormPage,
                 isIndex: false,
                 isAuthentication: true
             },

@@ -1,28 +1,29 @@
 package com.t2104e.biztrip.controllers;
 
+import com.t2104e.biztrip.dto.FileResponseDTO;
 import com.t2104e.biztrip.services.eloquents.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
-
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/file")
 public class FileController {
     @Autowired
     private FileService fileService;
-
+    private final FileResponseDTO FILE_RESPONSE_DTO = new FileResponseDTO();
     @PostMapping(value = "")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+                                        @RequestParam("containerName") String containerName) {
         try {
-            String pathName = fileService.uploadAndDownloadFile(file, "coach");
-            return ResponseEntity.ok(Objects.requireNonNullElse(pathName, "Error while processing file"));
+            String pathName = fileService.uploadAndDownloadFile(file, containerName);
+            FILE_RESPONSE_DTO.setCode(200);
+            FILE_RESPONSE_DTO.setStatus("success");
+            FILE_RESPONSE_DTO.setMessage("");
+            FILE_RESPONSE_DTO.setData(pathName);
+            return ResponseEntity.ok(FILE_RESPONSE_DTO);
         } catch (Exception e) {
             return ResponseEntity.ok("Error while processing file");
         }

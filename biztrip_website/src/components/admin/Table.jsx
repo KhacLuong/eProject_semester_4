@@ -1,13 +1,16 @@
 import React from 'react';
 import {FaPencilAlt, FaSort, FaTrashAlt} from "react-icons/all.js";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {AiFillEye} from "react-icons/ai";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import {toast} from "react-toastify";
+import {useDispatch} from "react-redux";
 
-const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
+const Table = ({theadData, tbodyData, tbodyAction, fetchDelete}) => {
+    const navigate = useNavigate();
     const MySwal = withReactContent(Swal)
+    const dispatch = useDispatch()
     const handleDelete = async (id) => {
         MySwal.fire({
             title: 'Bạn có chắc chắn không?',
@@ -18,27 +21,27 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Xác nhận!',
             cancelButtonText: 'Hủy'
-        }).then(async (result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                const res = await fetchDelete(id)
-                if (res && res.code === '200') {
-                    toast.success(res.message)
-                    await fetchList()
-                }
+                dispatch(fetchDelete({id, toast}))
             }
         })
     }
-    const handleEdit = async (id) => {
-
+    const handleEdit = (id) => {
+        navigate('edit', {
+            state: {
+                id: id
+            }
+        })
     }
     return (
         <div className={`flex flex-col my-6 mx-4 rounded-2xl shadow-xl shadow-gray-200`}>
             <div className={`overflow-x-auto rounded-2xl`}>
                 <div className={`inline-block min-w-full align-middle`}>
                     <div className={`overflow-hidden shadow-lg`}>
-                        <table className={`w-full text-sm text-left text-gray-500 dark:text-gray-400 `}>
+                        <table className={`w-full text-sm text-left text-gray-500`}>
                             <thead
-                                className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400`}>
+                                className={`text-xs text-gray-700 uppercase bg-gray-50`}>
                             <tr>
                                 {
                                     theadData.map((item, index) => {
@@ -65,75 +68,68 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, fetchList}) => {
                                 tbodyData.map((data, index) => {
                                     return (
                                         <tr key={`tr-${index}`}
-                                            className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}>
-                                            <td className="px-6 py-3">{index + 1}</td>
+                                            className={`bg-white border-b hover:bg-gray-50`}>
+                                            <td className="px-6 py-3">{data.id}</td>
                                             {
-                                                data.items.map((item, index) => {
-                                                    if (typeof item === "string") {
-                                                        switch (item.toLowerCase()) {
-                                                            case "active":
-                                                                return (
-                                                                    <td key={`td-${index}`}
-                                                                        className={`px-6 py-3 text-successColor`}>{item}</td>
-                                                                )
-                                                            case "disable":
-                                                                return (
-                                                                    <td key={`td-${index}`}
-                                                                        className={`px-6 py-3 text-dangerColor-default_2`}>{item}</td>
-                                                                )
-                                                            default:
-                                                                return (
-                                                                    <td key={`td-${index}`}
-                                                                        className={`px-6 py-3`}>{item}</td>
-                                                                )
-                                                        }
-                                                    } else {
-                                                        if (item.iconName) {
-                                                            const Icon = item.iconName
-                                                            return <td key={`td-${index}`} className={`px-6 py-3`}>
-                                                                <div
-                                                                    className={`rounded-lg p-2 bg-primaryColor inline-block text-white`}>
-                                                                    <Icon className={`w-8 h-8`}/>
-                                                                </div>
-                                                            </td>
-                                                        } else if (item.content) {
-                                                            return (<td key={`td-${index}`}
-                                                                        className={`px-6 py-3 w-96 text-justify`}>
-                                                                    {item.content}
-                                                                </td>
+                                                data && data.items ?
+                                                    data.items.map((item, index) => {
+                                                        if (typeof item === "string") {
+                                                            return (
+                                                                <td key={`td-${index}`}
+                                                                    className={`px-6 py-3`}>{item}</td>
                                                             )
+                                                        } else if (typeof item === "boolean") {
+                                                            return item === true ?
+                                                                <td key={`td-${index}`}
+                                                                    className={`px-6 py-3 text-successColor`}>Active</td> :
+                                                                <td key={`td-${index}`}
+                                                                    className={`px-6 py-3 text-dangerColor-default_2`}>Disable</td>
+                                                        } else {
+                                                            if (item?.content) {
+                                                                return (<td key={`td-${index}`}
+                                                                            className={`px-6 py-3 w-80 text-justify`}>
+                                                                        {item.content}
+                                                                    </td>
+                                                                )
+                                                            }
+                                                            return <td key={`td-${index}`} className={`px-6 py-3 w-24`}>
+                                                                <img src={item?.imagePath} alt={item?.imgName}
+                                                                     className={`aspect-square object-cover`}/>
+                                                            </td>
                                                         }
-                                                        return <td key={`td-${index}`} className={`px-6 py-3 w-44`}>
-                                                            <img src={item.imgPath} alt={item.imgName}
-                                                                 className={`aspect-square object-cover`}/>
-                                                        </td>
-                                                    }
-                                                })
+                                                    })
+                                                    :
+                                                    <></>
                                             }
                                             <td className="px-6 py-3">
                                                 <div className={`flex items-center`}>
                                                     {
-                                                        tbodyAction.map((action, index) => {
-                                                            return (
-                                                                <div key={`td-${index}`}
-                                                                     className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'hover:bg-primaryColor bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
-                                                                    {
-                                                                        action === 'edit' ?
-                                                                            <Link to={``} state={{id: data?.id}}>
-                                                                                <FaPencilAlt className={`w-5 h-5`}/>
-                                                                            </Link> :
-                                                                            action === 'view' ?
-                                                                                <button>
-                                                                                    <AiFillEye className={`w-5 h-5`}/>
-                                                                                </button> :
+                                                        data && data.items ?
+                                                            tbodyAction.map((action, index) => {
+                                                                return (
+                                                                    <div key={`td-${index}`}
+                                                                         className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'bg-primaryColor hover:bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
+                                                                        {
+                                                                            action === 'edit' ?
                                                                                 <button
-                                                                                    onClick={() => handleDelete(data?.id)}>
-                                                                                    <FaTrashAlt className={`w-5 h-5`}/>
-                                                                                </button>
-                                                                    }
-                                                                </div>
-                                                            )
-                                                        })
+                                                                                    onClick={() => handleEdit(data?.id)}>
+                                                                                    <FaPencilAlt className={`w-5 h-5`}/>
+                                                                                </button> :
+                                                                                action === 'view' ?
+                                                                                    <button>
+                                                                                        <AiFillEye
+                                                                                            className={`w-5 h-5`}/>
+                                                                                    </button> :
+                                                                                    <button
+                                                                                        onClick={() => handleDelete(data?.id)}>
+                                                                                        <FaTrashAlt
+                                                                                            className={`w-5 h-5`}/>
+                                                                                    </button>
+                                                                        }
+                                                                    </div>
+                                                                )
+                                                            }) :
+                                                            <></>
                                                     }
                                                 </div>
 
