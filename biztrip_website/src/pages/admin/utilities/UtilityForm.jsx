@@ -5,7 +5,7 @@ import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import image_add from "../../../assets/image/image_add.png";
 import {handleChangeImage, handleOpenFileInput} from "../../../utils/helper.jsx";
 import {message} from "../../../utils/message.jsx";
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
 import moment from "moment";
 import {fetchGetCoachUtilityById, fetchSaveCoachUtility} from "../../../redux/slices/coachUtilitySlice.jsx";
@@ -16,6 +16,7 @@ const UtilityForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const id = useLocation().state?.id
+    const statusState = useSelector((state) => state.coachUtility.status)
     const inputImageRef = useRef(null);
     const [imageDefault, setImageDefault] = useState(image_add)
     const [imageName, setImageName] = useState("")
@@ -26,7 +27,7 @@ const UtilityForm = () => {
     const [errTitle, setErrTitle] = useState("")
     const [errStatus, setErrStatus] = useState("")
     const [errImage, setErrImage] = useState("")
-
+    const [disableButton, setDisableButton] = useState(false)
     useEffect(() => {
         if (id) {
             const test = async () => {
@@ -42,6 +43,11 @@ const UtilityForm = () => {
             test()
         }
     }, [])
+    useEffect(() => {
+        if (statusState === 'succeeded') {
+            setDisableButton(false)
+        }
+    }, [statusState])
     const dataBreadcrumb = [
         {
             name: "Dashboard",
@@ -63,44 +69,50 @@ const UtilityForm = () => {
         } else if (status === 2) {
             setErrStatus(message.error.status.isEmpty)
             return false
-        } else if (imageName === "") {
+        } else if (imageDefault === "") {
             setErrImage(message.error.file.isEmpty)
             return false
         } else if (imageName.size / 1024 > 6144) {
             setErrImage(message.error.file.max)
             return false
         }
+
         return true
     }
     const handleSubmitForm = async (e) => {
         e.preventDefault()
+        setDisableButton(true)
         const containerName = 'utilities'
+        let imagePath = ""
         if (!handleValidate()) {
             return
         }
-        const data = new FormData()
-        data.append('file', imageName)
-        const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
-        if (uploadFile && uploadFile.code === 200) {
-            const imagePath = uploadFile.data
-            const dataUtility = {
-                'title': title,
-                'description': description,
-                'imagePath': imagePath,
-                'status': status,
+        if (imageName) {
+            const data = new FormData()
+            data.append('file', imageName)
+            const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
+            if (uploadFile && uploadFile.code === 200) {
+                imagePath = uploadFile.data
             }
-            if (id) {
-                dataUtility.id = id
-                dataUtility.createdAt = createdAt
-                dataUtility.updatedAt = moment(new Date()).format()
-            } else {
-                const createdAt = moment(new Date()).format()
-                dataUtility.id = ''
-                dataUtility.createdAt = createdAt
-                dataUtility.updatedAt = createdAt
-            }
-            await dispatch(fetchSaveCoachUtility({dataUtility, navigate, toast}))
         }
+        const dataUtility = {
+            'title': title,
+            'description': description,
+            'status': status,
+        }
+        if (id) {
+            dataUtility.id = id
+            dataUtility.createdAt = createdAt
+            dataUtility.imagePath = imageName ? imagePath : imageDefault
+            dataUtility.updatedAt = moment(new Date()).format()
+        } else {
+            const createdAt = moment(new Date()).format()
+            dataUtility.id = ''
+            dataUtility.imagePath = imagePath
+            dataUtility.createdAt = createdAt
+            dataUtility.updatedAt = createdAt
+        }
+        await dispatch(fetchSaveCoachUtility({dataUtility, navigate, toast}))
     }
     const handleResetForm = () => {
         setTitle("")
@@ -184,7 +196,7 @@ const UtilityForm = () => {
                                 }
                             </div>
                             <div className={`flex items-center justify-end`}>
-                                <button onClick={handleSubmitForm}
+                                <button disabled={disableButton} onClick={handleSubmitForm}
                                         type="submit"
                                         className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                                     {id ? 'Cập nhật' : 'Tạo'}
@@ -193,7 +205,7 @@ const UtilityForm = () => {
                                     !id ?
                                         <button onClick={handleResetForm}
                                                 type="reset"
-                                                className="ml-4 duration-300 text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
+                                                className="ml-4 duration-300 bg-gray-100 text-gray-400 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
                                         </button> :
                                         <></>
                                 }

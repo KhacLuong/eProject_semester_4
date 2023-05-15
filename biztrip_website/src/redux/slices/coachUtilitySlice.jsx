@@ -3,7 +3,7 @@ import instance from "../../config/axiosConfig.jsx";
 import {initialState} from "../../utils/helper.jsx";
 
 export const fetchAllCoachUtility = createAsyncThunk(
-    'utility/fetchCoachUtility',
+    'utility/getAllCoachUtility',
     async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
         const response = await instance.get(`coach-utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
         return response.data
@@ -22,10 +22,9 @@ export const fetchGetCoachUtilityById = createAsyncThunk(
 )
 export const fetchRemoveCoachUtility = createAsyncThunk(
     "utility/removeCoachUtility",
-    async ({id, toast}) => {
+    async ({id}) => {
         try {
-            const response = await instance.delete(`coach-utilities?id=${id}`);
-            toast.success(response.data.message)
+            const response = await instance.delete(`coach-utilities?id=${id}`)
             return response.data;
         } catch (err) {
             console.error(err);
@@ -36,7 +35,7 @@ export const fetchSaveCoachUtility = createAsyncThunk(
     "utility/saveCoachUtility",
     async ({dataUtility, navigate, toast}) => {
         try {
-            const response = await instance.post(`coach-utilities`, dataUtility);
+            const response = await instance.post(`coach-utilities`, dataUtility)
             if (response.data.code === 200) {
                 toast.success(response.data.message)
                 await navigate("/admin/v1/utilities")
@@ -49,7 +48,7 @@ export const fetchSaveCoachUtility = createAsyncThunk(
 )
 
 export const coachUtilitySlice = createSlice({
-    name: 'CoachUtility',
+    name: 'CoachUtilities',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
