@@ -6,8 +6,9 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
+import BeatLoader from "react-spinners/BeatLoader";
 
-const Table = ({theadData, tbodyData, tbodyAction, fetchDelete}) => {
+const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortField, setSortDir, firstItemPerPage}) => {
     const navigate = useNavigate();
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch()
@@ -23,9 +24,17 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete}) => {
             cancelButtonText: 'Hủy'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(fetchDelete({id, toast}))
+                const res = dispatch(fetchDelete({id})).unwrap()
+                if (res && res.code === 200) {
+                    toast.success(res.message)
+                }
             }
         })
+    }
+    const handleFilter = (e, name) => {
+        e.preventDefault()
+        setSortField(name)
+        setSortDir((sortDir) => sortDir === 'desc' ? 'asc' : 'desc')
     }
     const handleEdit = (id) => {
         navigate('edit', {
@@ -45,17 +54,26 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete}) => {
                             <tr>
                                 {
                                     theadData.map((item, index) => {
+                                        if (typeof item === "object") {
+                                            return (
+                                                <th key={`th-${index}`} scope={`col`} className={`px-6 py-3`}
+                                                    title={item.field}>
+                                                    <div className={`flex items-center`}>
+                                                        {item.name}
+                                                        <div className={`flex items-center`}>
+                                                            <button onClick={(e) => handleFilter(e, item.field)}>
+                                                                <FaSort className={`w-3 h-3 ml-1`}/>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                            )
+                                        }
                                         return (
                                             <th key={`th-${index}`} scope={`col`} className={`px-6 py-3`}
                                                 title={item}>
                                                 <div className={`flex items-center`}>
                                                     {item}
-                                                    <div className={`flex items-center`}>
-                                                        {item.name}
-                                                        <a href="#">
-                                                            <FaSort className={`w-3 h-3 ml-1`}/>
-                                                        </a>
-                                                    </div>
                                                 </div>
                                             </th>
                                         )
@@ -65,78 +83,93 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete}) => {
                             </thead>
                             <tbody>
                             {
-                                tbodyData.map((data, index) => {
-                                    return (
-                                        <tr key={`tr-${index}`}
-                                            className={`bg-white border-b hover:bg-gray-50`}>
-                                            <td className="px-6 py-3">{data.id}</td>
-                                            {
-                                                data && data.items ?
-                                                    data.items.map((item, index) => {
-                                                        if (typeof item === "string") {
-                                                            return (
-                                                                <td key={`td-${index}`}
-                                                                    className={`px-6 py-3`}>{item}</td>
-                                                            )
-                                                        } else if (typeof item === "boolean") {
-                                                            return item === true ?
-                                                                <td key={`td-${index}`}
-                                                                    className={`px-6 py-3 text-successColor`}>Active</td> :
-                                                                <td key={`td-${index}`}
-                                                                    className={`px-6 py-3 text-dangerColor-default_2`}>Disable</td>
-                                                        } else {
-                                                            if (item?.content) {
-                                                                return (<td key={`td-${index}`}
-                                                                            className={`px-6 py-3 w-80 text-justify`}>
-                                                                        {item.content}
-                                                                    </td>
-                                                                )
-                                                            }
-                                                            return <td key={`td-${index}`} className={`px-6 py-3 w-24`}>
-                                                                <img src={item?.imagePath} alt={item?.imgName}
-                                                                     className={`aspect-square object-cover`}/>
-                                                            </td>
-                                                        }
-                                                    })
-                                                    :
-                                                    <></>
-                                            }
-                                            <td className="px-6 py-3">
-                                                <div className={`flex items-center`}>
+                                status === "loading" ?
+                                    <tr className={`w-full relative`}>
+                                        <td colSpan={theadData.length} className={`text-center align-middle w-full  py-8`}>
+                                            <BeatLoader color="#000000" className={`absolute left-1/2 -translate-y-1/2`}/>
+                                        </td>
+                                    </tr> :
+                                    tbodyData && tbodyData.length > 0 ?
+                                        tbodyData.map((data, index) => {
+                                            return (
+                                                <tr key={`tr-${index}`}
+                                                    className={`bg-white border-b hover:bg-gray-50`}>
+                                                    <td className="px-6 py-3">{firstItemPerPage++}</td>
                                                     {
                                                         data && data.items ?
-                                                            tbodyAction.map((action, index) => {
-                                                                return (
-                                                                    <div key={`td-${index}`}
-                                                                         className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'bg-primaryColor hover:bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
-                                                                        {
-                                                                            action === 'edit' ?
-                                                                                <button
-                                                                                    onClick={() => handleEdit(data?.id)}>
-                                                                                    <FaPencilAlt className={`w-5 h-5`}/>
-                                                                                </button> :
-                                                                                action === 'view' ?
-                                                                                    <button>
-                                                                                        <AiFillEye
-                                                                                            className={`w-5 h-5`}/>
-                                                                                    </button> :
-                                                                                    <button
-                                                                                        onClick={() => handleDelete(data?.id)}>
-                                                                                        <FaTrashAlt
-                                                                                            className={`w-5 h-5`}/>
-                                                                                    </button>
-                                                                        }
-                                                                    </div>
-                                                                )
-                                                            }) :
+                                                            data.items.map((item, index) => {
+                                                                if (typeof item === "string") {
+                                                                    return (
+                                                                        <td key={`td-${index}`}
+                                                                            className={`px-6 py-3`}>{item}</td>
+                                                                    )
+                                                                } else if (typeof item === "boolean") {
+                                                                    return item === true ?
+                                                                        <td key={`td-${index}`}
+                                                                            className={`px-6 py-3 text-successColor`}>Active</td> :
+                                                                        <td key={`td-${index}`}
+                                                                            className={`px-6 py-3 text-dangerColor-default_2`}>Disable</td>
+                                                                } else {
+                                                                    if (item?.content) {
+                                                                        return (<td key={`td-${index}`}
+                                                                                    className={`px-6 py-3 w-80 text-justify`}>
+                                                                                {item.content}
+                                                                            </td>
+                                                                        )
+                                                                    }
+                                                                    return <td key={`td-${index}`}
+                                                                               className={`px-6 py-3 w-24`}>
+                                                                        <img src={item?.imagePath} alt={item?.imgName}
+                                                                             className={`aspect-square object-cover`}/>
+                                                                    </td>
+                                                                }
+                                                            })
+                                                            :
                                                             <></>
                                                     }
-                                                </div>
+                                                    <td className="px-6 py-3">
+                                                        <div className={`flex items-center`}>
+                                                            {
+                                                                data && data.items ?
+                                                                    tbodyAction.map((action, index) => {
+                                                                        return (
+                                                                            <div key={`td-${index}`}
+                                                                                 className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'bg-primaryColor hover:bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
+                                                                                {
+                                                                                    action === 'edit' ?
+                                                                                        <button
+                                                                                            onClick={() => handleEdit(data?.id)}>
+                                                                                            <FaPencilAlt
+                                                                                                className={`w-5 h-5`}/>
+                                                                                        </button> :
+                                                                                        action === 'view' ?
+                                                                                            <button>
+                                                                                                <AiFillEye
+                                                                                                    className={`w-5 h-5`}/>
+                                                                                            </button> :
+                                                                                            <button
+                                                                                                onClick={() => handleDelete(data?.id)}>
+                                                                                                <FaTrashAlt
+                                                                                                    className={`w-5 h-5`}/>
+                                                                                            </button>
+                                                                                }
+                                                                            </div>
+                                                                        )
+                                                                    }) :
+                                                                    <></>
+                                                            }
+                                                        </div>
 
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }) :
+                                        <tr>
+                                            <td colSpan={theadData.length}
+                                                className={`text-center py-8 text-dangerColor-default_2 text-base font-semibold`}>Chưa
+                                                có dữ liệu...
                                             </td>
                                         </tr>
-                                    )
-                                })
                             }
                             </tbody>
                         </table>

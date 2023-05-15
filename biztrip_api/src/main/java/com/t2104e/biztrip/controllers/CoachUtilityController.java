@@ -19,8 +19,7 @@ import java.util.Optional;
 public class CoachUtilityController {
     @Autowired
     private CoachUtilityImplService coachUtilityImplService;
-    @Autowired
-    private FileService fileService;
+
     private final ResponseDTO RESPONSE_DTO = new ResponseDTO();
 
     @GetMapping("")

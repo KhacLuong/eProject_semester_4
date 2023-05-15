@@ -13,10 +13,32 @@ import {produce} from "immer"
 import {tbodyActionDefault} from "../../../utils/data.jsx";
 import moment from "moment";
 import {useNavigate} from "react-router-dom";
+import {AiOutlineMinus} from "react-icons/all.js";
 
 const UtilityList = () => {
     const theadData = [
-        '#ID', 'Image', 'Tên', 'Miêu tả', 'Trạng thái', 'Ngày thêm vào', 'Ngày cập nhật', 'Action'
+        "#",
+        'Image',
+        {
+            field: 'title',
+            name: 'Tên'
+        },
+        {
+            field: 'description',
+            name: 'Miêu tả'
+        },
+        {
+            field: 'status',
+            name: 'Trạng thái'
+        },
+        {
+            field: 'createdAt',
+            name: 'Ngày thêm vào'
+        },
+        {
+            field: 'updatedAt',
+            name: 'Ngày cập nhật'
+        }, 'Action'
     ]
     useDocumentTitle("Quản lý tiện ích", true)
     const dispatch = useDispatch()
@@ -32,9 +54,10 @@ const UtilityList = () => {
     const [pageNumber, setPageNumber] = useState(1)
     const [perPage, setPerPage] = useState(6)
 
-
+    const [firstItemPerPage, setFirstItemPerPage] = useState(1)
+    const [lastItemPerPage, setLastItemPerPage] = useState(perPage)
+    const [keyword, setKeyword] = useState("")
     useEffect(() => {
-        const keyword = ""
         dispatch(fetchAllCoachUtility({pageNumber, perPage, sortField, sortDir, keyword}))
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
 
@@ -83,13 +106,40 @@ const UtilityList = () => {
                     sortField={sortField}
                     sortDir={sortDir}
                     pageNumber={pageNumber}
+                    setKeyword={setKeyword}
+                    keyword={keyword}
                     fetchData={fetchAllCoachUtility}/>
             <div data-aos="fade-right"
-                 data-aos-delay="300">
+                 data-aos-delay="300" className={`block justify-end items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
+                <div className={`flex items-centers justify- mr-4`}>
+                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</span>
+                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option>...</option>
+                        <option>Trạng thái: Active</option>
+                        <option>Trạng thái: Disable</option>
+                    </select>
+                </div>
+                <div className={`flex items-centers justify-center`}>
+                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Hiển thị</span>
+                    <select value={perPage} onChange={(e) => setPerPage(+e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option value={6}>6</option>
+                        <option value={9}>9</option>
+                        <option value={12}>12</option>
+                        <option value={15}>15</option>
+                    </select>
+                </div>
+            </div>
+            <div data-aos="fade-right"
+                 data-aos-delay="500">
                 <Table theadData={theadData}
                        tbodyData={tbodyData}
                        tbodyAction={tbodyActionDefault}
-                       fetchDelete={fetchRemoveCoachUtility}/>
+                       fetchDelete={fetchRemoveCoachUtility}
+                       status={status}
+                       setSortField={setSortField}
+                       setSortDir={setSortDir}
+                       firstItemPerPage={firstItemPerPage}/>
                 {
                     totalItems > 0 && totalPages > 0 ?
                         <Paginate setPageNumber={setPageNumber}
@@ -98,7 +148,11 @@ const UtilityList = () => {
                                   fetchData={fetchAllCoachUtility}
                                   totalPages={totalPages}
                                   perPage={perPage}
-                                  totalItems={totalItems}/> :
+                                  totalItems={totalItems}
+                                  firstItemPerPage={firstItemPerPage}
+                                  setFirstItemPerPage={setFirstItemPerPage}
+                                  lastItemPerPage={lastItemPerPage}
+                                  setLastItemPerPage={setLastItemPerPage}/> :
                         <></>
                 }
 
