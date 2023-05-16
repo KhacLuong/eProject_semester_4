@@ -10,6 +10,7 @@ import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
 import moment from "moment";
 import {fetchGetCoachUtilityById, fetchSaveCoachUtility} from "../../../redux/slices/coachUtilitySlice.jsx";
 import {toast} from "react-toastify";
+import {utilityFormBreadcrumb} from "../../../utils/data.jsx";
 
 const UtilityForm = () => {
     useDocumentTitle("Thêm mới tiện ích", true)
@@ -42,26 +43,13 @@ const UtilityForm = () => {
             }
             test()
         }
-    }, [])
+    }, [id])
     useEffect(() => {
         if (statusState === 'succeeded') {
             setDisableButton(false)
         }
     }, [statusState])
-    const dataBreadcrumb = [
-        {
-            name: "Dashboard",
-            path: "/admin/v1"
-        },
-        {
-            name: "Quản lý tiện ích",
-            path: "/admin/v1/coaches/utilities"
-        },
-        {
-            name: "Thêm mới",
-            path: ""
-        }
-    ]
+
     const handleValidate = () => {
         if (title.trim() === "") {
             setErrTitle(message.error.title.isEmpty)
@@ -127,7 +115,7 @@ const UtilityForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={dataBreadcrumb}/>
+                <Breadcrumb dataBreadcrumb={utilityFormBreadcrumb}/>
                 <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>Thêm mới tiện ích</h1>
             </div>
             <div data-aos="fade-right"

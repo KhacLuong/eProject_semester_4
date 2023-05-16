@@ -11,7 +11,7 @@ import {AiOutlineLike} from "react-icons/ai";
 import {RiBillLine} from "react-icons/ri"
 import {BsPersonVcard} from "react-icons/bs"
 
-const FINAL_URL_ADMIN = "/admin/v1"
+const FINAL_URL_ADMIN = "/admin/v1/cms"
 
 export const dataSidebarAdmin = [
     {
@@ -123,3 +123,41 @@ export const dataSidebarAdmin = [
 ]
 export const tbodyActionDefault = ['edit', 'delete']
 export const tbodyActionSpecial = ['view', 'edit', 'delete']
+
+export const coachListBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý xe",
+        path: ""
+    }
+]
+export const coachFormBreadcrumb = [
+
+]
+export const utilityListBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý tiện ích",
+        path: ""
+    }
+]
+export const utilityFormBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý tiện ích",
+        path: `${FINAL_URL_ADMIN}/coaches/utilities`
+    },
+    {
+        name: "Thêm mới",
+        path: ""
+    }
+]

@@ -10,7 +10,7 @@ import {
     selectCoachUtility,
 } from "../../../redux/slices/coachUtilitySlice.jsx";
 import {produce} from "immer"
-import {tbodyActionDefault} from "../../../utils/data.jsx";
+import {tbodyActionDefault, utilityListBreadcrumb} from "../../../utils/data.jsx";
 import moment from "moment";
 import {useNavigate} from "react-router-dom";
 import {AiOutlineMinus} from "react-icons/all.js";
@@ -72,19 +72,9 @@ const UtilityList = () => {
         }
     }, [coachUtilities]);
 
-    const dataBreadcrumb = [
-        {
-            name: "Dashboard",
-            path: "/admin/v1"
-        },
-        {
-            name: "Quản lý tiện ích",
-            path: ""
-        }
-    ]
     return (
         <>
-            <Banner dataBreadcrumb={dataBreadcrumb}
+            <Banner dataBreadcrumb={utilityListBreadcrumb}
                     title={"Danh sách tiện ích"}
                     pathCreate={"create"}
                     perPage={perPage}
@@ -95,16 +85,8 @@ const UtilityList = () => {
                     keyword={keyword}
                     fetchData={fetchAllCoachUtility}/>
             <div data-aos="fade-right"
-                 data-aos-delay="300" className={`block justify-end items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
-                <div className={`flex items-centers justify- mr-4`}>
-                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</span>
-                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                        <option>...</option>
-                        <option>Trạng thái: Active</option>
-                        <option>Trạng thái: Disable</option>
-                    </select>
-                </div>
-                <div className={`flex items-centers justify-center`}>
+                 data-aos-delay="300" className={`block justify-start items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
+                <div className={`flex items-centers justify-center  mr-4`}>
                     <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Hiển thị</span>
                     <select value={perPage} onChange={(e) => setPerPage(+e.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
@@ -112,6 +94,14 @@ const UtilityList = () => {
                         <option value={9}>9</option>
                         <option value={12}>12</option>
                         <option value={15}>15</option>
+                    </select>
+                </div>
+                <div className={`flex items-centers justify-center`}>
+                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</span>
+                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option>...</option>
+                        <option>Trạng thái: Active</option>
+                        <option>Trạng thái: Disable</option>
                     </select>
                 </div>
             </div>
@@ -127,7 +117,8 @@ const UtilityList = () => {
                        firstItemPerPage={firstItemPerPage}/>
                 {
                     totalItems > 0 && totalPages > 0 ?
-                        <Paginate setPageNumber={setPageNumber}
+                        <Paginate pageNumber={pageNumber}
+                                  setPageNumber={setPageNumber}
                                   sortField={sortField}
                                   sortDir={sortDir}
                                   fetchData={fetchAllCoachUtility}

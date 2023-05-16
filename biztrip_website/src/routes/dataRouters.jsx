@@ -49,7 +49,7 @@ export const dataRouters = [
         ]
     },
     {
-        path: "admin/v1",
+        path: "admin/v1/cms",
         page: AdminHomePage,
         isIndex: false,
         isAuthentication: true,

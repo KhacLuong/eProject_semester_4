@@ -38,7 +38,7 @@ export const fetchSaveCoachUtility = createAsyncThunk(
             const response = await instance.post(`coach-utilities`, dataUtility)
             if (response.data.code === 200) {
                 toast.success(response.data.message)
-                await navigate("/admin/v1/coaches/utilities")
+                await navigate("/admin/v1/cms/coaches/utilities")
             }
             return response.data
         } catch (err) {
@@ -64,15 +64,6 @@ export const coachUtilitySlice = createSlice({
                 state.status = 'succeeded'
             })
             .addCase(fetchAllCoachUtility.rejected, (state, action) => {
-                state.status = 'failed'
-            })
-            .addCase(fetchGetCoachUtilityById.pending,(state, action) => {
-                state.status = 'loading'
-            })
-            .addCase(fetchGetCoachUtilityById.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-            })
-            .addCase(fetchGetCoachUtilityById.rejected, (state, action) => {
                 state.status = 'failed'
             })
             .addCase(fetchRemoveCoachUtility.pending, (state, action) => {

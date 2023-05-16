@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Banner from "../../../components/admin/Banner.jsx";
 import Table from "../../../components/admin/Table.jsx";
-import {tbodyActionSpecial} from "../../../utils/data.jsx";
+import {coachListBreadcrumb, tbodyActionSpecial} from "../../../utils/data.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,8 +23,6 @@ const CoachList = () => {
         'Image',
         {field: 'plateNumber', name: 'Biển số'},
         {field: 'totalSeats', name: 'Tổng số ghế'},
-        'Lái xe',
-        'Phụ lái',
         {field: 'description', name: 'Miêu tả'},
         {field: 'status', name: 'Trạng thái'},
         {field: 'createdAt', name: 'Ngày thêm vào'},
@@ -43,21 +41,12 @@ const CoachList = () => {
     useEffect(() => {
         dispatch(fetchAllCoach({pageNumber, perPage, sortField, sortDir, keyword}))
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
-    const dataBreadcrumb = [
-        {
-            name: "Dashboard",
-            path: "/admin/v1"
-        },
-        {
-            name: "Quản lý xe",
-            path: ""
-        }
-    ]
+
     return (
         <>
-            <Banner dataBreadcrumb={dataBreadcrumb}
+            <Banner dataBreadcrumb={coachListBreadcrumb}
                     title={"Danh sách xe"}
-                    pathCreate={"/admin/v1/coaches/create"}
+                    pathCreate={"/admin/v1/cms/coaches/create"}
                     perPage={perPage}
                     sortField={sortField}
                     sortDir={sortDir}
@@ -66,16 +55,8 @@ const CoachList = () => {
                     keyword={keyword}
                     fetchData={fetchAllCoach}/>
             <div data-aos="fade-right"
-                 data-aos-delay="300" className={`block justify-end items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
-                <div className={`flex items-centers justify- mr-4`}>
-                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</span>
-                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                        <option>...</option>
-                        <option>Trạng thái: Active</option>
-                        <option>Trạng thái: Disable</option>
-                    </select>
-                </div>
-                <div className={`flex items-centers justify-center`}>
+                 data-aos-delay="300" className={`block justify-start items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
+                <div className={`flex items-centers justify-center  mr-4`}>
                     <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Hiển thị</span>
                     <select value={perPage} onChange={(e) => setPerPage(+e.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
@@ -83,6 +64,14 @@ const CoachList = () => {
                         <option value={9}>9</option>
                         <option value={12}>12</option>
                         <option value={15}>15</option>
+                    </select>
+                </div>
+                <div className={`flex items-centers justify-center`}>
+                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</span>
+                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option>...</option>
+                        <option>Trạng thái: Active</option>
+                        <option>Trạng thái: Disable</option>
                     </select>
                 </div>
             </div>
