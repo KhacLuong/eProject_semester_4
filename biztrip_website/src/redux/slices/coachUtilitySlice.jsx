@@ -38,11 +38,11 @@ export const fetchSaveCoachUtility = createAsyncThunk(
             const response = await instance.post(`coach-utilities`, dataUtility)
             if (response.data.code === 200) {
                 toast.success(response.data.message)
-                await navigate("/admin/v1/utilities")
+                await navigate("/admin/v1/coaches/utilities")
             }
             return response.data
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 )

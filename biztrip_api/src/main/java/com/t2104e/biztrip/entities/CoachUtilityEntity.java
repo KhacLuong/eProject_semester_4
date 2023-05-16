@@ -20,23 +20,23 @@ public class CoachUtilityEntity {
     @Column(name = "id")
     private long id;
     @Basic
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
     @Basic
     @Column(name = "description", columnDefinition = "text")
     private String description;
     @Basic
-    @Column(name = "image_path")
+    @Column(name = "image_path", nullable = false)
     private String imagePath;
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private boolean status;
     @Basic
-    @Column(name = "created_at" ,columnDefinition="TIMESTAMP")
+    @Column(name = "created_at" ,columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
     @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 }

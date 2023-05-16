@@ -27,10 +27,10 @@ public class PolicyEntity {
     @Column(name = "content", nullable = false,columnDefinition = "text")
     private String content;
     @Basic
-    @Column(name = "info", nullable = true,columnDefinition = "text")
+    @Column(name = "info",columnDefinition = "text")
     private String info;
     @Basic
-    @Column(name = "position", unique = true, nullable = true)
+    @Column(name = "position", unique = true)
     private int position;
     @Basic
     @Column(name = "created_at" ,columnDefinition="TIMESTAMP")

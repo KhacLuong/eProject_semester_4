@@ -23,8 +23,8 @@ public class CoachUtilityImplService implements ICoachUtilityService {
 
     @Override
     public Page<CoachUtilityEntity> getListCoachUtility(int pageNumber, int perPage, String sortField, String sortDir, String keyword) {
-        Sort sort = sortDir.equals("asc") ? Sort.by(Sort.Order.asc(sortField)) : Sort.by(Sort.Order.desc(sortField));
-        Pageable pageable = PageRequest.of(pageNumber , perPage, sort);
+        Sort sort = Helper.sortQuery(sortField, sortDir);
+        Pageable pageable = PageRequest.of(pageNumber - 1, perPage, sort);
         return coachUtilityRepository.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
     }
 

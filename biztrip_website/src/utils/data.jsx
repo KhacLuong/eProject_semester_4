@@ -23,14 +23,14 @@ export const dataSidebarAdmin = [
     {
         name: "Quản lý",
         isSubcategory: false,
-        url: "",
         icon: <></>,
     },
     {
-        name: "Người dùng",
+        name: "Đơn đặt vé",
+        key: 'booking-ticket',
         isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/users`,
-        icon: FiUsers,
+        url: `${FINAL_URL_ADMIN}/bookings`,
+        icon: RiBillLine,
     },
     {
         name: "Doanh thu",
@@ -39,10 +39,62 @@ export const dataSidebarAdmin = [
         icon: BiDollarCircle,
     },
     {
-        name: "Đơn đặt vé",
+        name: "Xe",
         isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/bookings`,
-        icon: RiBillLine,
+        icon: TbBus,
+        key: 'coaches',
+        children: [
+            {
+                name: "Danh sách xe",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/list`,
+                icon: <></>,
+            },
+            {
+                name: "Lộ trình",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/schedules`,
+                icon: <></>,
+            },
+            {
+                name: "Vé",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/tickets`,
+                icon: <></>,
+            },
+            {
+                name: "Tiện ích",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/utilities`,
+                icon: <></>,
+            },
+        ]
+    },
+    {
+        name: "Người dùng",
+        isSubcategory: true,
+        icon: FiUsers,
+        key: 'users',
+        children: [
+            {
+                name: 'Tài khoản',
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/accounts`,
+                icon: <></>,
+            },
+            {
+                name: "Nhân viên",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/staffs`,
+                icon: <></>,
+            },
+            {
+                name: "Phản hồi",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/testimonials`,
+                icon: <></>,
+            },
+        ]
     },
     {
         name: "Tin tức",
@@ -51,46 +103,10 @@ export const dataSidebarAdmin = [
         icon: BiNews,
     },
     {
-        name: "Chứng nhận phản hồi",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/testimonials`,
-        icon: BiCommentDetail,
-    },
-    {
-        name: "Đối tác",
+        name: "Cài đặt",
         isSubcategory: false,
         url: "",
         icon: <></>,
-    },
-    {
-        name: "Xe",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/coaches`,
-        icon: TbBus,
-    },
-    {
-        name: "Nhân viên",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/staffs`,
-        icon: BsPersonVcard,
-    },
-    {
-        name: "Lộ trình",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/schedules`,
-        icon: TbRoad,
-    },
-    {
-        name: "Vé",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/tickets`,
-        icon: HiOutlineTicket,
-    },
-    {
-        name: "Tiện ích",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/utilities`,
-        icon: AiOutlineLike,
     },
     {
         name: "Chính sách",
@@ -99,13 +115,7 @@ export const dataSidebarAdmin = [
         icon: MdOutlinePolicy,
     },
     {
-        name: "Hiển thị",
-        isSubcategory: false,
-        url: "",
-        icon: <></>,
-    },
-    {
-        name: "Cài đặt",
+        name: "Thông tin",
         isSubcategory: true,
         url: `${FINAL_URL_ADMIN}/display-settings`,
         icon: GrServices,

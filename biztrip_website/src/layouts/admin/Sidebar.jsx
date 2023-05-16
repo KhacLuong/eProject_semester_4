@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from "react-router-dom";
 import {dataSidebarAdmin} from "../../utils/data.jsx";
+import ElementSidebar from "../../components/admin/ElementSidebar.jsx";
 
 const Sidebar = () => {
     return (
@@ -14,12 +14,7 @@ const Sidebar = () => {
                                 if (item.isSubcategory) {
                                     return (
                                         <li key={`navbar-item-${index}`}>
-                                            <Link to={item.url} className={`flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group  transition-all duration-200`}>
-                                                <div className={`bg-white shadow-lg shadow-gray-300 text-dark-700 w-8 h-8 mr-1 rounded-lg text-center grid place-items-center`}>
-                                                    <Icon className={`w-[20px] h-[20px]`}/>
-                                                </div>
-                                                <span className={`ml-3 text-dark-500 text-sm font-medium`}>{item.name}</span>
-                                            </Link>
+                                            <ElementSidebar item={item} Icon={Icon}/>
                                         </li>
                                     )
                                 } else {

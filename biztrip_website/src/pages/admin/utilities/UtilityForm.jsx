@@ -55,7 +55,7 @@ const UtilityForm = () => {
         },
         {
             name: "Quản lý tiện ích",
-            path: "/admin/v1/utilities"
+            path: "/admin/v1/coaches/utilities"
         },
         {
             name: "Thêm mới",

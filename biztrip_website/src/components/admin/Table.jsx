@@ -1,12 +1,12 @@
 import React from 'react';
 import {FaPencilAlt, FaSort, FaTrashAlt} from "react-icons/all.js";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {AiFillEye} from "react-icons/ai";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import BeatLoader from "react-spinners/BeatLoader";
+import SyncLoader  from "react-spinners/SyncLoader";
 
 const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortField, setSortDir, firstItemPerPage}) => {
     const navigate = useNavigate();
@@ -86,7 +86,7 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortF
                                 status === "loading" ?
                                     <tr className={`w-full relative`}>
                                         <td colSpan={theadData.length} className={`text-center align-middle w-full  py-8`}>
-                                            <BeatLoader color="#000000" className={`absolute left-1/2 -translate-y-1/2`}/>
+                                            <SyncLoader loading={true} color="#374151" className={`absolute left-1/2 -translate-y-1/2`}/>
                                         </td>
                                     </tr> :
                                     tbodyData && tbodyData.length > 0 ?
@@ -166,8 +166,8 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortF
                                         }) :
                                         <tr>
                                             <td colSpan={theadData.length}
-                                                className={`text-center py-8 text-dangerColor-default_2 text-base font-semibold`}>Chưa
-                                                có dữ liệu...
+                                                className={`text-center py-8 text-dangerColor-default_2 text-base font-semibold`}>
+                                                Chưa có dữ liệu...
                                             </td>
                                         </tr>
                             }

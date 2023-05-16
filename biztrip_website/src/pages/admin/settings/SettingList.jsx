@@ -5,7 +5,7 @@ import Paginate from "../../../components/admin/Paginate.jsx";
 import Banner from "../../../components/admin/Banner.jsx";
 
 const SettingList = () => {
-    useDocumentTitle("Quản lý cài đặt", true)
+    useDocumentTitle("Quản lý hiển thị", true)
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
 
     const theadData = [
@@ -47,14 +47,14 @@ const SettingList = () => {
             path: "/admin/v1"
         },
         {
-            name: "Cài đặt",
+            name: "Quản lý hiển thị",
             path: ""
         }
     ]
 
     return (
         <>
-            <Banner dataBreadcrumb={dataBreadcrumb} title={"Danh sách cài đặt"} pathCreate={"create"} isExport={false}/>
+            <Banner dataBreadcrumb={dataBreadcrumb} title={"Danh sách hiển thị"} pathCreate={"create"} isExport={false}/>
             <div data-aos="fade-right"
                  data-aos-delay="300">
                 <Table theadData={theadData} tbodyData={tbodyData} tbodyAction={tbodyAction}/>
