@@ -44,6 +44,24 @@ public class AuthenticationService {
                 .build();
     }
 
+    public AuthenticationResponse admin_register(RegisterRequest request) {
+        var user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .phoneNumber(request.getPhoneNumber())
+                .role(Role.ADMIN)
+                .build();
+        var savedUser = userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(savedUser, refreshToken);
+        return AuthenticationResponse.builder()
+                .email(savedUser.getEmail())
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -96,6 +114,7 @@ public class AuthenticationService {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
                 return AuthenticationResponse.builder()
+                        .email(userEmail)
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();

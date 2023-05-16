@@ -34,6 +34,18 @@ public class AuthenticationController {
         RESPONSE_DTO.setData(service.register(request));
         return ResponseEntity.ok(RESPONSE_DTO);
     }
+
+    @PostMapping("/register-admin")
+    public ResponseEntity<?> admin_register(
+            @RequestBody RegisterRequest request
+    ) {
+        RESPONSE_DTO.setCode(200);
+        RESPONSE_DTO.setStatus("success");
+        RESPONSE_DTO.setMessage("Tạo tài khoản mới thành công.");
+        RESPONSE_DTO.setData(service.admin_register(request));
+        return ResponseEntity.ok(RESPONSE_DTO);
+    }
+
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
