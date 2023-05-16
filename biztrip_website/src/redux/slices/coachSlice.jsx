@@ -53,15 +53,6 @@ export const coachSlice = createSlice({
             .addCase(fetchAllCoach.rejected, (state, action) => {
                 state.status = 'failed'
             })
-            .addCase(fetchGetCoachById.pending, (state, action) => {
-                state.status = 'loading'
-            })
-            .addCase(fetchGetCoachById.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-            })
-            .addCase(fetchGetCoachById.rejected, (state, action) => {
-                state.status = 'failed'
-            })
             .addCase(fetchRemoveCoach.pending, (state, action) => {
                 state.status = 'loading'
             })

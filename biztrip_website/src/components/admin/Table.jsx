@@ -6,9 +6,19 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import SyncLoader  from "react-spinners/SyncLoader";
+import SyncLoader from "react-spinners/SyncLoader";
+import ReactTyped from "react-typed";
 
-const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortField, setSortDir, firstItemPerPage}) => {
+const Table = ({
+                   theadData,
+                   tbodyData,
+                   tbodyAction,
+                   fetchDelete,
+                   status,
+                   setSortField,
+                   setSortDir,
+                   firstItemPerPage
+               }) => {
     const navigate = useNavigate();
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch()
@@ -85,8 +95,10 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortF
                             {
                                 status === "loading" ?
                                     <tr className={`w-full relative`}>
-                                        <td colSpan={theadData.length} className={`text-center align-middle w-full  py-8`}>
-                                            <SyncLoader loading={true} color="#374151" className={`absolute left-1/2 -translate-y-1/2`}/>
+                                        <td colSpan={theadData.length}
+                                            className={`text-center align-middle w-full  py-8`}>
+                                            <SyncLoader loading={true} color="#374151"
+                                                        className={`absolute left-1/2 -translate-y-1/2`}/>
                                         </td>
                                     </tr> :
                                     tbodyData && tbodyData.length > 0 ?
@@ -130,36 +142,33 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortF
                                                     <td className="px-6 py-3">
                                                         <div className={`flex items-center`}>
                                                             {
-                                                                data && data.items ?
-                                                                    tbodyAction.map((action, index) => {
-                                                                        return (
-                                                                            <div key={`td-${index}`}
-                                                                                 className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'bg-primaryColor hover:bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
-                                                                                {
-                                                                                    action === 'edit' ?
-                                                                                        <button
-                                                                                            onClick={() => handleEdit(data?.id)}>
-                                                                                            <FaPencilAlt
+                                                                tbodyAction.map((action, index) => {
+                                                                    return (
+                                                                        <div key={`td-${index}`}
+                                                                             className={`cursor-pointer inline-flex items-center justify-center text-center text-white duration-300 p-2 rounded ${action === 'edit' ? 'bg-primaryColor hover:bg-primaryColor_hover mr-3' : action === 'delete' ? 'hover:bg-dangerColor-default_3 bg-dangerColor-default_2' : 'mr-3 bg-amber-400 hover:bg-amber-500'}`}>
+                                                                            {
+                                                                                action === 'edit' ?
+                                                                                    <button
+                                                                                        onClick={() => handleEdit(data?.id)}>
+                                                                                        <FaPencilAlt
+                                                                                            className={`w-5 h-5`}/>
+                                                                                    </button> :
+                                                                                    action === 'view' ?
+                                                                                        <button>
+                                                                                            <AiFillEye
                                                                                                 className={`w-5 h-5`}/>
                                                                                         </button> :
-                                                                                        action === 'view' ?
-                                                                                            <button>
-                                                                                                <AiFillEye
-                                                                                                    className={`w-5 h-5`}/>
-                                                                                            </button> :
-                                                                                            <button
-                                                                                                onClick={() => handleDelete(data?.id)}>
-                                                                                                <FaTrashAlt
-                                                                                                    className={`w-5 h-5`}/>
-                                                                                            </button>
-                                                                                }
-                                                                            </div>
-                                                                        )
-                                                                    }) :
-                                                                    <></>
+                                                                                        <button
+                                                                                            onClick={() => handleDelete(data?.id)}>
+                                                                                            <FaTrashAlt
+                                                                                                className={`w-5 h-5`}/>
+                                                                                        </button>
+                                                                            }
+                                                                        </div>
+                                                                    )
+                                                                })
                                                             }
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                             )
@@ -167,7 +176,20 @@ const Table = ({theadData, tbodyData, tbodyAction, fetchDelete, status, setSortF
                                         <tr>
                                             <td colSpan={theadData.length}
                                                 className={`text-center py-8 text-dangerColor-default_2 text-base font-semibold`}>
-                                                Chưa có dữ liệu...
+                                                Chưa có dữ liệu<ReactTyped
+                                                loop
+                                                typeSpeed={300}
+                                                backSpeed={50}
+                                                strings={["...!"]}
+                                                smartBackspace
+                                                shuffle={false}
+                                                backDelay={1}
+                                                fadeOut={false}
+                                                fadeOutDelay={100}
+                                                loopCount={0}
+                                                showCursor
+                                                cursorChar="|"
+                                            />
                                             </td>
                                         </tr>
                             }

@@ -1,21 +1,26 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactPaginate from "react-paginate";
 import {MdOutlineKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
 import {HiOutlineArrowNarrowRight} from "react-icons/all.js";
 import {useDispatch} from "react-redux";
 
-const Paginate = ({sortField, sortDir, fetchData, totalPages, perPage, totalItems, setPageNumber, firstItemPerPage, setFirstItemPerPage, lastItemPerPage, setLastItemPerPage}) => {
+const Paginate = ({sortField, sortDir, fetchData, totalPages, perPage, totalItems, setPageNumber, firstItemPerPage, setFirstItemPerPage, lastItemPerPage, setLastItemPerPage, pageNumber}) => {
     const dispatch = useDispatch()
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
-
+    useEffect(() => {
+        setFirstItemPerPage(perPage * (pageNumber - 1) + 1)
+        if (totalPages === pageNumber) {
+            setLastItemPerPage(totalItems)
+        } else {
+            setLastItemPerPage(perPage * pageNumber)
+        }
+    }, [perPage, pageNumber])
     const handleClickToPage = (event) => {
         const keyword = ""
         const pageNumber = +event.selected + 1
         setPageNumber(pageNumber)
         dispatch(fetchData({pageNumber, perPage, sortField, sortDir, keyword}))
-        setFirstItemPerPage(perPage * (pageNumber - 1) + 1)
-        setLastItemPerPage(perPage * pageNumber)
-        if (+event.selected + 1 === totalPages) {
+        if ((+event.selected + 1) === totalPages) {
             setTurnOffPrevNextBtn(true)
             setLastItemPerPage(totalItems)
         }

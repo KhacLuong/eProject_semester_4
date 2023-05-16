@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {NavLink, useLocation } from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import {
     AiOutlineMinus,
     AiOutlinePlus,
@@ -12,7 +12,7 @@ const ElementSidebar = ({item, Icon}) => {
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
-        const isChildPage = location.pathname.startsWith(`/admin/v1/${item.key}`);
+        const isChildPage = location.pathname.startsWith(`/admin/v1/cms/${item.key}`);
         setIsOpen(isChildPage);
     }, [location]);
     const toggleMenu = () => {
@@ -51,7 +51,7 @@ const ElementSidebar = ({item, Icon}) => {
                                 {item.name}
                             </span>
                         </div>
-                        <span>
+                        <span className={`flex items-center space-x-2 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
                               {
                                   isOpen
                                       ? <AiOutlineMinus></AiOutlineMinus>
@@ -70,7 +70,7 @@ const ElementSidebar = ({item, Icon}) => {
                                     <li key={key}>
                                         <NavLink to={childrenItem.url}
                                                  className={({isActive}) => `${isActive ? 'text-primaryColor' : 'text-black'} flex items-center w-full p-2 transition duration-300 pl-11 group text-sm`}>
-                                            <MdOutlineKeyboardDoubleArrowRight className={`mr-2 w-4 h-4`}/> {childrenItem.name}
+                                            {childrenItem.name}
                                         </NavLink>
                                     </li>
                                 )
