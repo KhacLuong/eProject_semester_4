@@ -1,6 +1,6 @@
 package com.t2104e.biztrip.services.eloquents;
 
-import com.t2104e.biztrip.entities.UserEntity;
+import com.t2104e.biztrip.entities.User;
 import com.t2104e.biztrip.repositories.UserRepository;
 import com.t2104e.biztrip.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class UserImplService implements IUserService {
     private UserRepository userRepository;
 
     @Override
-    public List<UserEntity> getListUserByKeyword(String keyword) {
+    public List<User> getListUserByKeyword(String keyword) {
         return userRepository.findByKeyword(keyword);
     }
 }

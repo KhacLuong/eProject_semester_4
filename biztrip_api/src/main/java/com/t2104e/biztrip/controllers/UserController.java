@@ -1,7 +1,7 @@
 package com.t2104e.biztrip.controllers;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.UserEntity;
+import com.t2104e.biztrip.entities.User;
 import com.t2104e.biztrip.services.eloquents.UserImplService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class UserController {
     private final ResponseDTO RESPONSE_DTO = new ResponseDTO();
     @GetMapping("")
     public ResponseEntity<?> index(@RequestParam(value = "keyword", required = false) String keyword) {
-        List<UserEntity> users = userImplService.getListUserByKeyword(keyword);
+        List<User> users = userImplService.getListUserByKeyword(keyword);
         if (users.size() == 0) {
             return ResponseEntity.noContent().build();
         }
