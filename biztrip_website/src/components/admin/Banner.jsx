@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {BiPlus, TbFileExport} from "react-icons/all.js";
+import React from 'react';
+import {BiPlus} from "react-icons/all.js";
 import Breadcrumb from "../admin/Breadcrumb.jsx";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -8,7 +8,6 @@ const Banner = ({dataBreadcrumb, title, pathCreate, fetchData, pageNumber, perPa
     const dispatch = useDispatch()
     const handleSearch = (e) => {
         e.preventDefault()
-        console.log(keyword)
         dispatch(fetchData({pageNumber, perPage, sortField, sortDir, keyword}))
     }
     const handleReset = (e) => {

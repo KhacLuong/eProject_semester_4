@@ -16,31 +16,16 @@ import {useNavigate} from "react-router-dom";
 import {AiOutlineMinus} from "react-icons/all.js";
 
 const UtilityList = () => {
+    useDocumentTitle("Quản lý tiện ích", true)
     const theadData = [
         "#",
         'Image',
-        {
-            field: 'title',
-            name: 'Tên'
-        },
-        {
-            field: 'description',
-            name: 'Miêu tả'
-        },
-        {
-            field: 'status',
-            name: 'Trạng thái'
-        },
-        {
-            field: 'createdAt',
-            name: 'Ngày thêm vào'
-        },
-        {
-            field: 'updatedAt',
-            name: 'Ngày cập nhật'
-        }, 'Action'
+        {field: 'title', name: 'Tên'},
+        {field: 'description', name: 'Miêu tả'},
+        {field: 'status', name: 'Trạng thái'},
+        {field: 'createdAt', name: 'Ngày thêm vào'},
+        {field: 'updatedAt', name: 'Ngày cập nhật'}, 'Action'
     ]
-    useDocumentTitle("Quản lý tiện ích", true)
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const coachUtilities = useSelector(selectCoachUtility)
@@ -155,7 +140,6 @@ const UtilityList = () => {
                                   setLastItemPerPage={setLastItemPerPage}/> :
                         <></>
                 }
-
             </div>
         </>
     );

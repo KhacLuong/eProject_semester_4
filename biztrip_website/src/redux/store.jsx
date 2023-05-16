@@ -7,6 +7,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import coachUtilitySlice from "./slices/coachUtilitySlice.jsx";
 import ticketSlice from "./slices/ticketSlice.jsx";
 import fileSlice from "./slices/fileSlice.jsx";
+import coachSlice from "./slices/coachSlice.jsx";
 
 const persistConfig = {
     key: 'root',
@@ -14,6 +15,7 @@ const persistConfig = {
 }
 export const store = configureStore({
     reducer: {
+        coach: coachSlice,
         coachUtility: coachUtilitySlice,
         ticket: ticketSlice,
         file: fileSlice,

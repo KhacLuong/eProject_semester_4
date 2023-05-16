@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "file")
+//@ConfigurationProperties(prefix = "file")
 public class FileStorageProperty {
     private String uploadDir;
 }

@@ -3,6 +3,7 @@ package com.t2104e.biztrip.services.eloquents;
 import com.t2104e.biztrip.entities.CoachUtilityEntity;
 import com.t2104e.biztrip.repositories.CoachUtilityRepository;
 import com.t2104e.biztrip.services.interfaces.ICoachUtilityService;
+import com.t2104e.biztrip.utils.Helper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class CoachUtilityImplService implements ICoachUtilityService {
 
     @Override
     public Page<CoachUtilityEntity> getListCoachUtility(int pageNumber, int perPage, String sortField, String sortDir, String keyword) {
-        Sort sort = sortDir.equals("asc") ? Sort.by(Sort.Order.asc(sortField)) : Sort.by(Sort.Order.desc(sortField));
+        Sort sort = Helper.sortQuery(sortField, sortDir);
         Pageable pageable = PageRequest.of(pageNumber - 1, perPage, sort);
         return coachUtilityRepository.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
     }

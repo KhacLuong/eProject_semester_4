@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
 import {initialState} from "../../utils/helper.jsx";
-import {fetchAllCoachUtility} from "./coachUtilitySlice.jsx";
 
 export const fetchAllCoach = createAsyncThunk('coach/getAllCoach', async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
     const response = await instance.get(`coaches?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
@@ -54,5 +53,36 @@ export const coachSlice = createSlice({
             .addCase(fetchAllCoach.rejected, (state, action) => {
                 state.status = 'failed'
             })
+            .addCase(fetchGetCoachById.pending, (state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchGetCoachById.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+            })
+            .addCase(fetchGetCoachById.rejected, (state, action) => {
+                state.status = 'failed'
+            })
+            .addCase(fetchRemoveCoach.pending, (state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchRemoveCoach.fulfilled, (state, action) => {
+                const {arg: data} = action.meta
+                state.list = state.list.filter((item) => item.id !== data.id)
+                state.status = 'succeeded'
+            })
+            .addCase(fetchRemoveCoach.rejected, (state, action) => {
+                state.status = 'failed'
+            })
+            .addCase(fetchSaveCoach.pending,(state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchSaveCoach.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+            })
+            .addCase(fetchSaveCoach.rejected, (state, action) => {
+                state.status = 'failed'
+            })
     }
 })
+export const selectCoach = state => state.coach.list;
+export default coachSlice.reducer
