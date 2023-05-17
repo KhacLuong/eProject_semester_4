@@ -3,13 +3,18 @@ import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import image_add from "../../../assets/image/image_add.png";
-import {fetchSaveCoachUtility} from "../../../redux/slices/coachUtilitySlice.jsx";
-import {fetchGetCoachById} from "../../../redux/slices/coachSlice.jsx";
+import {fetchGetAllUtility, fetchGetCoachById} from "../../../redux/slices/coachSlice.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
-import {utilityFormBreadcrumb} from "../../../utils/data.jsx";
+import {coachFormBreadcrumb} from "../../../utils/data.jsx";
+import Select, {components} from 'react-select';
+import AsyncSelect from 'react-select/async';
+import {produce} from "immer"
+import makeAnimated from 'react-select/animated';
 
 const CoachForm = () => {
     useDocumentTitle("Thêm mới xe", true)
+    const animatedComponents = makeAnimated()
+    const {NoOptionsMessage} = components
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const id = useLocation().state?.id
@@ -25,7 +30,8 @@ const CoachForm = () => {
     const [errStatus, setErrStatus] = useState("")
     const [errImage, setErrImage] = useState("")
     const [disableButton, setDisableButton] = useState(false)
-
+    const [utilities, setUtilities] = useState([])
+    const [selectOption, setSelectOption] = useState(null)
     useEffect(() => {
         if (id) {
             const test = async () => {
@@ -34,13 +40,58 @@ const CoachForm = () => {
             test()
         }
     }, [id])
+    useEffect(() => {
+        const test = async () => {
+            await handleGetAllUtility()
+        }
+        test()
+    }, [])
+    const handleGetAllUtility = async () => {
+        const res = await dispatch(fetchGetAllUtility()).unwrap()
+        if (res && res.code === 200) {
+            const nextState = produce([], draft => {
+                res.data.map((item) => {
+                    if (item.status === true) {
+                        draft.push({
+                            value: item.id,
+                            label: item.title
+                        })
+                    }
+                })
+            })
+            setUtilities(nextState)
+        }
+    }
+    const CustomNoOptionsMessage = (props) => {
+        return (
+            <NoOptionsMessage {...props}>
+                Không có dữ liệu
+            </NoOptionsMessage>
+        );
+    };
+    const filter = (inputValue) => {
+        return utilities.filter((i) =>
+            i.label.toLowerCase().includes(inputValue.toLowerCase())
+        );
+    };
 
+    const loadOptions = (inputValue, callback) => {
+        setTimeout(() => {
+            callback(filter(inputValue));
+        }, 1000);
+    };
+    const handleSubmitForm = (e) => {
+        console.log(selectOption)
+    }
+    const handleResetForm = (e) => {
+
+    }
     return (
         <>
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={utilityFormBreadcrumb}/>
+                <Breadcrumb dataBreadcrumb={coachFormBreadcrumb}/>
                 <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>Thêm mới xe</h1>
             </div>
             <div data-aos="fade-right"
@@ -69,6 +120,7 @@ const CoachForm = () => {
                                           name="description"
                                           id="description"
                                           placeholder={" "}
+                                          onChange={(e) => setDescription(e.target.value)}
                                           value={description ? description : ""}
                                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none h-44">{description ? description : ''}</textarea>
                                 <label htmlFor="description"
@@ -98,13 +150,44 @@ const CoachForm = () => {
                                 }
                             </div>
                             <div className={`group relative z-0 w-full mb-6`}>
-
+                                <label htmlFor="stauts"
+                                       className="block mb-2 text-sm font-medium text-gray-900">
+                                    Lựa chọn tiện ích <span className={`text-lightColor`}>(Optional)</span>
+                                </label>
+                                <AsyncSelect
+                                    isClearable
+                                    isSearchable
+                                    isMulti
+                                    value={selectOption}
+                                    onChange={setSelectOption}
+                                    cacheOptions
+                                    defaultOptions={utilities}
+                                    loadOptions={loadOptions}
+                                    placeholder={"-- Chọn --"}
+                                    className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full `}
+                                    components={{...animatedComponents, NoOptionsMessage: CustomNoOptionsMessage}}
+                                />
                             </div>
                             <div className={`group relative z-0 w-full mb-6`}>
 
                             </div>
                             <div className={`group relative z-0 w-full mb-6`}>
 
+                            </div>
+                            <div className={`flex items-center justify-end`}>
+                                <button disabled={disableButton} onClick={handleSubmitForm}
+                                        type="submit"
+                                        className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                    {id ? 'Cập nhật' : 'Tạo'}
+                                </button>
+                                {
+                                    !id ?
+                                        <button onClick={handleResetForm}
+                                                type="reset"
+                                                className="ml-4 duration-300 bg-gray-100 text-gray-400 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
+                                        </button> :
+                                        <></>
+                                }
                             </div>
                         </div>
                     </div>

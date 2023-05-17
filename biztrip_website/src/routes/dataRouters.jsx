@@ -115,13 +115,13 @@ export const dataRouters = [
                 isAuthentication: true
             },
             {
-                path: "coaches/create",
+                path: "coaches/list/create",
                 page: CoachCarFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "coaches/edit",
+                path: "coaches/list/edit",
                 page: CoachCarFormPage,
                 isIndex: false,
                 isAuthentication: true

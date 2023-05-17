@@ -135,7 +135,18 @@ export const coachListBreadcrumb = [
     }
 ]
 export const coachFormBreadcrumb = [
-
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý xe",
+        path: `${FINAL_URL_ADMIN}/coaches/list`
+    },
+    {
+        name: "Thêm mới",
+        path: ""
+    }
 ]
 export const utilityListBreadcrumb = [
     {

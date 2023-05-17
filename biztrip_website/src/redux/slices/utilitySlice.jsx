@@ -2,40 +2,40 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
 import {initialState} from "../../utils/helper.jsx";
 
-export const fetchAllCoachUtility = createAsyncThunk(
-    'utility/getAllCoachUtility',
+export const fetchAllUtility = createAsyncThunk(
+    'utility/getAllUtility',
     async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
-        const response = await instance.get(`coach-utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
+        const response = await instance.get(`utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
         return response.data
     }
 )
-export const fetchGetCoachUtilityById = createAsyncThunk(
-    'utility/getCoachUtilityById',
+export const fetchGetUtilityById = createAsyncThunk(
+    'utility/getUtilityById',
     async ({id}) => {
         try {
-            const response = await instance.get(`coach-utilities/${id}`)
+            const response = await instance.get(`utilities/${id}`)
             return response.data;
         } catch (err) {
             console.error(err);
         }
     }
 )
-export const fetchRemoveCoachUtility = createAsyncThunk(
-    "utility/removeCoachUtility",
+export const fetchRemoveUtility = createAsyncThunk(
+    "utility/removeUtility",
     async ({id}) => {
         try {
-            const response = await instance.delete(`coach-utilities?id=${id}`)
+            const response = await instance.delete(`utilities?id=${id}`)
             return response.data;
         } catch (err) {
             console.error(err);
         }
     }
 );
-export const fetchSaveCoachUtility = createAsyncThunk(
-    "utility/saveCoachUtility",
+export const fetchSaveUtility = createAsyncThunk(
+    "utility/saveUtility",
     async ({dataUtility, navigate, toast}) => {
         try {
-            const response = await instance.post(`coach-utilities`, dataUtility)
+            const response = await instance.post(`utilities`, dataUtility)
             if (response.data.code === 200) {
                 toast.success(response.data.message)
                 await navigate("/admin/v1/cms/coaches/utilities")
@@ -47,46 +47,46 @@ export const fetchSaveCoachUtility = createAsyncThunk(
     }
 )
 
-export const coachUtilitySlice = createSlice({
-    name: 'CoachUtilities',
+export const utilitySlice = createSlice({
+    name: 'Utilities',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder
-            .addCase(fetchAllCoachUtility.pending, (state, action) => {
+            .addCase(fetchAllUtility.pending, (state, action) => {
                 state.status = 'loading'
             })
-            .addCase(fetchAllCoachUtility.fulfilled, (state, action) => {
+            .addCase(fetchAllUtility.fulfilled, (state, action) => {
                 state.list = action.payload.data
                 state.totalItems = action.payload.totalItems
                 state.totalPages = action.payload.totalPages
                 state.status = 'succeeded'
             })
-            .addCase(fetchAllCoachUtility.rejected, (state, action) => {
+            .addCase(fetchAllUtility.rejected, (state, action) => {
                 state.status = 'failed'
             })
-            .addCase(fetchRemoveCoachUtility.pending, (state, action) => {
+            .addCase(fetchRemoveUtility.pending, (state, action) => {
                 state.status = 'loading'
             })
-            .addCase(fetchRemoveCoachUtility.fulfilled, (state, action) => {
+            .addCase(fetchRemoveUtility.fulfilled, (state, action) => {
                 const {arg: data} = action.meta
                 state.list = state.list.filter((item) => item.id !== data.id)
                 state.status = 'succeeded'
             })
-            .addCase(fetchRemoveCoachUtility.rejected, (state, action) => {
+            .addCase(fetchRemoveUtility.rejected, (state, action) => {
                 state.status = 'failed'
             })
-            .addCase(fetchSaveCoachUtility.pending,(state, action) => {
+            .addCase(fetchSaveUtility.pending,(state, action) => {
                 state.status = 'loading'
             })
-            .addCase(fetchSaveCoachUtility.fulfilled, (state, action) => {
+            .addCase(fetchSaveUtility.fulfilled, (state, action) => {
                 state.status = 'succeeded'
             })
-            .addCase(fetchSaveCoachUtility.rejected, (state, action) => {
+            .addCase(fetchSaveUtility.rejected, (state, action) => {
                 state.status = 'failed'
             })
     },
 })
-export const selectCoachUtility = state => state.coachUtility.list;
-export default coachUtilitySlice.reducer
+export const selectUtility = state => state.utility.list;
+export default utilitySlice.reducer

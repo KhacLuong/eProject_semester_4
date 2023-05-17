@@ -8,7 +8,7 @@ import {message} from "../../../utils/message.jsx";
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
 import moment from "moment";
-import {fetchGetCoachUtilityById, fetchSaveCoachUtility} from "../../../redux/slices/coachUtilitySlice.jsx";
+import {fetchGetUtilityById, fetchSaveUtility} from "../../../redux/slices/utilitySlice.jsx";
 import {toast} from "react-toastify";
 import {utilityFormBreadcrumb} from "../../../utils/data.jsx";
 
@@ -17,7 +17,7 @@ const UtilityForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const id = useLocation().state?.id
-    const statusState = useSelector((state) => state.coachUtility.status)
+    const statusState = useSelector((state) => state.utility.status)
     const inputImageRef = useRef(null);
     const [imageDefault, setImageDefault] = useState(image_add)
     const [imageName, setImageName] = useState("")
@@ -32,7 +32,7 @@ const UtilityForm = () => {
     useEffect(() => {
         if (id) {
             const test = async () => {
-                const res = await dispatch(fetchGetCoachUtilityById({id})).unwrap()
+                const res = await dispatch(fetchGetUtilityById({id})).unwrap()
                 if (res && res.code === 200) {
                     setTitle(res.data.title)
                     setDescription(res.data.description)
@@ -108,7 +108,7 @@ const UtilityForm = () => {
             dataUtility.createdAt = createdAt
             dataUtility.updatedAt = createdAt
         }
-        await dispatch(fetchSaveCoachUtility({dataUtility, navigate, toast}))
+        await dispatch(fetchSaveUtility({dataUtility, navigate, toast}))
     }
     const handleResetForm = () => {
         setTitle("")

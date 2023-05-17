@@ -14,4 +14,6 @@ public interface CoachRepository extends JpaRepository<CoachEntity, Long> {
     public Page<CoachEntity> findByKeyword(String keyword, Pageable pageable);
 
     public CoachEntity getCoachEntitiesById(@Param("id") long id);
+
+//    public List<CoachUtilityEntity> getCoachEntitiesW
 }

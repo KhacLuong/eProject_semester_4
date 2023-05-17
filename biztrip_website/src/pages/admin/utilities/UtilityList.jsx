@@ -5,15 +5,14 @@ import Table from "../../../components/admin/Table.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
 import {useSelector, useDispatch} from 'react-redux'
 import {
-    fetchAllCoachUtility,
-    fetchRemoveCoachUtility,
-    selectCoachUtility,
-} from "../../../redux/slices/coachUtilitySlice.jsx";
+    fetchAllUtility,
+    fetchRemoveUtility,
+    selectUtility,
+} from "../../../redux/slices/utilitySlice.jsx";
 import {produce} from "immer"
 import {tbodyActionDefault, utilityListBreadcrumb} from "../../../utils/data.jsx";
 import moment from "moment";
 import {useNavigate} from "react-router-dom";
-import {AiOutlineMinus} from "react-icons/all.js";
 
 const UtilityList = () => {
     useDocumentTitle("Quản lý tiện ích", true)
@@ -28,10 +27,10 @@ const UtilityList = () => {
     ]
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const coachUtilities = useSelector(selectCoachUtility)
-    const status = useSelector((state) => state.coachUtility.status)
-    const totalItems = useSelector((state) => state.coachUtility.totalItems)
-    const totalPages = useSelector((state) => state.coachUtility.totalPages)
+    const utilities = useSelector(selectUtility)
+    const status = useSelector((state) => state.utility.status)
+    const totalItems = useSelector((state) => state.utility.totalItems)
+    const totalPages = useSelector((state) => state.utility.totalPages)
 
     const [tbodyData, setTbodyData] = useState([])
     const [sortField, setSortField] = useState("updatedAt")
@@ -43,13 +42,13 @@ const UtilityList = () => {
     const [lastItemPerPage, setLastItemPerPage] = useState(perPage)
     const [keyword, setKeyword] = useState("")
     useEffect(() => {
-        dispatch(fetchAllCoachUtility({pageNumber, perPage, sortField, sortDir, keyword}))
+        dispatch(fetchAllUtility({pageNumber, perPage, sortField, sortDir, keyword}))
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
 
     useEffect(() => {
-        if (coachUtilities.length >= 0) {
+        if (utilities.length >= 0) {
             const nextState = produce([], draft => {
-                coachUtilities.map((item) => {
+                utilities.map((item) => {
                     draft.push({
                         id: item?.id,
                         items: [
@@ -70,7 +69,7 @@ const UtilityList = () => {
             })
             setTbodyData(nextState)
         }
-    }, [coachUtilities]);
+    }, [utilities]);
 
     return (
         <>
@@ -83,7 +82,7 @@ const UtilityList = () => {
                     pageNumber={pageNumber}
                     setKeyword={setKeyword}
                     keyword={keyword}
-                    fetchData={fetchAllCoachUtility}/>
+                    fetchData={fetchAllUtility}/>
             <div data-aos="fade-right"
                  data-aos-delay="300" className={`block justify-start items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
                 <div className={`flex items-centers justify-center  mr-4`}>
@@ -110,7 +109,7 @@ const UtilityList = () => {
                 <Table theadData={theadData}
                        tbodyData={tbodyData}
                        tbodyAction={tbodyActionDefault}
-                       fetchDelete={fetchRemoveCoachUtility}
+                       fetchDelete={fetchRemoveUtility}
                        status={status}
                        setSortField={setSortField}
                        setSortDir={setSortDir}
@@ -121,7 +120,7 @@ const UtilityList = () => {
                                   setPageNumber={setPageNumber}
                                   sortField={sortField}
                                   sortDir={sortDir}
-                                  fetchData={fetchAllCoachUtility}
+                                  fetchData={fetchAllUtility}
                                   totalPages={totalPages}
                                   perPage={perPage}
                                   totalItems={totalItems}
