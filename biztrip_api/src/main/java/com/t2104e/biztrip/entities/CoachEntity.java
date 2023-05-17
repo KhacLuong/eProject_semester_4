@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -44,4 +45,10 @@ public class CoachEntity {
     @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "coach_utilities",
+            joinColumns = @JoinColumn(name = "coach_id"),
+            inverseJoinColumns = @JoinColumn(name = "utility_id"))
+    private Set<UtilityEntity> utilities;
 }

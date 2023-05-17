@@ -30,11 +30,18 @@ export const fetchSaveCoach = createAsyncThunk(
             const response = await instance.post(`coaches`, data)
             return response.data
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 )
-
+export const fetchGetAllUtility = createAsyncThunk('coach/getUtility', async () => {
+    try {
+        const response = await instance.get(`coaches/get-all-utility`)
+        return response.data
+    } catch (err) {
+        console.error(err)
+    }
+})
 export const coachSlice = createSlice({
     name: 'Coaches',
     initialState,

@@ -1,7 +1,9 @@
 package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.entities.CoachEntity;
+import com.t2104e.biztrip.entities.UtilityEntity;
 import com.t2104e.biztrip.repositories.CoachRepository;
+import com.t2104e.biztrip.repositories.UtilityRepository;
 import com.t2104e.biztrip.services.interfaces.ICoachService;
 import com.t2104e.biztrip.utils.Helper;
 import jakarta.transaction.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -19,6 +22,8 @@ import java.util.Objects;
 public class CoachImplService implements ICoachService {
     @Autowired
     private CoachRepository coachRepository;
+    @Autowired
+    UtilityRepository utilityRepository;
     @Override
     public Page<CoachEntity> getListCoach(int pageNumber, int perPage, String sortField, String sortDir, String keyword) {
         Sort sort = Helper.sortQuery(sortField, sortDir);
@@ -39,5 +44,10 @@ public class CoachImplService implements ICoachService {
     @Override
     public void saveCoach(CoachEntity coach) {
         coachRepository.save(coach);
+    }
+
+    @Override
+    public List<UtilityEntity> getAllUtility() {
+        return utilityRepository.findAll();
     }
 }

@@ -2,6 +2,7 @@ package com.t2104e.biztrip.controllers;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.CoachEntity;
+import com.t2104e.biztrip.entities.UtilityEntity;
 import com.t2104e.biztrip.services.eloquents.CoachImplService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -73,6 +74,16 @@ public class CoachController {
         RESPONSE_DTO.setStatus("SUCCESS");
         RESPONSE_DTO.setMessage("Find successfully");
         RESPONSE_DTO.setData(coach);
+        return ResponseEntity.ok(RESPONSE_DTO);
+    }
+
+    @GetMapping("/get-all-utility")
+    public ResponseEntity<?> getAll() {
+        List<UtilityEntity> ls = coachImplService.getAllUtility();
+        RESPONSE_DTO.setCode(200);
+        RESPONSE_DTO.setStatus("SUCCESS");
+        RESPONSE_DTO.setMessage("Find successfully");
+        RESPONSE_DTO.setData(ls);
         return ResponseEntity.ok(RESPONSE_DTO);
     }
 }

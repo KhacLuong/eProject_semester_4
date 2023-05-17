@@ -46,7 +46,7 @@ const CoachList = () => {
         <>
             <Banner dataBreadcrumb={coachListBreadcrumb}
                     title={"Danh sách xe"}
-                    pathCreate={"/admin/v1/cms/coaches/create"}
+                    pathCreate={"/admin/v1/cms/coaches/list/create"}
                     perPage={perPage}
                     sortField={sortField}
                     sortDir={sortDir}

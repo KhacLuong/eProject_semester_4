@@ -22,3 +22,6 @@
 .footerTextHover {
     @apply text-sm font-medium hover:text-primaryColor_hover cursor-pointer duration-300
 }
+input[type='text']:focus {
+    @apply appearance-none outline-none shadow-none ring-offset-transparent ring-0 ring-offset-0 ring-transparent;
+}
