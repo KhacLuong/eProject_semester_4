@@ -11,7 +11,8 @@ export const initialState = {
     totalItems: 0,
     status: 'idle',
 }
-export const handleChangeImage = (e, setImageDefault, setImageName) => {
+export const handleChangeImage = (e, setImageDefault, setImageName, setErrMsg) => {
+    setErrMsg("")
     const fileObj = e.target.files && e.target.files[0];
 
     if (!fileObj) {
