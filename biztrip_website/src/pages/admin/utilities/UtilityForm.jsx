@@ -51,7 +51,7 @@ const UtilityForm = () => {
     }, [statusState])
 
     const handleValidate = () => {
-        if (title.trim() === "") {
+        if (title === "") {
             setErrTitle(message.error.title.isEmpty)
             return false
         } else if (status === 2) {
@@ -64,29 +64,37 @@ const UtilityForm = () => {
             setErrImage(message.error.file.max)
             return false
         }
-
         return true
     }
     const handleSubmitForm = async (e) => {
         e.preventDefault()
         setDisableButton(true)
-        const containerName = 'utilities'
-        let imagePath = ""
-        if (!handleValidate()) {
-            return
-        }
-        if (imageName) {
-            const data = new FormData()
-            data.append('file', imageName)
-            const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
-            if (uploadFile && uploadFile.code === 200) {
-                imagePath = uploadFile.data
-            }
-        }
         const dataUtility = {
             'title': title,
             'description': description,
             'status': status,
+        }
+        const containerName = 'utilities'
+        let imagePath = ""
+
+        if (!handleValidate()) {
+            setDisableButton(false)
+            return
+        }
+        if (imageDefault) {
+            if (imageName) {
+                const data = new FormData()
+                data.append('file', imageName)
+                const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
+                if (uploadFile && uploadFile.code === 200) {
+                    imagePath = uploadFile.data
+                    setImageDefault(imagePath)
+                }
+            }
+        } else {
+            setDisableButton(false)
+            setErrImage(message.error.file.isEmpty)
+            return
         }
         if (id) {
             dataUtility.id = id
@@ -109,7 +117,20 @@ const UtilityForm = () => {
         setCreatedAt("")
         setStatus(2)
         setImageDefault(image_add)
+        setErrStatus("")
+        setErrTitle("")
+        setErrImage("")
+        setDisableButton(false)
     }
+    const handleOnChangeTitle = (e) => {
+        setTitle(e.target.value)
+        setErrTitle("")
+    }
+    const handleOnChangeStatus = (e) => {
+        setStatus(+e.target.value)
+        setErrStatus("")
+    }
+
     return (
         <>
             <div data-aos="fade-up"
@@ -120,7 +141,7 @@ const UtilityForm = () => {
             </div>
             <div data-aos="fade-right"
                  data-aos-delay="300"
-                 className={`flex flex-col p-4 my-4 mx-4 rounded-2xl shadow-xl shadow-gray-200 `}>
+                 className={`flex flex-col p-4 my-4 mx-4 rounded-2xl shadow-xl shadow-gray-200`}>
                 <form className={``}>
                     <div className="grid md:grid-cols-2 md:gap-6">
                         <div className="w-full">
@@ -132,11 +153,11 @@ const UtilityForm = () => {
                                        placeholder=" "
                                        autoComplete={`off`}
                                        required
-                                       onChange={(e) => setTitle(e.target.value)}
+                                       onChange={(e) => handleOnChangeTitle(e)}
                                        defaultValue={title ? title : ''}/>
                                 <label htmlFor="title"
-                                       className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Tiêu đề <span className={`text-dangerColor-default_2`}>*</span>
+                                       className="peer-focus:font-medium absolute text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                    Tiêu đề
                                 </label>
                                 {
                                     errTitle && errTitle.length > 0 ?
@@ -157,19 +178,19 @@ const UtilityForm = () => {
                                           onChange={(e) => setDescription(e.target.value)}
                                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none h-44">{description ? description : ''}</textarea>
                                 <label htmlFor="description"
-                                       className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Miêu tả
+                                       className="peer-focus:font-medium absolute text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                    Miêu tả <span className={`text-lightColor`}>(Optional)</span>
                                 </label>
                             </div>
                             <div className={`group relative z-0 w-full mb-6`}>
                                 <label htmlFor="stauts"
                                        className="block mb-2 text-sm font-medium text-gray-900">
-                                    Lựa chọn trạng thái <span className={`text-dangerColor-default_2`}>*</span>
+                                    Lựa chọn trạng thái
                                 </label>
                                 <select id="stauts"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         value={status}
-                                        onChange={(e) => setStatus(+e.target.value)}>
+                                        onChange={(e) => handleOnChangeStatus(e)}>
                                     <option value={2}>-- Chọn --</option>
                                     <option value={0}>Disable</option>
                                     <option value={1}>Active</option>
@@ -201,17 +222,8 @@ const UtilityForm = () => {
                             </div>
                         </div>
                         <div className={`col-span-1 h-full w-full`}>
-                            {
-                                errImage && errImage.length > 0 ?
-                                    <p
-                                        className={`text-dangerColor-default_2 text-sm font-medium flex items-center justify-center`}>
-                                        {errImage}
-                                    </p> :
-                                    <></>
-                            }
-
                             <input className={`hidden`}
-                                   onChange={(e) => handleChangeImage(e, setImageDefault, setImageName)}
+                                   onChange={(e) => handleChangeImage(e, setImageDefault, setImageName, setErrImage)}
                                    accept="image/png"
                                    ref={inputImageRef}
                                    type={`file`}/>
@@ -226,6 +238,14 @@ const UtilityForm = () => {
                                      alt="Extra large avatar"
                                      onClick={() => handleOpenFileInput(inputImageRef)}/>
                             </div>
+                            {
+                                errImage && errImage.length > 0 ?
+                                    <p
+                                        className={`text-dangerColor-default_2 text-sm font-medium flex items-center justify-center mt-6`}>
+                                        {errImage}
+                                    </p> :
+                                    <></>
+                            }
                         </div>
                     </div>
                 </form>
