@@ -172,3 +172,36 @@ export const utilityFormBreadcrumb = [
         path: ""
     }
 ]
+
+export const schedules = [
+    {
+        id: 1,
+        departure: 'Hà Nội',
+        stopOver: [
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+        ],
+        destination: 'Thanh Hóa',
+        startTime: '06:00:00',
+        endTime: '11:00:00'
+    },
+    {
+        id: 2,
+        departure: 'Thanh Hóa',
+        stopOver: [
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+        ],
+        destination: 'Hà Nội',
+        startTime: '12:00:00',
+        endTime: '16:00:00'
+    },
+    {
+        id: 3,
+        departure: 'Hà Nội',
+        stopOver: [
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+        ],
+        destination: 'Thanh Hóa',
+        startTime: '15:00:00',
+        endTime: '21:00:00'
+    }
+]

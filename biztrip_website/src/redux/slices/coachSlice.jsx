@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
-import {initialState} from "../../utils/helper.jsx";
+import {initialState} from "../../utils/initial.jsx";
 
 export const fetchAllCoach = createAsyncThunk('coach/getAllCoach', async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
     const response = await instance.get(`coaches?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
@@ -37,6 +37,14 @@ export const fetchSaveCoach = createAsyncThunk(
 export const fetchGetAllUtility = createAsyncThunk('coach/getUtility', async () => {
     try {
         const response = await instance.get(`coaches/get-all-utility`)
+        return response.data
+    } catch (err) {
+        console.error(err)
+    }
+})
+export const fetchGetAllSchedule = createAsyncThunk('coach/getSchedule', async () => {
+    try {
+        const response = await instance.get(`coaches/get-all-schedule`)
         return response.data
     } catch (err) {
         console.error(err)

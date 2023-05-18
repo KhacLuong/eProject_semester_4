@@ -2,26 +2,30 @@ export const message = {
     error: {
         email: {
             isInvalid: 'Email không hợp lệ!',
-            isEmpty: 'Email không được để trống!'
+            isEmpty: 'Vui lòng nhập email!'
         },
         password: {
             confirm_password: 'Confirmation password is incorrect',
-            isEmpty: 'Password không được để trống!',
-            isShort: 'Password bắt buộc phải nhiều hơn 6 ký tự!'
+            isEmpty: 'Vui lòng nhập mật khẩu!',
+            isShort: 'Mật khẩu bắt buộc phải nhiều hơn 6 ký tự!'
         },
         name: {
             name_has_number: 'Invalid user name',
             name_is_empty: 'Username is required'
         },
         title: {
-            isEmpty: 'Tiêu đề không được để trống!',
+            isEmpty: 'Vui lòng nhập tiêu đề',
         },
         status: {
-            isEmpty: 'Status không được để trống!'
+            isEmpty: 'Vui lòng chọn trạng thái!'
         },
         file: {
-            isEmpty: 'Ảnh không được để trống!',
-            max: 'Dung lượng ảnh không được vượt quá 6MB!'
+            isEmpty: 'Vui lòng chọn ảnh!',
+            max: 'Dung lượng ảnh không được vượt quá 5MB!',
+            notAllowed: 'File không hợp lệ'
+        },
+        plateNumber: {
+            isEmpty: 'Vui lòng nhập biển số xe!'
         }
     },
     success: 'Successfully added new'
