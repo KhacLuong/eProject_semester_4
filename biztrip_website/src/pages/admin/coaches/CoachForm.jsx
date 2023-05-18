@@ -6,11 +6,39 @@ import image_add from "../../../assets/image/image_add.png";
 import {fetchGetAllUtility, fetchGetCoachById} from "../../../redux/slices/coachSlice.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
 import {coachFormBreadcrumb} from "../../../utils/data.jsx";
-import Select, {components} from 'react-select';
+import {components} from 'react-select';
 import AsyncSelect from 'react-select/async';
 import {produce} from "immer"
 import makeAnimated from 'react-select/animated';
+import {initialCoachFormState} from "../../../utils/initial.jsx";
+import {
+    validateEmpty,
+    validateFile,
+    validateForm,
+    validateSelectOption
+} from "../../../utils/helper.jsx";
+import {message} from "../../../utils/message.jsx";
+import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
+import {
+    Tabs,
+    TabsHeader,
+    TabsBody,
+    Tab,
+    TabPanel,
+} from "@material-tailwind/react";
 
+const formCoachValidationRules = [
+    {
+        fieldName: "plateNumber",
+        validationFn: validateEmpty,
+        errorMessage: message.error.plateNumber.isEmpty
+    },
+    {
+        fieldName: "status",
+        validationFn: validateSelectOption,
+        errorMessage: message.error.status.isEmpty
+    },
+]
 const CoachForm = () => {
     useDocumentTitle("Thêm mới xe", true)
     const animatedComponents = makeAnimated()
@@ -18,20 +46,15 @@ const CoachForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const id = useLocation().state?.id
-    const statusState = useSelector((state) => state.coach.status)
-    const inputImageRef = useRef(null);
     const [imageDefault, setImageDefault] = useState(image_add)
-    const [imageName, setImageName] = useState("")
-    const [plateNumber, setPlateNumber] = useState("")
-    const [totalSeats, setTotalSeats] = useState(0)
-    const [status, setStatus] = useState("")
-    const [description, setDescription] = useState("")
-    const [createdAt, setCreatedAt] = useState("")
-    const [errStatus, setErrStatus] = useState("")
-    const [errImage, setErrImage] = useState("")
     const [disableButton, setDisableButton] = useState(false)
     const [utilities, setUtilities] = useState([])
     const [selectOption, setSelectOption] = useState(null)
+    const [formState, setFormState] = useState(initialCoachFormState)
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileError, setFileError] = useState("");
+    const fileInputRef = useRef(null);
+
     useEffect(() => {
         if (id) {
             const test = async () => {
@@ -46,6 +69,27 @@ const CoachForm = () => {
         }
         test()
     }, [])
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        setFileError("")
+    };
+    const handleImageClick = () => {
+        fileInputRef.current.click();
+    };
+    const handleInputChange = (event) => {
+        const {name, value} = event.target
+        setFormState((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+    const handleSelectChange = (selectedOption) => {
+        setFormState((preState) => ({
+            ...preState,
+            status: selectedOption.target.value,
+        }));
+    }
     const handleGetAllUtility = async () => {
         const res = await dispatch(fetchGetAllUtility()).unwrap()
         if (res && res.code === 200) {
@@ -74,18 +118,77 @@ const CoachForm = () => {
             i.label.toLowerCase().includes(inputValue.toLowerCase())
         );
     };
-
+    const handleFormReset = () => {
+        setDisableButton(false)
+        setFormState(initialCoachFormState);
+    };
     const loadOptions = (inputValue, callback) => {
         setTimeout(() => {
             callback(filter(inputValue));
         }, 1000);
     };
-    const handleSubmitForm = (e) => {
-        console.log(selectOption)
-    }
-    const handleResetForm = (e) => {
+    const handleSubmitForm = async (e) => {
+        e.preventDefault()
+        const errors = validateForm(formState, formCoachValidationRules);
+        const fileError = validateFile(selectedFile)
 
+        if (fileError) {
+            setFileError(fileError);
+            return;
+        } else {
+            // const containerName = 'coaches'
+            // let imagePath = ""
+            // const data = new FormData()
+            // data.append('file', selectedFile)
+            // const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
+            // if (uploadFile && uploadFile.code === 200) {
+            //     imagePath = uploadFile.data
+            //     // setImageDefault(imagePath)
+            // }
+            // setFormState((prevState) => ({
+            //     ...prevState,
+            //     imagePath: imagePath
+            // }))
+        }
+        console.log(formState)
+        if (Object.keys(errors).length === 0) {
+            setDisableButton(true)
+            try {
+                // await axios...
+
+                setFormState(initialCoachFormState)
+                setSelectedFile(null);
+                setFileError("");
+                setDisableButton(false);
+            } catch (error) {
+                setDisableButton(false)
+            }
+
+            // Form is valid, proceed with submission
+            // ...
+        } else {
+            // Form has errors, handle them accordingly
+            // ...
+        }
     }
+    const dataTab = [
+        {
+            label: "Thông tin cơ bản",
+            value: "tab-1",
+        },
+        {
+            label: "Lộ trình",
+            value: "tab-2",
+        },
+        {
+            label: "Vị trí ghế ngồi",
+            value: "tab-3",
+        },
+        {
+            label: "Ảnh thu nhỏ",
+            value: "tab-4",
+        },
+    ]
     return (
         <>
             <div data-aos="fade-up"
@@ -98,98 +201,149 @@ const CoachForm = () => {
                  data-aos-delay="300"
                  className={`flex flex-col p-4 my-4 mx-4 rounded-2xl shadow-xl shadow-gray-200`}>
                 <form className={``}>
-                    <div className={`grid md:grid-cols-2 mb:gap-6`}>
-                        <div className={`w-full`}>
-                            <div className={`group relative z-0 w-full mb-6`}>
-                                <input type={`text`}
-                                       name={"plateNumber"}
-                                       id={"plateNumber"}
-                                       className={"block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"}
-                                       placeholder={" "}
-                                       autoComplete={`off`}
-                                       required
-                                       defaultValue={plateNumber ? plateNumber : ''}/>
-                                <label htmlFor="plateNumber"
-                                       className="peer-focus:font-medium absolute  text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Biển số xe
-                                </label>
-                            </div>
-                            <div className={`group relative z-0 w-full mb-6`}>
-                                <textarea required
-                                          autoComplete={`off`}
-                                          name="description"
+                    <Tabs value="tab-1" className={`overflow-visible`}>
+                        <TabsHeader className="w-1/2 rounded-none border-b border-blue-gray-50 bg-transparent mb-6 py-4"
+                                    indicatorProps={{
+                                        className: "bg-transparent border-b-2 border-primaryColor shadow-none mt-4 rounded-none",
+                                    }}>
+                            {dataTab.map(({ label, value }) => (
+                                <Tab key={value} value={value} className={`before:content[''] before:inline-block before:absolute before:w-0 before:bg-primaryColor before:h-[2px] before:bottom-[-16px] hover:before:w-full hover:before:duration-300 `}>
+                                    {label}
+                                </Tab>
+                            ))}
+                        </TabsHeader>
+                        <TabsBody className={`overflow-visible`} animate={{
+                            initial: {y: 250},
+                            mount: {y: 0},
+                            unmount: {y: 250},
+                        }}>
+                            <TabPanel value={`tab-1`} className={``}>
+                                <div className={`grid md:grid-cols-2 mb:gap-6`}>
+                                    <div className={`w-full`}>
+                                        <div className={`group relative z-0 w-full mb-6`}>
+                                            <input type={"text"}
+                                                   name={"plateNumber"}
+                                                   value={formState.plateNumber}
+                                                   onChange={handleInputChange}
+                                                   className={"block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"}
+                                                   placeholder={" "}
+                                                   autoComplete={`off`}
+                                                   required/>
+                                            <label htmlFor="plateNumber"
+                                                   className="peer-focus:font-medium absolute  text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                Biển số xe
+                                            </label>
+                                        </div>
+                                        <div className={`group relative z-0 w-full mb-6`}>
+                                <textarea name="description"
                                           id="description"
                                           placeholder={" "}
-                                          onChange={(e) => setDescription(e.target.value)}
-                                          value={description ? description : ""}
-                                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none h-44">{description ? description : ''}</textarea>
-                                <label htmlFor="description"
-                                       className="peer-focus:font-medium absolute text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Miêu tả <span className={`text-lightColor`}>(Optional)</span>
-                                </label>
-                            </div>
-                            <div className={`group relative z-0 w-full mb-6`}>
-                                <label htmlFor="stauts"
-                                       className="block mb-2 text-sm font-medium text-gray-900">
-                                    Lựa chọn trạng thái
-                                </label>
-                                <select id="stauts"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        value={status}>
-                                    <option value={2}>-- Chọn --</option>
-                                    <option value={0}>Disable</option>
-                                    <option value={1}>Active</option>
-                                </select>
-                                {
-                                    errStatus && errStatus.length > 0 ?
-                                        <span
-                                            className={`text-dangerColor-default_2 text-sm font-medium`}>
-                                            {errStatus}
-                                        </span> :
-                                        <></>
-                                }
-                            </div>
-                            <div className={`group relative z-0 w-full mb-6`}>
-                                <label htmlFor="stauts"
-                                       className="block mb-2 text-sm font-medium text-gray-900">
-                                    Lựa chọn tiện ích <span className={`text-lightColor`}>(Optional)</span>
-                                </label>
-                                <AsyncSelect
-                                    isClearable
-                                    isSearchable
-                                    isMulti
-                                    value={selectOption}
-                                    onChange={setSelectOption}
-                                    cacheOptions
-                                    defaultOptions={utilities}
-                                    loadOptions={loadOptions}
-                                    placeholder={"-- Chọn --"}
-                                    className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full `}
-                                    components={{...animatedComponents, NoOptionsMessage: CustomNoOptionsMessage}}
-                                />
-                            </div>
-                            <div className={`group relative z-0 w-full mb-6`}>
+                                          onChange={handleInputChange}
+                                          value={formState.description}
+                                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none h-44"></textarea>
+                                            <label htmlFor="description"
+                                                   className="peer-focus:font-medium absolute text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                Miêu tả <span className={`text-lightColor`}>(Optional)</span>
+                                            </label>
+                                        </div>
+                                        <div className={`group relative z-0 w-full mb-6`}>
+                                            <label htmlFor="status"
+                                                   className="block mb-2 text-sm font-medium text-gray-900">
+                                                Lựa chọn trạng thái
+                                            </label>
+                                            <select id="status"
+                                                    name={"status"}
+                                                    onChange={handleSelectChange}
+                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                    defaultValue={formState.status}>
+                                                <option value={""}>-- Chọn --</option>
+                                                <option value={"disable"}>Vô hiệu hóa</option>
+                                                <option value={"active"}>Đang hoạt động</option>
+                                                <option value={"maintenance"}>Bảo trì</option>
+                                            </select>
+                                        </div>
+                                        <div className={`group relative z-50 w-full mb-6`}>
+                                            <label htmlFor="stauts"
+                                                   className="block mb-2 text-sm font-medium text-gray-900">
+                                                Lựa chọn tiện ích <span
+                                                className={`text-lightColor`}>(Optional)</span>
+                                            </label>
+                                            <AsyncSelect
+                                                isClearable
+                                                isSearchable
+                                                isMulti
+                                                value={selectOption}
+                                                onChange={setSelectOption}
+                                                cacheOptions
+                                                defaultOptions={utilities}
+                                                loadOptions={loadOptions}
+                                                placeholder={"-- Chọn --"}
+                                                className={`bg-gray-50 z-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full `}
+                                                components={{
+                                                    ...animatedComponents,
+                                                    NoOptionsMessage: CustomNoOptionsMessage
+                                                }}
+                                            />
+                                        </div>
 
-                            </div>
-                            <div className={`group relative z-0 w-full mb-6`}>
-
-                            </div>
-                            <div className={`flex items-center justify-end`}>
-                                <button disabled={disableButton} onClick={handleSubmitForm}
-                                        type="submit"
-                                        className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-                                    {id ? 'Cập nhật' : 'Tạo'}
-                                </button>
-                                {
-                                    !id ?
-                                        <button onClick={handleResetForm}
-                                                type="reset"
-                                                className="ml-4 duration-300 bg-gray-100 text-gray-400 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
-                                        </button> :
-                                        <></>
-                                }
-                            </div>
-                        </div>
+                                    </div>
+                                    <div className={`col-span-1 h-full w-full`}>
+                                        <input className={`hidden`}
+                                               onChange={handleFileChange}
+                                               accept="image/png"
+                                               ref={fileInputRef}
+                                               type={`file`}/>
+                                        <div className={`flex items-center justify-center cursor-pointer`}>
+                                            <img style={{
+                                                backgroundSize: "cover",
+                                                backgroundPosition: "center",
+                                                objectFit: "cover"
+                                            }}
+                                                 className="aspect-square rounded-md w-1/2 h-1/2 bg-gray-50 shadow-xl shadow-gray-200"
+                                                 src={selectedFile ? window.URL.createObjectURL(selectedFile) : imageDefault}
+                                                 alt="Ảnh đại diện"
+                                                 onClick={handleImageClick}/>
+                                        </div>
+                                        {
+                                            fileError &&
+                                            <span
+                                                className={`text-dangerColor-default_2 text-sm font-medium flex items-center justify-center mt-6`}>
+                                    {fileError}
+                                </span>
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                            <TabPanel value={`tab-2`}>
+                                <h2>Content for Tab 2</h2>
+                                <p>This is the content of Tab 2.</p>
+                            </TabPanel>
+                            <TabPanel value={`tab-3`}>
+                                <h2>Content for Tab 3</h2>
+                                <p>This is the content of Tab 3.</p>
+                            </TabPanel>
+                            <TabPanel value={`tab-4`}
+                            >
+                                <h2>Content for Tab 4</h2>
+                                <p>This is the content of Tab 3.</p>
+                            </TabPanel>
+                        </TabsBody>
+                    </Tabs>
+                    <div className={`flex items-center justify-end`}>
+                        <button disabled={disableButton}
+                                onClick={handleSubmitForm}
+                                type="submit"
+                                className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                            {id ? 'Cập nhật' : 'Tạo'}
+                        </button>
+                        {
+                            !id ?
+                                <button onClick={handleFormReset}
+                                        type="reset"
+                                        className="ml-4 duration-300 bg-gray-100 text-gray-400 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
+                                </button> :
+                                <></>
+                        }
                     </div>
                 </form>
             </div>

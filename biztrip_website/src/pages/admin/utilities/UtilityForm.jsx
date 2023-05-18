@@ -17,7 +17,6 @@ const UtilityForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const id = useLocation().state?.id
-    const statusState = useSelector((state) => state.utility.status)
     const inputImageRef = useRef(null);
     const [imageDefault, setImageDefault] = useState(image_add)
     const [imageName, setImageName] = useState("")
@@ -44,11 +43,6 @@ const UtilityForm = () => {
             test()
         }
     }, [id])
-    useEffect(() => {
-        if (statusState === 'succeeded') {
-            setDisableButton(false)
-        }
-    }, [statusState])
 
     const handleValidate = () => {
         if (title === "") {
@@ -218,7 +212,6 @@ const UtilityForm = () => {
                                         </button> :
                                         <></>
                                 }
-
                             </div>
                         </div>
                         <div className={`col-span-1 h-full w-full`}>
@@ -233,7 +226,7 @@ const UtilityForm = () => {
                                     backgroundPosition: "center",
                                     objectFit: "cover"
                                 }}
-                                     className="aspect-square rounded-full w-1/3 h-1/3 bg-gray-50 shadow-xl shadow-gray-200"
+                                     className="aspect-square rounded-md w-1/2 h-1/2 bg-gray-50 shadow-xl shadow-gray-200"
                                      src={imageDefault}
                                      alt="Extra large avatar"
                                      onClick={() => handleOpenFileInput(inputImageRef)}/>

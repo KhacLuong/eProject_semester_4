@@ -1,12 +1,12 @@
 package com.t2104e.biztrip.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -51,4 +51,7 @@ public class CoachEntity {
             joinColumns = @JoinColumn(name = "coach_id"),
             inverseJoinColumns = @JoinColumn(name = "utility_id"))
     private Set<UtilityEntity> utilities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coaches")
+    private List<ThumbnailEntity> thumbnails;
 }
