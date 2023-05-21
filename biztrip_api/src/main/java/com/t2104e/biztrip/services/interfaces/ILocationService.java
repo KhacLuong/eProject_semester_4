@@ -9,7 +9,7 @@ public interface ILocationService {
     public Page<LocationEntity> getListLocations(int pageNumber, int perPage, String sortField, String sortDir, String keyword);
     public LocationEntity getLocationById(long id);
     public boolean delete(long id);
-    public boolean update(LocationEntity location);
+    public LocationEntity update(LocationEntity location);
     public LocationEntity create(LocationDto locationDto);
     public boolean checkDubName(String name);
     public LocationEntity findAllByName(String name);

@@ -65,10 +65,10 @@ public class LocationImpIService implements ILocationService {
     }
 
     @Override
-    public boolean update(LocationEntity location) {
+    public LocationEntity update(LocationEntity location) {
             location.setUpdatedAt(new Date());
-            locationRepo.save(location);
-            return true;
+        return  locationRepo.save(location);
+
     }
 
     @Override

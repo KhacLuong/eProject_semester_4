@@ -11,4 +11,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
     @Query("SELECT sc from schedules sc WHERE concat(sc.departure,sc.startTime, sc.endTime, sc.createdAt, sc.updatedAt, sc.destination) like %?1%")
     public Page<ScheduleEntity> findByKeyword(String keyword, Pageable pageable);
+
 }

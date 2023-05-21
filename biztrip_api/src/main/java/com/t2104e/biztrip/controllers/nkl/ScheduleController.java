@@ -143,11 +143,11 @@ public class ScheduleController {
 //                RESPONSE_DTO.setMessage("Duplicate Name");
 //                return ResponseEntity.ok(RESPONSE_DTO);
 //            }
-            scheduleService.update(request);
+            ScheduleEntity schedule = scheduleService.update(request);
             RESPONSE_DTO.setCode(Status.SUCCESS_CODE);
             RESPONSE_DTO.setStatus(Status.SUCCESS);
             RESPONSE_DTO.setMessage("update location successfully");
-            RESPONSE_DTO.setData(request);
+            RESPONSE_DTO.setData(schedule);
             return ResponseEntity.ok(RESPONSE_DTO);
         } catch (Exception e) {
             return ResponseEntity.status(Status.INTERN_SERVER_ERROR_CODE).build();

@@ -78,8 +78,11 @@ public class ScheduleImplService implements IScheduleService {
     }
 
     @Override
-    public boolean update(ScheduleUpdateRequest scheduleDto) {
-        ScheduleEntity schedule = convertDtoToEntity(scheduleDto);
+    public ScheduleEntity update(ScheduleUpdateRequest scheduleDto) {
+        ScheduleEntity schedule = getScheduleById(scheduleDto.getId());
+        if (schedule==null)
+            return null;
+        schedule.getLocations().clear();
         schedule.setLocations(new HashSet<>());
         if (scheduleDto.getLocation_ids()!=null){
             for(long id:scheduleDto.getLocation_ids()){
@@ -88,9 +91,12 @@ public class ScheduleImplService implements IScheduleService {
                     schedule.getLocations().add(location);
             }
         }
+        schedule.setDeparture(scheduleDto.getDeparture());
+        schedule.setDestination(scheduleDto.getDestination());
+        schedule.setStartTime(scheduleDto.getStartTime());
         schedule.setUpdatedAt(new Date());
-        scheduleRepo.save(schedule);
-       return true;
+         scheduleRepo.save(schedule);
+       return schedule;
 
     }
 

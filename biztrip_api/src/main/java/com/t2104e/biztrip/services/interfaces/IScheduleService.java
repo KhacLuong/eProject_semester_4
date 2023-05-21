@@ -10,5 +10,5 @@ public interface IScheduleService {
     public ScheduleEntity getScheduleById(long id);
     public boolean delete(long id);
     public ScheduleEntity create(ScheduleNewRequest scheduleDto);
-    public boolean update(ScheduleUpdateRequest scheduleDto);
+    public ScheduleEntity update(ScheduleUpdateRequest scheduleDto);
 }

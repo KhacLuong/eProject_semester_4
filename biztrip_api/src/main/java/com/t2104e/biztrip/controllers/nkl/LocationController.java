@@ -166,10 +166,11 @@ public class LocationController {
                     return ResponseEntity.ok(RESPONSE_DTO);
                 }
                 request.setCreatedAt(location.getCreatedAt());
-                locationService.update(request);
+              LocationEntity location1 =   locationService.update(request);
                 RESPONSE_DTO.setCode(Status.SUCCESS_CODE);
                 RESPONSE_DTO.setStatus(Status.SUCCESS);
                 RESPONSE_DTO.setMessage("Update successfully");
+                RESPONSE_DTO.setData(location1);
                 return ResponseEntity.ok(RESPONSE_DTO);
             }
             return ResponseEntity.notFound().build();
