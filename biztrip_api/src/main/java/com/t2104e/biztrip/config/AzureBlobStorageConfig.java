@@ -3,9 +3,16 @@ package com.t2104e.biztrip.config;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.common.StorageSharedKeyCredential;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Configuration
 public class AzureBlobStorageConfig {
@@ -24,5 +31,25 @@ public class AzureBlobStorageConfig {
                 .endpoint(blobEndpoint)
                 .credential(new StorageSharedKeyCredential(accountName, accountKey))
                 .buildClient();
+    }
+
+//    Converter<String, Date> stringToDateConverter = new Converter<String, Date>() {
+//        @Override
+//        public Date convert(MappingContext<String, Date> context) {
+//            String dateString = context.getSource();
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            try {
+//                return dateFormat.parse(dateString);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//    };
+//
+//        modelMapper.addConverter(stringToDateConverter);
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

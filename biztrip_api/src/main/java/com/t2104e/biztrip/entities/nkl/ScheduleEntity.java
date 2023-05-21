@@ -1,13 +1,12 @@
 package com.t2104e.biztrip.entities.nkl;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 
 @Builder
@@ -24,43 +23,48 @@ public class ScheduleEntity {
     private long id;
 
     @Basic
-    @Column(name = "departure")
+    @NotEmpty(message = "this field is mandatory")
+    @Column(name = "departure", nullable = false)
     private String departure;
 
 
-    @Basic
-    @Column(name = "stopover")
-    private String stopover;
+//    @Basic
+//    @NotEmpty(message = "this field is mandatory")
+//    @Column(name = "stopover", nullable = false)
+//    private String stopOver;
     private String destination;
 
 
     @Basic
-    @Column(name = "start_time")
+//    @NotNull(message = "this field is mandatory")
+    @Column(name = "start_time", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date start_time;
+    private Date startTime;
 
 
     @Basic
-    @Column(name = "end_time")
+//    @NotNull(message = "this field is mandatory")
+    @Column(name = "end_time", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date end_time;
+    private Date endTime;
 
 
     @Basic
-    @Column(name = "create_at", columnDefinition="TIMESTAMP")
+    @Column(name = "create_at", columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date create_at;
+    private Date createdAt;
 
 
     @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date update_at;
+    private Date updatedAt;
 
-
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("schedule")
-    private List<ScheduleLocationEntity> scheduleLocationEntities = new ArrayList<>();
-
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
+    @JoinTable(
+            name = "schedule_location",
+            joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
+    private Set<LocationEntity> locations;
 
 }

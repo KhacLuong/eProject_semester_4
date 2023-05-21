@@ -1,15 +1,17 @@
 package com.t2104e.biztrip.entities.nkl;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Builder
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,19 +25,25 @@ public class LocationEntity {
     private long id;
 
     @Basic
-    @Column(name = "location_name")
-    private String location_name;
+    @NotEmpty(message = "this field is mandatory")
+    @NotNull(message = "this field is mandatory")
+    @Column(name = "location_name", unique = true)
+    private String name;
 
     @Basic
-    @Column(name = "created_at" ,columnDefinition="TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
 
 
     @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
-//    @OneToMany(mappedBy = "location")
-//    private List<ScheduleLocationEntity> scheduleLocationEntities;
+
+
+    @ManyToMany(mappedBy = "locations",cascade = {CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
+    @JsonBackReference
+    private Set<ScheduleEntity> schedules;
+
 }
