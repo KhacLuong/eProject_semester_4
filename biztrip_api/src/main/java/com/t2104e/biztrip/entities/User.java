@@ -26,11 +26,11 @@ public class User implements UserDetails {
     @Column(name = "id")
     private long id;
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotEmpty(message = "Email không được bỏ trống!")
     private String email;
     @Basic
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true)
     @NotEmpty(message = "Số điện thoại không được bỏ trống!")
     @Size(min = 10, max = 12, message = "Số điện thoại tối đa từ 10 đến 12 chữ số")
     private String phoneNumber;

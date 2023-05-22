@@ -1,7 +1,5 @@
 package com.t2104e.biztrip.controllers;
 
-import com.t2104e.biztrip.entities.User;
-import com.t2104e.biztrip.services.ResponseService;
 import com.t2104e.biztrip.services.eloquents.UserImplService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +13,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserImplService userImplService;
+
     @GetMapping("")
     public ResponseEntity<?> index(@RequestParam(value = "keyword", required = false) String keyword) {
-        List<User> users = userImplService.getListUserByKeyword(keyword);
-        if (users.size() == 0) {
-            return ResponseEntity.noContent().build();
+        if (keyword != null && !keyword.isEmpty())
+        {
+            return ResponseEntity.ok(userImplService.getListUsersByKeyword(keyword));
         }
-        return ResponseEntity.ok(
-                ResponseService.ok(
-                        users,
-                        ""
-                )
-        );
+        return ResponseEntity.ok(userImplService.getListUsers());
     }
 }

@@ -1,12 +1,13 @@
 package com.t2104e.biztrip.services;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
+import jakarta.annotation.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 
 @Service
 public class ResponseService {
-    public static <T> ResponseDTO<T> ok(T data, String message) {
+    public static <T> ResponseDTO<T> ok(@Nullable T data, String message) {
         ResponseDTO<T> response = new ResponseDTO<>();
         response.setCode(HttpStatus.OK.value());
         response.setStatus("Success");

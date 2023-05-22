@@ -3,7 +3,6 @@ package com.t2104e.biztrip.controllers;
 import com.t2104e.biztrip.dto.AuthenticationRequest;
 import com.t2104e.biztrip.dto.RegisterRequest;
 import com.t2104e.biztrip.services.AuthenticationService;
-import com.t2104e.biztrip.services.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,36 +25,21 @@ public class AuthenticationController {
     public ResponseEntity<?> register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(
-                ResponseService.created(
-                        authenticationService.register(request),
-                        "Tạo tài khoản mới thành công."
-                )
-        );
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/admin-register")
     public ResponseEntity<?> admin_register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(
-                ResponseService.created(
-                        authenticationService.admin_register(request),
-                        "Tạo tài khoản quản trị mới thành công."
-                )
-        );
+        return ResponseEntity.ok(authenticationService.admin_register(request));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(
-                ResponseService.ok(
-                        authenticationService.authenticate(request),
-                        "Đăng nhập thành công."
-                )
-        );
+        return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
     @PostMapping("/refresh-token")
@@ -63,11 +47,6 @@ public class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        return ResponseEntity.ok(
-                ResponseService.ok(
-                        authenticationService.refreshToken(request, response),
-                        "Refresh token success"
-                )
-        );
+        return ResponseEntity.ok(authenticationService.refreshToken(request, response));
     }
 }

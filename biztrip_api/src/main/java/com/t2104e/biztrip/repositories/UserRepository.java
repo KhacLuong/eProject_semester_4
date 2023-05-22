@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u from users u where concat(u.email, u.phoneNumber) like %?1%")
     public List<User> findByKeyword(String Keyword);
     public Optional<User> findByRefreshToken(String token);
+    public Optional<User> findByPhoneNumber(String phoneNumber);
 }
