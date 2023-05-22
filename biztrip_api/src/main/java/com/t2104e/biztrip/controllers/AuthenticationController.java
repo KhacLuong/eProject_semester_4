@@ -1,10 +1,9 @@
 package com.t2104e.biztrip.controllers;
 
 import com.t2104e.biztrip.dto.AuthenticationRequest;
-import com.t2104e.biztrip.dto.AuthenticationResponse;
 import com.t2104e.biztrip.dto.RegisterRequest;
-import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.services.AuthenticationService;
+import com.t2104e.biztrip.services.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,40 +20,42 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final AuthenticationService service;
-    private final ResponseDTO RESPONSE_DTO = new ResponseDTO();
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
             @RequestBody RegisterRequest request
     ) {
-        RESPONSE_DTO.setCode(200);
-        RESPONSE_DTO.setStatus("success");
-        RESPONSE_DTO.setMessage("Tạo tài khoản mới thành công.");
-        RESPONSE_DTO.setData(service.register(request));
-        return ResponseEntity.ok(RESPONSE_DTO);
+        return ResponseEntity.ok(
+                ResponseService.created(
+                        authenticationService.register(request),
+                        "Tạo tài khoản mới thành công."
+                )
+        );
     }
 
-    @PostMapping("/register-admin")
+    @PostMapping("/admin-register")
     public ResponseEntity<?> admin_register(
             @RequestBody RegisterRequest request
     ) {
-        RESPONSE_DTO.setCode(200);
-        RESPONSE_DTO.setStatus("success");
-        RESPONSE_DTO.setMessage("Tạo tài khoản mới thành công.");
-        RESPONSE_DTO.setData(service.admin_register(request));
-        return ResponseEntity.ok(RESPONSE_DTO);
+        return ResponseEntity.ok(
+                ResponseService.created(
+                        authenticationService.admin_register(request),
+                        "Tạo tài khoản quản trị mới thành công."
+                )
+        );
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        RESPONSE_DTO.setCode(200);
-        RESPONSE_DTO.setStatus("success");
-        RESPONSE_DTO.setMessage("Đăng nhập thành công.");
-        RESPONSE_DTO.setData(service.authenticate(request));
-        return ResponseEntity.ok(RESPONSE_DTO);
+        return ResponseEntity.ok(
+                ResponseService.ok(
+                        authenticationService.authenticate(request),
+                        "Đăng nhập thành công."
+                )
+        );
     }
 
     @PostMapping("/refresh-token")
@@ -62,10 +63,11 @@ public class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        RESPONSE_DTO.setCode(200);
-        RESPONSE_DTO.setStatus("success");
-        RESPONSE_DTO.setMessage("");
-        RESPONSE_DTO.setData(service.refreshToken(request, response));
-        return ResponseEntity.ok(RESPONSE_DTO);
+        return ResponseEntity.ok(
+                ResponseService.ok(
+                        authenticationService.refreshToken(request, response),
+                        "Refresh token success"
+                )
+        );
     }
 }
