@@ -27,20 +27,21 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.authorizeHttpRequests(requests -> requests.requestMatchers(
-                                "/api/v1/auth/**",
-                                "/v2/api-docs",
-                                "/v3/api-docs",
-                                "/v3/api-docs/**",
-                                "/swagger-resources",
-                                "/swagger-resources/**",
-                                "/configuration/ui",
-                                "/configuration/security",
-                                "/swagger-ui/**",
-                                "/webjars/**",
-                                "/swagger-ui.html").permitAll()
-                        .anyRequest().authenticated()
-                );
+        http.authorizeHttpRequests().anyRequest().permitAll();
+//        http.authorizeHttpRequests(requests -> requests.requestMatchers(
+//                                "/api/v1/auth/**",
+//                                "/v2/api-docs",
+//                                "/v3/api-docs",
+//                                "/v3/api-docs/**",
+//                                "/swagger-resources",
+//                                "/swagger-resources/**",
+//                                "/configuration/ui",
+//                                "/configuration/security",
+//                                "/swagger-ui/**",
+//                                "/webjars/**",
+//                                "/swagger-ui.html").permitAll()
+//                        .anyRequest().authenticated()
+//                );
 //                .formLogin(form -> form
 //                        .loginPage("/login")
 //                        .permitAll()
@@ -48,8 +49,8 @@ public class WebSecurityConfiguration {
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+//            .authenticationProvider(authenticationProvider)
+//            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
             .logoutUrl("/api/v1/auth/logout")
             .addLogoutHandler(logoutHandler)
