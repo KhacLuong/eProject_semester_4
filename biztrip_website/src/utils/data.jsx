@@ -11,7 +11,7 @@ import {AiOutlineLike} from "react-icons/ai";
 import {RiBillLine} from "react-icons/ri"
 import {BsPersonVcard} from "react-icons/bs"
 
-const FINAL_URL_ADMIN = "/admin/v1"
+const FINAL_URL_ADMIN = "/admin/v1/cms"
 
 export const dataSidebarAdmin = [
     {
@@ -23,14 +23,14 @@ export const dataSidebarAdmin = [
     {
         name: "Quản lý",
         isSubcategory: false,
-        url: "",
         icon: <></>,
     },
     {
-        name: "Người dùng",
+        name: "Đơn đặt vé",
+        key: 'booking-ticket',
         isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/users`,
-        icon: FiUsers,
+        url: `${FINAL_URL_ADMIN}/bookings`,
+        icon: RiBillLine,
     },
     {
         name: "Doanh thu",
@@ -39,10 +39,62 @@ export const dataSidebarAdmin = [
         icon: BiDollarCircle,
     },
     {
-        name: "Đơn đặt vé",
+        name: "Xe",
         isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/bookings`,
-        icon: RiBillLine,
+        icon: TbBus,
+        key: 'coaches',
+        children: [
+            {
+                name: "Danh sách xe",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/list`,
+                icon: <></>,
+            },
+            {
+                name: "Lộ trình",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/schedules`,
+                icon: <></>,
+            },
+            {
+                name: "Vé",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/tickets`,
+                icon: <></>,
+            },
+            {
+                name: "Tiện ích",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/utilities`,
+                icon: <></>,
+            },
+        ]
+    },
+    {
+        name: "Người dùng",
+        isSubcategory: true,
+        icon: FiUsers,
+        key: 'users',
+        children: [
+            {
+                name: 'Tài khoản',
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/accounts`,
+                icon: <></>,
+            },
+            {
+                name: "Nhân viên",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/staffs`,
+                icon: <></>,
+            },
+            {
+                name: "Phản hồi",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/testimonials`,
+                icon: <></>,
+            },
+        ]
     },
     {
         name: "Tin tức",
@@ -51,46 +103,10 @@ export const dataSidebarAdmin = [
         icon: BiNews,
     },
     {
-        name: "Chứng nhận phản hồi",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/testimonials`,
-        icon: BiCommentDetail,
-    },
-    {
-        name: "Đối tác",
+        name: "Cài đặt",
         isSubcategory: false,
         url: "",
         icon: <></>,
-    },
-    {
-        name: "Xe",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/coaches`,
-        icon: TbBus,
-    },
-    {
-        name: "Nhân viên",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/staffs`,
-        icon: BsPersonVcard,
-    },
-    {
-        name: "Lộ trình",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/schedules`,
-        icon: TbRoad,
-    },
-    {
-        name: "Vé",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/tickets`,
-        icon: HiOutlineTicket,
-    },
-    {
-        name: "Tiện ích",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/utilities`,
-        icon: AiOutlineLike,
     },
     {
         name: "Chính sách",
@@ -99,13 +115,7 @@ export const dataSidebarAdmin = [
         icon: MdOutlinePolicy,
     },
     {
-        name: "Hiển thị",
-        isSubcategory: false,
-        url: "",
-        icon: <></>,
-    },
-    {
-        name: "Cài đặt",
+        name: "Thông tin",
         isSubcategory: true,
         url: `${FINAL_URL_ADMIN}/display-settings`,
         icon: GrServices,
@@ -113,3 +123,85 @@ export const dataSidebarAdmin = [
 ]
 export const tbodyActionDefault = ['edit', 'delete']
 export const tbodyActionSpecial = ['view', 'edit', 'delete']
+
+export const coachListBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý xe",
+        path: ""
+    }
+]
+export const coachFormBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý xe",
+        path: `${FINAL_URL_ADMIN}/coaches/list`
+    },
+    {
+        name: "Thêm mới",
+        path: ""
+    }
+]
+export const utilityListBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý tiện ích",
+        path: ""
+    }
+]
+export const utilityFormBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý tiện ích",
+        path: `${FINAL_URL_ADMIN}/coaches/utilities`
+    },
+    {
+        name: "Thêm mới",
+        path: ""
+    }
+]
+
+export const schedules = [
+    {
+        id: 1,
+        departure: 'Hà Nội',
+        stopOver: [
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên','Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+        ],
+        destination: 'Thanh Hóa',
+        startTime: '06:00:00',
+        endTime: '11:00:00'
+    },
+    {
+        id: 2,
+        departure: 'Thanh Hóa',
+        stopOver: [
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+        ],
+        destination: 'Hà Nội',
+        startTime: '12:00:00',
+        endTime: '16:00:00'
+    },
+    {
+        id: 3,
+        departure: 'Hà Nội',
+        stopOver: [
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+        ],
+        destination: 'Thanh Hóa',
+        startTime: '15:00:00',
+        endTime: '21:00:00'
+    }
+]

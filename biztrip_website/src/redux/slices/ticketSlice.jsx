@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
-import {initialState} from "../../utils/helper.jsx";
-import {coachUtilitySlice} from "./coachUtilitySlice.jsx";
+import {initialState} from "../../utils/initial.jsx";
 
 export const ticketSlice = createSlice({
     name: 'Ticket',

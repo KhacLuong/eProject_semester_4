@@ -24,6 +24,9 @@ public class NewsEntity {
     @Size(max = 255)
     private String title;
     @Basic
+    @Column(name = "image_path", nullable = false)
+    private String imagePath;
+    @Basic
     @Column(name = "summary", nullable = false,columnDefinition = "text")
     private String summary;
     @Basic
@@ -46,11 +49,11 @@ public class NewsEntity {
     @Column(name = "view")
     private long view;
     @Basic
-    @Column(name = "created_at" ,columnDefinition="TIMESTAMP")
+    @Column(name = "created_at" ,columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
     @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 }

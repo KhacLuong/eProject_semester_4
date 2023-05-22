@@ -49,7 +49,7 @@ export const dataRouters = [
         ]
     },
     {
-        path: "admin/v1",
+        path: "admin/v1/cms",
         page: AdminHomePage,
         isIndex: false,
         isAuthentication: true,
@@ -67,19 +67,19 @@ export const dataRouters = [
                 isAuthentication: true,
             },
             {
-                path: "users",
+                path: "users/accounts",
                 page: UserListPage,
                 isIndex: false,
                 isAuthentication: true,
             },
             {
-                path: "users/create",
+                path: "users/accounts/create",
                 page: UserFormPage,
                 isIndex: false,
                 isAuthentication: true,
             },
             {
-                path: "users/edit",
+                path: "users/accounts/edit",
                 page: UserFormPage,
                 isIndex: false,
                 isAuthentication: true,
@@ -109,19 +109,19 @@ export const dataRouters = [
                 isAuthentication: true
             },
             {
-                path: "coaches",
+                path: "coaches/list",
                 page: CoachCarListPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "coaches/create",
+                path: "coaches/list/create",
                 page: CoachCarFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "coaches/edit",
+                path: "coaches/list/edit",
                 page: CoachCarFormPage,
                 isIndex: false,
                 isAuthentication: true
@@ -145,37 +145,37 @@ export const dataRouters = [
                 isAuthentication: true
             },
             {
-                path: "testimonials",
+                path: "users/testimonials",
                 page: TestimonialListPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "utilities",
+                path: "coaches/utilities",
                 page: UtilityListPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "utilities/create",
+                path: "coaches/utilities/create",
                 page: UtilityFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "utilities/edit",
+                path: "coaches/utilities/edit",
                 page: UtilityFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "schedules",
+                path: "coaches/schedules",
                 page: ScheduleListPage,
                 isIndex: false,
                 isAuthentication: true
             },
             {
-                path: "tickets",
+                path: "coaches/tickets",
                 page: TicketListPage,
                 isIndex: false,
                 isAuthentication: true
@@ -187,7 +187,7 @@ export const dataRouters = [
                 isAuthentication: true
             },
             {
-                path: "staffs",
+                path: "users/staffs",
                 page: StaffListPage,
                 isIndex: false,
                 isAuthentication: true

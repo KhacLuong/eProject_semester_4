@@ -4,10 +4,10 @@ import {composeWithDevTools} from "@redux-devtools/extension";
 import {persistStore, persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage" // defaults to localStorage for web
 import {configureStore} from "@reduxjs/toolkit";
-import counterSlice from "./slices/counterSlice.jsx";
-import coachUtilitySlice from "./slices/coachUtilitySlice.jsx";
+import utilitySlice from "./slices/utilitySlice.jsx";
 import ticketSlice from "./slices/ticketSlice.jsx";
 import fileSlice from "./slices/fileSlice.jsx";
+import coachSlice from "./slices/coachSlice.jsx";
 
 const persistConfig = {
     key: 'root',
@@ -15,8 +15,8 @@ const persistConfig = {
 }
 export const store = configureStore({
     reducer: {
-        counter: counterSlice,
-        coachUtility: coachUtilitySlice,
+        coach: coachSlice,
+        utility: utilitySlice,
         ticket: ticketSlice,
         file: fileSlice,
     }

@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
-import {initialState} from "../../utils/helper.jsx";
+import {initialState} from "../../utils/initial.jsx";
 
 export const fetchCreateFile = createAsyncThunk(
     'file/createFile',
@@ -9,7 +9,7 @@ export const fetchCreateFile = createAsyncThunk(
             const response = await instance.post(`file?containerName=${containerName}`, data)
             return response.data
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 )

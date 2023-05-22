@@ -1,3 +1,55 @@
+import {message} from "./message.jsx";
+
+export const validateForm = (formData, validationRules) => {
+    let errors = {};
+
+    validationRules.forEach((rule) => {
+        const { fieldName, validationFn, errorMessage } = rule;
+        const fieldValue = formData[fieldName];
+
+        if (typeof fieldValue === "string" && fieldValue.trim() === "") {
+            // Check if the field value is an empty string (for input fields)
+            errors[fieldName] = errorMessage;
+        } else if (Array.isArray(fieldValue) && fieldValue.length === 0) {
+            // Check if the field value is an empty array (for select options with multiple selection)
+            errors[fieldName] = errorMessage;
+        } else if (fieldValue instanceof FileList && fieldValue.length === 0) {
+            // Check if the field value is an empty FileList (for file inputs)
+            errors[fieldName] = errorMessage;
+        } else if (!validationFn(fieldValue)) {
+            // Perform custom validation using the provided function
+            errors[fieldName] = errorMessage;
+        }
+    });
+
+    return errors;
+}
+export const validateEmpty = (value) => {
+    return value.trim() !== ""
+}
+export const validateSelectOption = (value) => {
+    return value !== null
+}
+export const validateFile = (file) => {
+    // Check if a file is selected
+    if (!file) {
+        return message.error.file.isEmpty;
+    }
+    // Check the file type
+    const allowedTypes = ["image/jpeg", "image/png"];
+    if (!allowedTypes.includes(file.type)) {
+        return message.error.file.notAllowed;
+    }
+
+    // Check the file size (in bytes)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+        return message.error.file.max;
+    }
+
+    // File is valid
+    return null;
+};
 export const validateEmail = (email) => {
     return String(email)
         .toLowerCase()
@@ -5,15 +57,10 @@ export const validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
-export const initialState = {
-    list: [],
-    totalPages: 0,
-    totalItems: 0,
-    status: 'idle',
-}
-export const handleChangeImage = (e, setImageDefault, setImageName) => {
-    const fileObj = e.target.files && e.target.files[0];
 
+export const handleChangeImage = (e, setImageDefault, setImageName, setErrMsg) => {
+    setErrMsg("")
+    const fileObj = e.target.files && e.target.files[0];
     if (!fileObj) {
         return;
     }
@@ -25,48 +72,4 @@ export const handleChangeImage = (e, setImageDefault, setImageName) => {
 }
 export const handleOpenFileInput = (inputImageRef) => {
     inputImageRef.current.click()
-}
-export const THIS_YEAR = +(new Date().getFullYear())
-
-export const THIS_MONTH = +(new Date().getMonth()) + 1;
-export const WEEK_DAYS = {
-    Sunday: "CN",
-    Monday: "T2",
-    Tuesday: "T3",
-    Wednesday: "T4",
-    Thursday: "T5",
-    Friday: "T6",
-    Saturday: "T7"
-}
-export const CALENDAR_MONTHS = {
-    January: "Th01",
-    February: "Th02",
-    March: "Th03",
-    April: "Th04",
-    May: "Th05",
-    June: "Th06",
-    July: "Th07",
-    August: "Th08",
-    September: "Th09",
-    October: "Th10",
-    November: "Th11",
-    December: "Th12"
-}
-export const getMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
-    const months30 = [4, 6, 9, 11];
-    const leapYear = year % 4 === 0;
-    return month === 2
-        ? leapYear
-            ? 29
-            : 28
-        : months30.includes(month)
-            ? 30
-            : 31;
-}
-export const CALENDAR_WEEKS = 6;
-export const zeroPad = (value, length) => {
-    return `${value}`.padStart(length, '0');
-}
-export const getMonthFirstDay = (month = THIS_MONTH, year = THIS_YEAR) => {
-    return +(new Date(`${year}-${zeroPad(month, 2)}-01`).getDay()) + 1;
 }
