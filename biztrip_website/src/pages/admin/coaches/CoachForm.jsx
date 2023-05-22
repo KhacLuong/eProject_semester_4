@@ -26,6 +26,7 @@ import {
     Tab,
     TabPanel,
 } from "@material-tailwind/react";
+import CoachSchedule from "../../../components/admin/CoachSchedule.jsx";
 
 const formCoachValidationRules = [
     {
@@ -278,7 +279,7 @@ const CoachForm = () => {
                                                 defaultOptions={utilities}
                                                 loadOptions={loadOptions}
                                                 placeholder={"-- Chọn --"}
-                                                className={`bg-gray-50 z-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full `}
+                                                className={`react-select-custom bg-gray-50 z-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full `}
                                                 components={{
                                                     ...animatedComponents,
                                                     NoOptionsMessage: CustomNoOptionsMessage
@@ -315,8 +316,7 @@ const CoachForm = () => {
                                 </div>
                             </TabPanel>
                             <TabPanel value={`tab-2`}>
-                                <h2>Content for Tab 2</h2>
-                                <p>This is the content of Tab 2.</p>
+                                <CoachSchedule/>
                             </TabPanel>
                             <TabPanel value={`tab-3`}>
                                 <h2>Content for Tab 3</h2>
