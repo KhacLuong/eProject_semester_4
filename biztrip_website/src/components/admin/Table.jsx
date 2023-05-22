@@ -60,7 +60,7 @@ const Table = ({
                     <div className={`overflow-hidden shadow-lg`}>
                         <table className={`w-full text-sm text-left text-gray-500`}>
                             <thead
-                                className={`text-xs text-gray-700 uppercase bg-gray-50`}>
+                                className={`text-xs text-gray-700 capitalize bg-gray-50`}>
                             <tr>
                                 {
                                     theadData.map((item, index) => {

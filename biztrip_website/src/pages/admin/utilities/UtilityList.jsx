@@ -84,23 +84,23 @@ const UtilityList = () => {
                     keyword={keyword}
                     fetchData={fetchAllUtility}/>
             <div data-aos="fade-right"
-                 data-aos-delay="300" className={`block justify-start items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
-                <div className={`flex items-centers justify-center  mr-4`}>
-                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Hiển thị</span>
-                    <select value={perPage} onChange={(e) => setPerPage(+e.target.value)}
+                 data-aos-delay="300" className={`block justify-end items-center p-4 mx-4 mt-4 mb-6 bg-white rounded-2xl shadow-xl shadow-gray-200 lg:p-5 sm:flex`}>
+                <div className={`flex items-centers justify-center mr-8`}>
+                    <label htmlFor={`filter`} className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</label>
+                    <select id={`filter`} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option>...</option>
+                        <option>Trạng thái: Active</option>
+                        <option>Trạng thái: Disable</option>
+                    </select>
+                </div>
+                <div className={`flex items-centers justify-center`}>
+                    <label htmlFor={`perPage`} className={`text-sm whitespace-nowrap flex items-center mr-2`}>Hiển thị</label>
+                    <select id={`perPage`} value={perPage} onChange={(e) => setPerPage(+e.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
                         <option value={6}>6</option>
                         <option value={9}>9</option>
                         <option value={12}>12</option>
                         <option value={15}>15</option>
-                    </select>
-                </div>
-                <div className={`flex items-centers justify-center`}>
-                    <span className={`text-sm whitespace-nowrap flex items-center mr-2`}>Lọc</span>
-                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                        <option>...</option>
-                        <option>Trạng thái: Active</option>
-                        <option>Trạng thái: Disable</option>
                     </select>
                 </div>
             </div>

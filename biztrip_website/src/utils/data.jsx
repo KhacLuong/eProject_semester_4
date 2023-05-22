@@ -178,7 +178,7 @@ export const schedules = [
         id: 1,
         departure: 'Hà Nội',
         stopOver: [
-            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+            'Bỉm Sơn','Ninh Bình', 'Hưng Yên','Bỉm Sơn','Ninh Bình', 'Hưng Yên'
         ],
         destination: 'Thanh Hóa',
         startTime: '06:00:00',
