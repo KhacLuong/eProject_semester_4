@@ -2,6 +2,7 @@ package com.t2104e.biztrip.controllers;
 
 import com.t2104e.biztrip.services.eloquents.UserImplService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,14 @@ public class UserController {
     public ResponseEntity<?> index(@RequestParam(value = "keyword", required = false) String keyword) {
         if (keyword != null && !keyword.isEmpty())
         {
-            return ResponseEntity.ok(userImplService.getListUsersByKeyword(keyword));
+            return new ResponseEntity<>(
+                    userImplService.getListUsersByKeyword(keyword),
+                    HttpStatusCode.valueOf(userImplService.getListUsersByKeyword(keyword).getCode())
+            );
         }
-        return ResponseEntity.ok(userImplService.getListUsers());
+        return new ResponseEntity<>(
+                userImplService.getListUsers(),
+                HttpStatusCode.valueOf(userImplService.getListUsers().getCode())
+        );
     }
 }

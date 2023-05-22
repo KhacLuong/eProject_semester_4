@@ -1,6 +1,7 @@
 package com.t2104e.biztrip.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -26,6 +27,7 @@ public class User implements UserDetails {
     @Column(name = "id")
     private long id;
     @Basic
+    @Email
     @Column(name = "email", unique = true)
     @NotEmpty(message = "Email không được bỏ trống!")
     private String email;

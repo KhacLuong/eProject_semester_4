@@ -6,6 +6,7 @@ import com.t2104e.biztrip.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,21 +26,30 @@ public class AuthenticationController {
     public ResponseEntity<?> register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(authenticationService.register(request));
+        return new ResponseEntity<>(
+                authenticationService.register(request),
+                HttpStatusCode.valueOf(authenticationService.register(request).getCode())
+        );
     }
 
     @PostMapping("/admin-register")
     public ResponseEntity<?> admin_register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(authenticationService.admin_register(request));
+        return new ResponseEntity<>(
+                authenticationService.admin_register(request),
+                HttpStatusCode.valueOf(authenticationService.admin_register(request).getCode())
+        );
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        return new ResponseEntity<>(
+                authenticationService.authenticate(request),
+                HttpStatusCode.valueOf(authenticationService.authenticate(request).getCode())
+        );
     }
 
     @PostMapping("/refresh-token")
@@ -47,6 +57,9 @@ public class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        return ResponseEntity.ok(authenticationService.refreshToken(request, response));
+        return new ResponseEntity<>(
+                authenticationService.refreshToken(request, response),
+                HttpStatusCode.valueOf(authenticationService.refreshToken(request, response).getCode())
+        );
     }
 }

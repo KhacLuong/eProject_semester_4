@@ -33,6 +33,14 @@ public class ResponseService {
         return response;
     }
 
+    public static <T> ResponseDTO<T> conflict(String message) {
+        ResponseDTO<T> response = new ResponseDTO<>();
+        response.setCode(HttpStatus.CONFLICT.value());
+        response.setStatus("Conflict");
+        response.setMessage(message);
+        return response;
+    }
+
     public static <T> ResponseDTO<T> badRequest(String message) {
         ResponseDTO<T> response = new ResponseDTO<>();
         response.setCode(HttpStatus.BAD_REQUEST.value());

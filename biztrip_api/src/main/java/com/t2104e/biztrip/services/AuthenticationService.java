@@ -32,11 +32,11 @@ public class AuthenticationService {
     public ResponseDTO<?> register(RegisterRequest request) {
         var existUserByEmail = userRepository.findByEmail(request.getEmail());
         if (existUserByEmail.isPresent()) {
-            return ResponseService.badRequest("Đã tồn tại tài khoản với email này. Hãy chọn email khác.");
+            return ResponseService.conflict("Đã tồn tại tài khoản với email này. Hãy chọn email khác.");
         }
         var existUserByPhoneNumber = userRepository.findByPhoneNumber(request.getPhoneNumber());
         if (existUserByPhoneNumber.isPresent()) {
-            return ResponseService.badRequest("Đã tồn tại tài khoản với số điện thoại này. Hãy chọn số điện thoại khác.");
+            return ResponseService.conflict("Đã tồn tại tài khoản với số điện thoại này. Hãy chọn số điện thoại khác.");
         }
 
         var user = User.builder()
@@ -61,11 +61,11 @@ public class AuthenticationService {
     public ResponseDTO<?> admin_register(RegisterRequest request) {
         var existUser = userRepository.findByEmail(request.getEmail());
         if (existUser.isPresent()) {
-            return ResponseService.badRequest("Đã tồn tại tài khoản với email này. Hãy chọn email khác.");
+            return ResponseService.conflict("Đã tồn tại tài khoản với email này. Hãy chọn email khác.");
         }
         var existUserByPhoneNumber = userRepository.findByPhoneNumber(request.getPhoneNumber());
         if (existUserByPhoneNumber.isPresent()) {
-            return ResponseService.badRequest("Đã tồn tại tài khoản với số điện thoại này. Hãy chọn số điện thoại khác.");
+            return ResponseService.conflict("Đã tồn tại tài khoản với số điện thoại này. Hãy chọn số điện thoại khác.");
         }
         var user = User.builder()
                 .email(request.getEmail())
@@ -148,9 +148,9 @@ public class AuthenticationService {
                         .build();
                 return ResponseService.ok(data, "JWT được tạo mới thành công.");
             } else {
-                ResponseService.badRequest("Token đã hết hạn.");
+                ResponseService.unAuthorized("Token đã hết hạn.");
             }
         }
-        return ResponseService.noContent("Không tìm thấy tài khoản tồn tại với email lấy từ refresh token.");
+        return ResponseService.notFound("Không tìm thấy tài khoản tồn tại với email lấy từ refresh token.");
     }
 }
