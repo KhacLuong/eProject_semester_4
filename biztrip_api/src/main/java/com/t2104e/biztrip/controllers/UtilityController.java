@@ -3,6 +3,7 @@ package com.t2104e.biztrip.controllers;
 import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.UtilityEntity;
 import com.t2104e.biztrip.services.eloquents.UtilityImplService;
+import com.t2104e.biztrip.services.interfaces.IUtilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/utilities")
 public class UtilityController {
     @Autowired
-    private UtilityImplService utilityImplService;
+    private IUtilityService iUtilityService;
 
     private final ResponseDTO RESPONSE_DTO = new ResponseDTO();
 
@@ -26,7 +27,7 @@ public class UtilityController {
                                    @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField,
                                    @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
                                    @RequestParam(value = "keyword", required = false) String keyword) {
-        Page<UtilityEntity> page = utilityImplService.getListUtility(pageNumber, perPage, sortField, sortDir, keyword);
+        Page<UtilityEntity> page = iUtilityService.getListUtility(pageNumber, perPage, sortField, sortDir, keyword);
         long totalItems = page.getTotalElements();
         int totalPages = page.getTotalPages();
         List<UtilityEntity> list = page.getContent();
@@ -46,7 +47,7 @@ public class UtilityController {
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody UtilityEntity utility) {
         try {
-            utilityImplService.saveUtility(utility);
+            iUtilityService.saveUtility(utility);
             RESPONSE_DTO.setCode(200);
             RESPONSE_DTO.setStatus("SUCCESS");
             RESPONSE_DTO.setMessage("Create utility successfully");
@@ -60,9 +61,9 @@ public class UtilityController {
     @DeleteMapping("")
     public ResponseEntity<?> delete(@RequestParam("id") long id) {
         try {
-            Optional<UtilityEntity> op = utilityImplService.getOneUtilityById(id);
+            Optional<UtilityEntity> op = iUtilityService.getOneUtilityById(id);
             if (op.isPresent()) {
-                utilityImplService.deleteUtility(op.get());
+                iUtilityService.deleteUtility(op.get());
                 RESPONSE_DTO.setCode(200);
                 RESPONSE_DTO.setStatus("SUCCESS");
                 RESPONSE_DTO.setMessage("Delete utility successfully");
@@ -76,7 +77,7 @@ public class UtilityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> detail(@PathVariable(name = "id") long id) {
-        Optional<UtilityEntity> op = utilityImplService.getOneUtilityById(id);
+        Optional<UtilityEntity> op = iUtilityService.getOneUtilityById(id);
         if (op.isPresent()) {
             RESPONSE_DTO.setCode(200);
             RESPONSE_DTO.setStatus("SUCCESS");

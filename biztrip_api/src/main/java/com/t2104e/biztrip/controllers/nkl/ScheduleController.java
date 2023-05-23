@@ -2,10 +2,8 @@ package com.t2104e.biztrip.controllers.nkl;
 
 
 import com.t2104e.biztrip.dto.*;
-import com.t2104e.biztrip.entities.CoachUtilityEntity;
 import com.t2104e.biztrip.entities.nkl.LocationEntity;
 import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
-import com.t2104e.biztrip.services.interfaces.ILocationService;
 import com.t2104e.biztrip.services.interfaces.IScheduleService;
 import com.t2104e.biztrip.services.util.Status;
 import com.t2104e.biztrip.services.util.ValidationHandle;
