@@ -1,7 +1,7 @@
 package com.t2104e.biztrip.controllers;
 
-import com.t2104e.biztrip.dto.AuthenticationRequest;
-import com.t2104e.biztrip.dto.RegisterRequest;
+import com.t2104e.biztrip.command.AuthenticationRequest;
+import com.t2104e.biztrip.command.RegisterRequest;
 import com.t2104e.biztrip.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

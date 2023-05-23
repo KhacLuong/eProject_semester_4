@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.dto;
+package com.t2104e.biztrip.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String email;
-    private String password;
-    private String phoneNumber;
+public class AuthenticationRequest {
+
+  private String email;
+  private String password;
 }

@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.dto;
+package com.t2104e.biztrip.command;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
