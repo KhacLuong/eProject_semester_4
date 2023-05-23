@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.services;
+package com.t2104e.biztrip.services.eloquents;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

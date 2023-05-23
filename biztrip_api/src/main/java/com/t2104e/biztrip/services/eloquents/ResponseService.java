@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.services;
+package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
 import jakarta.annotation.Nullable;
@@ -12,6 +12,28 @@ public class ResponseService {
         response.setCode(HttpStatus.OK.value());
         response.setStatus("Success");
         response.setMessage(message);
+        response.setData(data);
+        return response;
+    }
+
+    public static <T> ResponseDTO<T> ok(
+            @Nullable T data, String message,
+            int pageNumber,
+            int perPage,
+            long totalItems,
+            int totalPages,
+            String sortField,
+            String sortDir) {
+        ResponseDTO<T> response = new ResponseDTO<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setStatus("Success");
+        response.setMessage(message);
+        response.setPageNumber(pageNumber);
+        response.setPerPage(perPage);
+        response.setTotalItems(totalItems);
+        response.setTotalPages(totalPages);
+        response.setSortField(sortField);
+        response.setSortDir(sortDir);
         response.setData(data);
         return response;
     }

@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.services;
+package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.command.AuthenticationRequest;
 import com.t2104e.biztrip.dto.AuthenticationResponse;
