@@ -36,7 +36,7 @@ export const fetchSaveUtility = createAsyncThunk(
     async ({dataUtility, navigate, toast}) => {
         try {
             const response = await instance.post(`utilities`, dataUtility)
-            if (response.data.code === 200) {
+            if (response.data.code === 201) {
                 toast.success(response.data.message)
                 await navigate("/admin/v1/cms/coaches/utilities")
             }

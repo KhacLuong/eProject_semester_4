@@ -1,17 +1,18 @@
 package com.t2104e.biztrip.services.eloquents;
 
+import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.UtilityEntity;
 import com.t2104e.biztrip.repositories.UtilityRepository;
 import com.t2104e.biztrip.services.interfaces.IUtilityService;
 import com.t2104e.biztrip.utils.Helper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,24 +23,45 @@ public class UtilityImplService implements IUtilityService {
     private UtilityRepository utilityRepository;
 
     @Override
-    public Page<UtilityEntity> getListUtility(int pageNumber, int perPage, String sortField, String sortDir, String keyword) {
+    public ResponseDTO<?> getListUtility(int pageNumber, int perPage, String sortField, String sortDir, String keyword) {
         Sort sort = Helper.sortQuery(sortField, sortDir);
         Pageable pageable = PageRequest.of(pageNumber - 1, perPage, sort);
-        return utilityRepository.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
+        var page = utilityRepository.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
+        long totalItems = page.getTotalElements();
+        int totalPages = page.getTotalPages();
+        return ResponseService.ok(page.getContent(), "Lấy danh", pageNumber, perPage, totalItems, totalPages, sortField, sortDir);
     }
 
     @Override
-    public Optional<UtilityEntity> getOneUtilityById(long id) {
-        return utilityRepository.findById(id);
+    public ResponseDTO<?> getOneUtilityById(long id) {
+        Optional<UtilityEntity> utility = utilityRepository.findById(id);
+        if (utility.isPresent()) {
+            return ResponseService.ok(utility.get(), "lay thanh cong");
+        }
+        return ResponseService.notFound("Khong tim thay id = " + id);
     }
 
     @Override
-    public void deleteUtility(UtilityEntity utility) {
-        utilityRepository.delete(utility);
+    public ResponseDTO<?> deleteUtility(long id) {
+        Optional<UtilityEntity> utility = utilityRepository.findById(id);
+        if (utility.isPresent()) {
+            utilityRepository.deleteById(id);
+            return ResponseService.ok(null, "Xoa thanh cong");
+        }
+        return ResponseService.notFound("Khong tim thay id = " + id);
     }
 
     @Override
-    public void saveUtility(UtilityEntity utility) {
-        utilityRepository.save(utility);
+    public ResponseDTO<?> saveUtility(UtilityEntity utility) {
+        long id = utility.getId();
+        if (id == 0) {
+            utility.setCreatedAt(new Date());
+
+            utility.setUpdatedAt(new Date());
+        } else {
+            utility.setUpdatedAt(new Date());
+        }
+        var data = utilityRepository.save(utility);
+        return ResponseService.created(data, id == 0 ? "Tao thanh cong" : "Cap nhat thanh cong");
     }
 }

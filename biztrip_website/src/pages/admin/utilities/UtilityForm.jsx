@@ -5,9 +5,8 @@ import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import image_add from "../../../assets/image/image_add.png";
 import {handleChangeImage, handleOpenFileInput} from "../../../utils/helper.jsx";
 import {message} from "../../../utils/message.jsx";
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
-import moment from "moment";
 import {fetchGetUtilityById, fetchSaveUtility} from "../../../redux/slices/utilitySlice.jsx";
 import {toast} from "react-toastify";
 import {utilityFormBreadcrumb} from "../../../utils/data.jsx";
@@ -32,12 +31,16 @@ const UtilityForm = () => {
         if (id) {
             const test = async () => {
                 const res = await dispatch(fetchGetUtilityById({id})).unwrap()
-                if (res && res.code === 200) {
-                    setTitle(res.data.title)
-                    setDescription(res.data.description)
-                    setStatus(res.data.status === true ? 1 : 0)
-                    setImageDefault(res.data.imagePath)
-                    setCreatedAt(res.data.createdAt)
+                if (res) {
+                    if (res.code === 200) {
+                        setTitle(res.data.title)
+                        setDescription(res.data.description)
+                        setStatus(res.data.status === true ? 1 : 0)
+                        setImageDefault(res.data.imagePath)
+                        setCreatedAt(res.data.createdAt)
+                    } else {
+                        toast.error(res.message)
+                    }
                 }
             }
             test()
@@ -94,13 +97,9 @@ const UtilityForm = () => {
             dataUtility.id = id
             dataUtility.createdAt = createdAt
             dataUtility.imagePath = imageName ? imagePath : imageDefault
-            dataUtility.updatedAt = moment(new Date()).format()
         } else {
-            const createdAt = moment(new Date()).format()
             dataUtility.id = ''
             dataUtility.imagePath = imagePath
-            dataUtility.createdAt = createdAt
-            dataUtility.updatedAt = createdAt
         }
         await dispatch(fetchSaveUtility({dataUtility, navigate, toast}))
     }
