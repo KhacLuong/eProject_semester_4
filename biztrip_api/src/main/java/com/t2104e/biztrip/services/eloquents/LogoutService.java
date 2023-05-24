@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.services;
+package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;

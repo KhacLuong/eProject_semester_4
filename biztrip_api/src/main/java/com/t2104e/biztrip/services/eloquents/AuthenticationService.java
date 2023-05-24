@@ -1,12 +1,11 @@
-package com.t2104e.biztrip.services;
+package com.t2104e.biztrip.services.eloquents;
 
-import com.t2104e.biztrip.dto.AuthenticationRequest;
+import com.t2104e.biztrip.command.AuthenticationRequest;
 import com.t2104e.biztrip.dto.AuthenticationResponse;
-import com.t2104e.biztrip.dto.RegisterRequest;
+import com.t2104e.biztrip.command.RegisterRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.Role;
 import com.t2104e.biztrip.entities.User;
-import com.t2104e.biztrip.services.ResponseService;
 import com.t2104e.biztrip.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

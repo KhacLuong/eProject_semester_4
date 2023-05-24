@@ -1,7 +1,7 @@
 package com.t2104e.biztrip.services.interfaces;
 
-import com.t2104e.biztrip.dto.ScheduleNewRequest;
-import com.t2104e.biztrip.dto.ScheduleUpdateRequest;
+import com.t2104e.biztrip.command.ScheduleNewRequest;
+import com.t2104e.biztrip.command.ScheduleUpdateRequest;
 import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
 import org.springframework.data.domain.Page;
 

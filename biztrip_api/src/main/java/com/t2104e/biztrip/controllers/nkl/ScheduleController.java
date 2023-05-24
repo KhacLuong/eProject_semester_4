@@ -1,6 +1,8 @@
 package com.t2104e.biztrip.controllers.nkl;
 
 
+import com.t2104e.biztrip.command.ScheduleNewRequest;
+import com.t2104e.biztrip.command.ScheduleUpdateRequest;
 import com.t2104e.biztrip.dto.*;
 import com.t2104e.biztrip.entities.nkl.LocationEntity;
 import com.t2104e.biztrip.entities.nkl.ScheduleEntity;

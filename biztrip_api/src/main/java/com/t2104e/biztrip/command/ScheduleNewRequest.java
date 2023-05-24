@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.dto;
+package com.t2104e.biztrip.command;
 
 import com.t2104e.biztrip.entities.nkl.LocationEntity;
 import jakarta.validation.constraints.NotEmpty;

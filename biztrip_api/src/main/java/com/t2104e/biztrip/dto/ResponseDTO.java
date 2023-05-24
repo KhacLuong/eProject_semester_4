@@ -11,11 +11,11 @@ public class ResponseDTO<T> {
     private int code;
     private String status;
     private String message;
-    int pageNumber;
-    int perPage;
-    long totalItems;
-    int totalPages;
-    String sortField;
-    String sortDir;
+    private int pageNumber;
+    private int perPage;
+    private long totalItems;
+    private int totalPages;
+    private String sortField;
+    private String sortDir;
     private T data;
 }

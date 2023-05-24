@@ -1,16 +1,11 @@
 package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.User;
 import com.t2104e.biztrip.repositories.UserRepository;
-import com.t2104e.biztrip.services.ResponseService;
 import com.t2104e.biztrip.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional

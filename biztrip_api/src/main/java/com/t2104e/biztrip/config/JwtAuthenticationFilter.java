@@ -1,7 +1,7 @@
 package com.t2104e.biztrip.config;
 
 import com.t2104e.biztrip.repositories.UserRepository;
-import com.t2104e.biztrip.services.JwtService;
+import com.t2104e.biztrip.services.eloquents.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
