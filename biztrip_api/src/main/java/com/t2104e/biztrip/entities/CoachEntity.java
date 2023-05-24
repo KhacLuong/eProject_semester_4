@@ -46,7 +46,7 @@ public class CoachEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany()
     @JoinTable(name = "coach_utilities",
             joinColumns = @JoinColumn(name = "coach_id"),
             inverseJoinColumns = @JoinColumn(name = "utility_id"))

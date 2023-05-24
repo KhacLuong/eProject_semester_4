@@ -1,7 +1,5 @@
 package com.t2104e.biztrip.repositories;
 
-import com.t2104e.biztrip.dto.ScheduleResponse;
-import com.t2104e.biztrip.entities.CoachUtilityEntity;
 import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

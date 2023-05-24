@@ -23,7 +23,7 @@ const Table = ({
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch()
     const handleDelete = async (id) => {
-        MySwal.fire({
+         MySwal.fire({
             title: 'Bạn có chắc chắn không?',
             text: "Nếu xác nhận, Bạn sẽ không thể khôi phục dữ liệu này!",
             icon: 'warning',
@@ -32,11 +32,15 @@ const Table = ({
             cancelButtonColor: '#d33',
             confirmButtonText: 'Xác nhận!',
             cancelButtonText: 'Hủy'
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = dispatch(fetchDelete({id})).unwrap()
-                if (res && res.code === 200) {
-                    toast.success(res.message)
+                const res = await dispatch(fetchDelete({id})).unwrap()
+                if (res) {
+                    if (res.code === 200) {
+                        toast.success(res.message)
+                    } else {
+                        toast.error(res.message)
+                    }
                 }
             }
         })
