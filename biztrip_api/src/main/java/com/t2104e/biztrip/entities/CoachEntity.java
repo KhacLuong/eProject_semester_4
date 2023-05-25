@@ -51,7 +51,8 @@ public class CoachEntity {
             joinColumns = @JoinColumn(name = "coach_id"),
             inverseJoinColumns = @JoinColumn(name = "utility_id"))
     private Set<UtilityEntity> utilities;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "coaches")
     private List<ThumbnailEntity> thumbnails;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coaches")
+    private List<SeatEntity> seats;
 }
