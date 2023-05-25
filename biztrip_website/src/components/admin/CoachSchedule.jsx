@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {schedules} from "../../utils/data.jsx";
+import {FiFilter} from "react-icons/all.js";
 
 const CoachSchedule = () => {
     useEffect(() => {
@@ -51,7 +52,10 @@ const CoachSchedule = () => {
                                 <option>3</option>
                             </select>
                         </div>
-                        <button className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none`}>Lọc</button>
+                        <button className={`inline-flex items-center py-2 px-3 mr-2 text-sm font-medium text-center text-white rounded-lg bg-primaryColor hover:bg-primaryColor_hover shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform duration-300`}>
+                            <FiFilter className={`mr-2 -ml-1 w-4 h-4`}/>
+                            Lọc
+                        </button>
                     </div>
                     <table className={`w-full text-sm text-left text-gray-500`}>
                         <thead className={`text-xs text-gray-700 capitalize bg-white`}>

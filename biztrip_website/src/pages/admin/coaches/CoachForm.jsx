@@ -27,6 +27,8 @@ import {
     TabPanel,
 } from "@material-tailwind/react";
 import CoachSchedule from "../../../components/admin/CoachSchedule.jsx";
+import CoachThumbnail from "../../../components/admin/CoachThumbnail.jsx";
+import CoachSeat from "../../../components/admin/CoachSeat.jsx";
 
 const formCoachValidationRules = [
     {
@@ -182,7 +184,7 @@ const CoachForm = () => {
             value: "tab-2",
         },
         {
-            label: "Vị trí ghế ngồi",
+            label: "Sơ đồ xe",
             value: "tab-3",
         },
         {
@@ -279,7 +281,7 @@ const CoachForm = () => {
                                                 defaultOptions={utilities}
                                                 loadOptions={loadOptions}
                                                 placeholder={"-- Chọn --"}
-                                                className={`react-select-custom bg-gray-50 z-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full `}
+                                                className={`react-select-custom bg-gray-50 text-gray-900 text-sm block w-full`}
                                                 components={{
                                                     ...animatedComponents,
                                                     NoOptionsMessage: CustomNoOptionsMessage
@@ -319,13 +321,10 @@ const CoachForm = () => {
                                 <CoachSchedule/>
                             </TabPanel>
                             <TabPanel value={`tab-3`}>
-                                <h2>Content for Tab 3</h2>
-                                <p>This is the content of Tab 3.</p>
+                                <CoachSeat/>
                             </TabPanel>
-                            <TabPanel value={`tab-4`}
-                            >
-                                <h2>Content for Tab 4</h2>
-                                <p>This is the content of Tab 3.</p>
+                            <TabPanel value={`tab-4`}>
+                                <CoachThumbnail/>
                             </TabPanel>
                         </TabsBody>
                     </Tabs>
