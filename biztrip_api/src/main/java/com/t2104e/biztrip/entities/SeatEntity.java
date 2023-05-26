@@ -20,7 +20,7 @@ public class SeatEntity {
     @Column(name = "id")
     private long id;
     @ManyToOne
-    @JoinColumn(name = "coach_id", nullable = false)
+    @JoinColumn(name = "coach_id")
     private CoachEntity coaches;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_id")
