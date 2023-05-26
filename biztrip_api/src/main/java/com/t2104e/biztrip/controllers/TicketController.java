@@ -15,8 +15,8 @@ public class TicketController {
     ITicketService iTicketService;
 
     @GetMapping("")
-    public ResponseEntity<?> index(@RequestParam("pageNumber") int pageNumber,
-                                   @RequestParam("perPage") int perPage,
+    public ResponseEntity<?> index(@RequestParam(value = "pageNumber") int pageNumber,
+                                   @RequestParam(value = "perPage") int perPage,
                                    @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField,
                                    @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
                                    @RequestParam(value = "keyword", required = false) String keyword) {

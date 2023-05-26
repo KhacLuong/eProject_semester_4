@@ -37,14 +37,6 @@ public class CoachEntity {
     @Basic
     @Column(name = "status", nullable = false)
     private String status;
-    @Basic
-    @Column(name = "created_at" ,columnDefinition="TIMESTAMP", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date createdAt;
-    @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date updatedAt;
 
     @ManyToMany()
     @JoinTable(name = "coach_utilities",
