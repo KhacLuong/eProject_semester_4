@@ -1,5 +1,7 @@
 package com.t2104e.biztrip.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -32,20 +34,30 @@ public class CoachEntity {
     @Column(name = "total_seats")
     private String totalSeats;
     @Basic()
-    @Column(name = "description" ,columnDefinition = "text")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
     @Basic
     @Column(name = "status", nullable = false)
     private String status;
-
-    @ManyToMany()
+    @Basic
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+    private Date createdAt;
+    @Basic
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+    private Date updatedAt;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "coach_utilities",
-            joinColumns = @JoinColumn(name = "coach_id"),
-            inverseJoinColumns = @JoinColumn(name = "utility_id"))
-    private Set<UtilityEntity> utilities;
+            joinColumns={@JoinColumn(name = "coach_id")},
+            inverseJoinColumns={@JoinColumn(name = "utility_id")})
+    private List<UtilityEntity> utilities;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coaches")
-    private List<ThumbnailEntity> thumbnails;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coaches")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "coach_id")
     private List<SeatEntity> seats;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "coach_id")
+    private List<ThumbnailEntity> thumbnails;
 }

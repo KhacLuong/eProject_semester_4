@@ -11,7 +11,6 @@ public interface ICoachService {
     public CoachEntity getOneCoachById(long id);
     public void deleteCoach(CoachEntity coach);
     public void saveCoach(CoachEntity coach);
-
     public List<UtilityEntity> getAllUtility();
 
 }

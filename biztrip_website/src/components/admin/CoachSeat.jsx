@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux"
 import {fetchAllTicket} from "../../redux/slices/ticketSlice.jsx"
 
 const CoachSeat = () => {
-    const [selectedBox, setSelectedBox] = useState(null)
+    const [selectedBox, setSelectedBox] = useState(0)
     const [rows, setRows] = useState(8)
     const maxBoxesPerRow = 5
     const [tickets, setTickets] = useState([])
@@ -40,10 +40,12 @@ const CoachSeat = () => {
     }, [])
 
     const handleBoxClick = (box) => {
+        console.log(seatData)
         setSelectedBox(box)
+        setTicketId(0)
         setType('')
         setSeatCode('')
-        setTicketId(0)
+
     }
     const renderRows = () => {
         const rowsArray = []
@@ -146,13 +148,13 @@ const CoachSeat = () => {
                                             <input id={`position`}
                                                    type={`text`}
                                                    readOnly={true}
-                                                   defaultValue={+selectedBox && +selectedBox !== 0 ? +selectedBox : ''}/>
+                                                   defaultValue={+selectedBox ? +selectedBox : ''}/>
                                         </div>
                                         <div className={`flex flex-col w-96 mb-4`}>
                                             <label htmlFor={`type`}>Loại vị trí</label>
                                             <select onChange={(e) => setType(e.target.value)}
                                                     id={`type`}
-                                                    defaultValue={type && type.length > 0 ? type : ''}>
+                                                    value={type && type.length > 0 ? type : ''}>
                                                 <option value={``}>Chọn</option>
                                                 <option value={`driver`}>Ghế cho tài xế</option>
                                                 <option value={`customer`}>Ghế cho hành khách</option>
@@ -164,12 +166,12 @@ const CoachSeat = () => {
                                             <input onChange={(e) => setSeatCode(e.target.value)}
                                                    id={`seatCode`}
                                                    type={`text`}
-                                                   defaultValue={setSeatCode && setSeatCode.length > 0 ? setSeatCode : ''}/>
+                                                   value={seatCode ? seatCode : ''}/>
                                         </div>
                                         <div className={`flex flex-col w-96 mb-4`}>
                                             <label htmlFor={`ticketId`}>Giá vé</label>
                                             <select id={`ticketId`}
-                                                defaultValue={+ticketId && +ticketId !== 0 ? +tickets : 0}
+                                                value={+ticketId ? +ticketId : 0}
                                                     onChange={(e) => setTicketId(+e.target.value)}>
                                                 <option value={0}>Chọn</option>
                                                 {

@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SeatCommand {
-    private long coachId;
-    private List<SeatRequest> seats;
+public class SeatRequest {
+    private long ticketId;
+    private String seatCode;
+    private String type;
 }
