@@ -26,7 +26,7 @@ const UtilityList = () => {
         {field: 'updatedAt', name: 'Ngày cập nhật'}, 'Action'
     ]
     const dispatch = useDispatch()
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const utilities = useSelector(selectUtility)
     const status = useSelector((state) => state.utility.status)
     const totalItems = useSelector((state) => state.utility.totalItems)

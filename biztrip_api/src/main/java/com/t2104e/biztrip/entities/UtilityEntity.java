@@ -6,14 +6,14 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-@Builder
-@Getter
-@Setter
+@Entity(name = "utilities")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "utilities")
+@Builder
 @Table(name = "utilities", schema = "biztrip_database", catalog = "")
 public class UtilityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +40,5 @@ public class UtilityEntity {
     @Column(name = "updated_at", columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
-    @ManyToMany(mappedBy = "utilities")
-    private Set<CoachEntity> coaches;
+
 }

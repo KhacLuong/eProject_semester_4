@@ -1,9 +1,11 @@
 package com.t2104e.biztrip.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Collection;
 import java.util.Date;
 
 @Builder
@@ -18,9 +20,6 @@ public class TicketEntity {
     @Id
     @Column(name = "id")
     private long id;
-    @OneToOne(mappedBy = "tickets", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private SeatEntity seats;
     @Basic
     @Column(name = "title", nullable = false)
     private String title;
