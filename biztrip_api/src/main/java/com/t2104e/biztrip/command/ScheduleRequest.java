@@ -1,6 +1,5 @@
 package com.t2104e.biztrip.command;
 
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,29 +12,22 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ScheduleNewRequest {
+public class ScheduleRequest {
 
     private long id;
+
+    @NotEmpty(message = "this field is mandatory")
     private String departure;
-
-
 
     @NotEmpty(message = "this field is mandatory")
     private String destination;
-
-
-
-
     @NotNull(message = "this field is mandatory")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date startTime;
 
-
-
     @NotNull(message = "this field is mandatory")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date endTime;
-
     @Nullable
     private Set<Long> location_ids;
 

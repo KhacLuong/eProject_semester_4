@@ -50,13 +50,13 @@ public class ScheduleEntity {
 
 
     @Basic
-    @Column(name = "create_at", columnDefinition="TIMESTAMP", nullable = false)
+    @Column(name = "create_at", columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
 
 
     @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = true)
+    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 

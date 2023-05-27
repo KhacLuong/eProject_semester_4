@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.services.util;
+package com.t2104e.biztrip.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
