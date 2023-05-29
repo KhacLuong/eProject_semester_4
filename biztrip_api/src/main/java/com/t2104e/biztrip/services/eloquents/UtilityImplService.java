@@ -45,7 +45,7 @@ public class UtilityImplService implements IUtilityService {
     public ResponseDTO<?> deleteUtility(long id) {
         Optional<UtilityEntity> utility = utilityRepository.findById(id);
         if (utility.isPresent()) {
-            utilityRepository.deleteById(id);
+            utilityRepository.delete(utility.get());
             return ResponseService.ok(null, "Xoa thanh cong");
         }
         return ResponseService.notFound("Khong tim thay id = " + id);
@@ -56,11 +56,8 @@ public class UtilityImplService implements IUtilityService {
         long id = utility.getId();
         if (id == 0) {
             utility.setCreatedAt(new Date());
-
-            utility.setUpdatedAt(new Date());
-        } else {
-            utility.setUpdatedAt(new Date());
         }
+        utility.setUpdatedAt(new Date());
         var data = utilityRepository.save(utility);
         return ResponseService.created(data, id == 0 ? "Tao thanh cong" : "Cap nhat thanh cong");
     }

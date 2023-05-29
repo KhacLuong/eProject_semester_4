@@ -1,5 +1,6 @@
 package com.t2104e.biztrip.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +29,7 @@ public class ThumbnailEntity {
     @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
-    @ManyToOne
-    @JoinColumn(name = "coach_id", nullable = false)
-    private CoachEntity coaches;
+    @Basic
+    @Column(name = "coach_id", nullable = false)
+    private Long coachId;
 }

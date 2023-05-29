@@ -2,10 +2,6 @@ package com.t2104e.biztrip.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-import java.util.List;
 
 @Builder
 @Getter
@@ -19,12 +15,6 @@ public class SeatEntity {
     @Id
     @Column(name = "id")
     private long id;
-    @ManyToOne
-    @JoinColumn(name = "coach_id", nullable = false)
-    private CoachEntity coaches;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ticket_id")
-    private TicketEntity tickets;
     @Basic
     @Column(name = "seat_code", nullable = false)
     private String seatCode;
@@ -32,11 +22,9 @@ public class SeatEntity {
     @Column(name = "type", nullable = false)
     private String type;
     @Basic
-    @Column(name = "created_at" ,columnDefinition="TIMESTAMP")
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date createdAt;
-    @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date updatedAt;
+    @Column(name = "coach_id", nullable = false)
+    private Long coachId;
+    @OneToOne
+    @JoinColumn(name = "ticket_id")
+    private TicketEntity tickets;
 }
