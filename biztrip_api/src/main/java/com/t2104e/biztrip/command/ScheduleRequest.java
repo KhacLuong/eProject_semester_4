@@ -1,5 +1,7 @@
 package com.t2104e.biztrip.command;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -18,6 +20,8 @@ public class ScheduleRequest {
 
     @NotEmpty(message = "this field is mandatory")
     private String departure;
+
+    private String stopOver;
 
     @NotEmpty(message = "this field is mandatory")
     private String destination;
@@ -39,4 +43,6 @@ public class ScheduleRequest {
     public void setLocation_ids(@Nullable Set<Long> location_ids) {
         this.location_ids = location_ids;
     }
+
+
 }

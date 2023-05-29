@@ -51,69 +51,6 @@ public class ScheduleController {
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
 
-//    @PostMapping("")
-//    public ResponseEntity<?> create(@Valid @RequestBody ScheduleRequest request,
-//                                    BindingResult result) {
-//        RESPONSE_DTO = new ResponseDTO();
-//        try {
-//            List<String> valid = validationHandle.validation(result);
-//            if (valid != null&&!valid.isEmpty()) {
-//                RESPONSE_DTO.setCode(Status.BAD_REQUEST_CODE);
-//                RESPONSE_DTO.setStatus(Status.FAILURE);
-//                RESPONSE_DTO.setMessage(valid.get(0));
-//                return ResponseEntity.badRequest().body(RESPONSE_DTO);
-//            }
-////            if (locationService.checkDubName(request.getName())) {
-////                RESPONSE_DTO.setCode(Status.SUCCESS_CODE);
-////                RESPONSE_DTO.setStatus(Status.FAILURE);
-////                RESPONSE_DTO.setMessage("Duplicate Name");
-////                return ResponseEntity.ok(RESPONSE_DTO);
-////            }
-//            ScheduleEntity schedule = scheduleService.create(request);
-//            RESPONSE_DTO.setCode(Status.SUCCESS_CODE);
-//            RESPONSE_DTO.setStatus(Status.SUCCESS);
-//            RESPONSE_DTO.setMessage("Create location successfully");
-//            RESPONSE_DTO.setData(schedule);
-//            return ResponseEntity.ok(RESPONSE_DTO);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(Status.INTERN_SERVER_ERROR_CODE).build();
-//        }
-//    }
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> update(@PathVariable(value = "id") long id,
-//            @Valid @RequestBody ScheduleUpdateRequest request,
-//                                    BindingResult result) {
-//        RESPONSE_DTO = new ResponseDTO();
-//        try {
-//            List<String> valid = validationHandle.validation(result);
-//            if (request.getId() != id || valid != null) {
-//                RESPONSE_DTO.setCode(Status.BAD_REQUEST_CODE);
-//                RESPONSE_DTO.setStatus(Status.FAILURE);
-//                if (valid != null && !valid.isEmpty()) {
-//                    RESPONSE_DTO.setMessage(valid.get(0));
-//                }
-//                return ResponseEntity.badRequest().body(RESPONSE_DTO);
-//            }
-////            if (locationService.checkDubName(request.getName())) {
-////                RESPONSE_DTO.setCode(Status.SUCCESS_CODE);
-////                RESPONSE_DTO.setStatus(Status.FAILURE);
-////                RESPONSE_DTO.setMessage("Duplicate Name");
-////                return ResponseEntity.ok(RESPONSE_DTO);
-////            }
-//            ScheduleEntity schedule = scheduleService.update(request);
-//            RESPONSE_DTO.setCode(Status.SUCCESS_CODE);
-//            RESPONSE_DTO.setStatus(Status.SUCCESS);
-//            RESPONSE_DTO.setMessage("update location successfully");
-//            RESPONSE_DTO.setData(schedule);
-//            return ResponseEntity.ok(RESPONSE_DTO);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(Status.INTERN_SERVER_ERROR_CODE).build();
-//        }
-//    }
-
-
-
 
     @DeleteMapping("")
     public ResponseEntity<?> delete(@RequestParam("id") long id) {

@@ -28,10 +28,15 @@ public class ScheduleEntity {
     private String departure;
 
 
-//    @Basic
-//    @NotEmpty(message = "this field is mandatory")
-//    @Column(name = "stopover", nullable = false)
-//    private String stopOver;
+    @Basic
+    @Column(name = "stopover", nullable = true)
+    private String stopOver;
+
+
+
+    @Basic
+    @NotEmpty(message = "this field is mandatory")
+    @Column(name = "destination", nullable = false)
     private String destination;
 
 
