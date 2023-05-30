@@ -25,13 +25,13 @@ public class ScheduleRequest {
 
     @NotEmpty(message = "this field is mandatory")
     private String destination;
-    @NotNull(message = "this field is mandatory")
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date startTime;
-
-    @NotNull(message = "this field is mandatory")
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date endTime;
+//    @NotNull(message = "this field is mandatory")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date startTime;
+//
+//    @NotNull(message = "this field is mandatory")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date endTime;
     @Nullable
     private Set<Long> location_ids;
 

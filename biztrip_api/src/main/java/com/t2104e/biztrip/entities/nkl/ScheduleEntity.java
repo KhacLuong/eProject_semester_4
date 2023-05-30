@@ -40,18 +40,18 @@ public class ScheduleEntity {
     private String destination;
 
 
-    @Basic
-//    @NotNull(message = "this field is mandatory")
-    @Column(name = "start_time", nullable = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date startTime;
+//    @Basic
+////    @NotNull(message = "this field is mandatory")
+//    @Column(name = "start_time", nullable = true)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date startTime;
 
 
-    @Basic
-//    @NotNull(message = "this field is mandatory")
-    @Column(name = "end_time", nullable = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date endTime;
+//    @Basic
+////    @NotNull(message = "this field is mandatory")
+//    @Column(name = "end_time", nullable = true)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date endTime;
 
 
     @Basic
