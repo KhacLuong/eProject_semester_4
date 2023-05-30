@@ -106,6 +106,7 @@ public class ScheduleImplService implements IScheduleService {
             schedule.setDeparture(request.getDeparture());
             schedule.setStopOver(request.getStopOver());
             schedule.setDestination(request.getDestination());
+            schedule.setStatus(request.getStatus());
 //            schedule.setStartTime(request.getStartTime());
             schedule.setUpdatedAt(new Date());
         }
@@ -130,9 +131,9 @@ public class ScheduleImplService implements IScheduleService {
     }
 
 
-    private ScheduleEntity convertDtoToEntity(ScheduleResponse scheduleResponse) {
-        return modelMapper.map(scheduleResponse, ScheduleEntity.class);
-    }
+//    private ScheduleEntity convertDtoToEntity(ScheduleResponse scheduleResponse) {
+//        return modelMapper.map(scheduleResponse, ScheduleEntity.class);
+//    }
 
     private ScheduleEntity convertDtoToEntity(ScheduleRequest scheduleDto) {
         Converter<String, Date> stringToDateConverter = context -> {

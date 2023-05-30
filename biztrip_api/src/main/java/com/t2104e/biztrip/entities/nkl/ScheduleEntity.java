@@ -40,6 +40,9 @@ public class ScheduleEntity {
     private String destination;
 
 
+    @Basic
+    @Column(name = "status")
+    private String status;
 //    @Basic
 ////    @NotNull(message = "this field is mandatory")
 //    @Column(name = "start_time", nullable = true)

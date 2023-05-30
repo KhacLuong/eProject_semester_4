@@ -25,6 +25,9 @@ public class ScheduleRequest {
 
     @NotEmpty(message = "this field is mandatory")
     private String destination;
+
+
+    private String status;
 //    @NotNull(message = "this field is mandatory")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
 //    private Date startTime;
