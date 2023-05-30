@@ -28,35 +28,43 @@ public class ScheduleEntity {
     private String departure;
 
 
-//    @Basic
-//    @NotEmpty(message = "this field is mandatory")
-//    @Column(name = "stopover", nullable = false)
-//    private String stopOver;
+    @Basic
+    @Column(name = "stopover", nullable = true)
+    private String stopOver;
+
+
+
+    @Basic
+    @NotEmpty(message = "this field is mandatory")
+    @Column(name = "destination", nullable = false)
     private String destination;
 
 
     @Basic
-//    @NotNull(message = "this field is mandatory")
-    @Column(name = "start_time", nullable = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date startTime;
+    @Column(name = "status")
+    private String status;
+//    @Basic
+////    @NotNull(message = "this field is mandatory")
+//    @Column(name = "start_time", nullable = true)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date startTime;
+
+
+//    @Basic
+////    @NotNull(message = "this field is mandatory")
+//    @Column(name = "end_time", nullable = true)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date endTime;
 
 
     @Basic
-//    @NotNull(message = "this field is mandatory")
-    @Column(name = "end_time", nullable = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date endTime;
-
-
-    @Basic
-    @Column(name = "create_at", columnDefinition="TIMESTAMP", nullable = false)
+    @Column(name = "create_at", columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
 
 
     @Basic
-    @Column(name = "updated_at", columnDefinition="TIMESTAMP", nullable = true)
+    @Column(name = "updated_at", columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 

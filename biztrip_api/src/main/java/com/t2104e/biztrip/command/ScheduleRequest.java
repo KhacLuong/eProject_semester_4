@@ -1,6 +1,7 @@
 package com.t2104e.biztrip.command;
 
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,29 +14,27 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ScheduleNewRequest {
+public class ScheduleRequest {
 
     private long id;
+
+    @NotEmpty(message = "this field is mandatory")
     private String departure;
 
-
+    private String stopOver;
 
     @NotEmpty(message = "this field is mandatory")
     private String destination;
 
 
-
-
-    @NotNull(message = "this field is mandatory")
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date startTime;
-
-
-
-    @NotNull(message = "this field is mandatory")
-    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-    private Date endTime;
-
+    private String status;
+//    @NotNull(message = "this field is mandatory")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date startTime;
+//
+//    @NotNull(message = "this field is mandatory")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
+//    private Date endTime;
     @Nullable
     private Set<Long> location_ids;
 
@@ -47,4 +46,6 @@ public class ScheduleNewRequest {
     public void setLocation_ids(@Nullable Set<Long> location_ids) {
         this.location_ids = location_ids;
     }
+
+
 }

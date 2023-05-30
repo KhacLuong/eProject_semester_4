@@ -1,14 +1,20 @@
 package com.t2104e.biztrip.services.interfaces;
 
-import com.t2104e.biztrip.command.ScheduleNewRequest;
+import com.t2104e.biztrip.command.ScheduleRequest;
 import com.t2104e.biztrip.command.ScheduleUpdateRequest;
+import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
-import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
 
 public interface IScheduleService {
-    public Page<ScheduleEntity> getListSchedules(int pageNumber, int perPage, String sortField, String sortDir, String keyword);
-    public ScheduleEntity getScheduleById(long id);
-    public boolean delete(long id);
-    public ScheduleEntity create(ScheduleNewRequest scheduleDto);
-    public ScheduleEntity update(ScheduleUpdateRequest scheduleDto);
+    ResponseDTO<?> getListSchedules(int pageNumber, int perPage, String sortField, String sortDir, String keyword);
+
+    ResponseDTO<?> save(ScheduleRequest request, BindingResult result);
+
+    ScheduleEntity findScheduleById(long id);
+
+    ResponseDTO<?> delete(long id);
+
+    ResponseDTO<?> getScheduleById(long id);
+
 }

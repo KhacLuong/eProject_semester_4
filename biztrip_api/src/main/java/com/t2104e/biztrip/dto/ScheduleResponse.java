@@ -22,9 +22,6 @@ public class ScheduleResponse {
     @NotEmpty(message = "this field is mandatory")
     private String departure;
 
-    @Nullable
-    private Set<String> stopOver;
-
 
     @NotEmpty(message = "this field is mandatory")
     private String destination;
@@ -49,15 +46,7 @@ public class ScheduleResponse {
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 
-
-    public ScheduleResponse(long id, String departure, @Nullable Set<String> stopOver, String destination, Date startTime, Date endTime) {
-        this.id = id;
-        this.departure = departure;
-        this.stopOver = stopOver;
-        this.destination = destination;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
+    
 
     public ScheduleResponse(long id, String departure, String destination, Date startTime, Date endTime, Date createdAt, Date updatedAt) {
         this.id = id;
