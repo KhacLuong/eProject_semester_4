@@ -3,10 +3,13 @@ import instance from "../../config/axiosConfig.jsx";
 import {initialState} from "../../utils/initial.jsx";
 
 export const fetchAllTicket = createAsyncThunk('ticket/getAllTicket', async ({pageNumber = 1, perPage = 100, sortField = '', sortDir = '', keyword = ''}) => {
-    const response = await instance.get(`tickets?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-    return response.data
+    try {
+        const response = await instance.get(`tickets?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
+        return response.data
+    } catch (err) {
+        console.error(err)
+    }
 })
-
 export const fetchGetTicketById = createAsyncThunk('ticket/getTicketById', async ({id}) => {
     try {
         const response = await instance.get(`tickets/${id}`)
@@ -17,7 +20,7 @@ export const fetchGetTicketById = createAsyncThunk('ticket/getTicketById', async
 })
 export const fetchRemoveTicket = createAsyncThunk('ticket/removeTicket', async ({id}) => {
     try {
-        const response = await instance.get(`tickets?id=${id}`)
+        const response = await instance.delete(`tickets?id=${id}`)
         return response.data;
     } catch (err) {
         console.error(err);
@@ -75,4 +78,5 @@ export const ticketSlice = createSlice({
             })
     }
 })
+export const selectTicket = state => state.ticket.list;
 export default ticketSlice.reducer

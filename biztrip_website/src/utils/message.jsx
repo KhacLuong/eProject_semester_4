@@ -26,6 +26,9 @@ export const message = {
         },
         plateNumber: {
             isEmpty: 'Vui lòng nhập biển số xe!'
+        },
+        fare: {
+            isEmpty: 'Vui lòng nhập giá vé!'
         }
     },
     success: 'Successfully added new'

@@ -245,7 +245,7 @@ const CoachThumbnail = () => {
                                 : null
                         }
                     </div>
-                    <div className={`w-full grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-4`}>
+                    <div className={`w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[1680px]:grid-cols-5 gap-6 mb-4`}>
                         {
                             data.map((item, index) => {
                                 return (

@@ -18,6 +18,7 @@ export const UtilityListPage = lazy(() => import("../pages/admin/utilities/Utili
 export const UtilityFormPage = lazy(() => import("../pages/admin/utilities/UtilityForm.jsx"))
 export const ScheduleListPage = lazy(() => import("../pages/admin/schedules/ScheduleList.jsx"))
 export const TicketListPage = lazy(() => import("../pages/admin/tickets/TicketList.jsx"))
+export const TicketFormPage = lazy(() => import("../pages/admin/tickets/TicketForm.jsx"))
 export const PolicyListPage = lazy(() => import("../pages/admin/policies/PolicyList.jsx"))
 export const StaffListPage = lazy(() => import("../pages/admin/staffs/StaffList.jsx"))
 export const CustomerHomePage = lazy(() => import("../pages/customer/CustomerHomePage.jsx"))

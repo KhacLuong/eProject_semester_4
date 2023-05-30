@@ -3,7 +3,7 @@ import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import image_add from "../../../assets/image/image_add.png";
-import {fetchGetAllUtility, fetchGetCoachById} from "../../../redux/slices/coachSlice.jsx";
+import {fetchAllUtility, fetchGetCoachById} from "../../../redux/slices/coachSlice.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
 import {coachFormBreadcrumb} from "../../../utils/data.jsx";
 import {components} from 'react-select';
@@ -43,12 +43,12 @@ const formCoachValidationRules = [
     },
 ]
 const CoachForm = () => {
-    useDocumentTitle("Thêm mới xe", true)
+    const id = useLocation().state?.id
+    useDocumentTitle(id ? "Sửa thông tin xe" : "Thêm mới xe", true)
     const animatedComponents = makeAnimated()
     const {NoOptionsMessage} = components
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const id = useLocation().state?.id
     const [imageDefault, setImageDefault] = useState(image_add)
     const [disableButton, setDisableButton] = useState(false)
     const [utilities, setUtilities] = useState([])
@@ -94,7 +94,7 @@ const CoachForm = () => {
         }));
     }
     const handleGetAllUtility = async () => {
-        const res = await dispatch(fetchGetAllUtility()).unwrap()
+        const res = await dispatch(fetchAllUtility()).unwrap()
         if (res && res.code === 200) {
             const nextState = produce([], draft => {
                 res.data.map((item) => {
@@ -180,11 +180,11 @@ const CoachForm = () => {
             value: "tab-1",
         },
         {
-            label: "Lộ trình",
+            label: "Sơ đồ xe",
             value: "tab-2",
         },
         {
-            label: "Sơ đồ xe",
+            label: "Lộ trình",
             value: "tab-3",
         },
         {
@@ -197,8 +197,8 @@ const CoachForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={coachFormBreadcrumb}/>
-                <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>Thêm mới xe</h1>
+                <Breadcrumb dataBreadcrumb={coachFormBreadcrumb(id)}/>
+                <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa thông tin xe" : "Thêm mới xe"}</h1>
             </div>
             <div data-aos="fade-right"
                  data-aos-delay="300"
@@ -288,7 +288,6 @@ const CoachForm = () => {
                                                 }}
                                             />
                                         </div>
-
                                     </div>
                                     <div className={`col-span-1 h-full w-full`}>
                                         <input className={`hidden`}
@@ -317,11 +316,10 @@ const CoachForm = () => {
                                     </div>
                                 </div>
                             </TabPanel>
-                            <TabPanel value={`tab-2`}>
-                                <CoachSchedule/>
+                            <TabPanel value={`tab-2`}>                                <CoachSeat/>
                             </TabPanel>
                             <TabPanel value={`tab-3`}>
-                                <CoachSeat/>
+                                <CoachSchedule/>
                             </TabPanel>
                             <TabPanel value={`tab-4`}>
                                 <CoachThumbnail/>
