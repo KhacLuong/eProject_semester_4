@@ -45,7 +45,7 @@ export const dataSidebarAdmin = [
         key: 'coaches',
         children: [
             {
-                name: "Danh sách xe",
+                name: "Danh sách",
                 isSubcategory: true,
                 url: `${FINAL_URL_ADMIN}/coaches/list`,
                 icon: <></>,
@@ -77,7 +77,7 @@ export const dataSidebarAdmin = [
         key: 'users',
         children: [
             {
-                name: 'Tài khoản',
+                name: 'Danh sách',
                 isSubcategory: true,
                 url: `${FINAL_URL_ADMIN}/users/accounts`,
                 icon: <></>,
@@ -134,20 +134,22 @@ export const coachListBreadcrumb = [
         path: ""
     }
 ]
-export const coachFormBreadcrumb = [
-    {
-        name: "Dashboard",
-        path: `${FINAL_URL_ADMIN}`
-    },
-    {
-        name: "Quản lý xe",
-        path: `${FINAL_URL_ADMIN}/coaches/list`
-    },
-    {
-        name: "Thêm mới",
-        path: ""
-    }
-]
+export const coachFormBreadcrumb = (id) => {
+    return [
+        {
+            name: "Dashboard",
+            path: `${FINAL_URL_ADMIN}`
+        },
+        {
+            name: "Quản lý xe",
+            path: `${FINAL_URL_ADMIN}/coaches/list`
+        },
+        {
+            name: !id ? "Thêm mới" : "Sửa",
+            path: ""
+        }
+    ]
+}
 export const utilityListBreadcrumb = [
     {
         name: "Dashboard",
@@ -158,27 +160,80 @@ export const utilityListBreadcrumb = [
         path: ""
     }
 ]
-export const utilityFormBreadcrumb = [
+export const utilityFormBreadcrumb = (id) => {
+    return [
+        {
+            name: "Dashboard",
+            path: `${FINAL_URL_ADMIN}`
+        },
+        {
+            name: "Quản lý tiện ích",
+            path: `${FINAL_URL_ADMIN}/coaches/utilities`
+        },
+        {
+            name: !id ? "Thêm mới" : "Sửa",
+            path: ""
+        }
+    ]
+}
+export const ticketListBreadcrumb = [
     {
         name: "Dashboard",
         path: `${FINAL_URL_ADMIN}`
     },
     {
-        name: "Quản lý tiện ích",
-        path: `${FINAL_URL_ADMIN}/coaches/utilities`
-    },
-    {
-        name: "Thêm mới",
+        name: "Quản lý vé",
         path: ""
     }
 ]
-
+export const ticketFormBreadcrumb = (id) => {
+    return [
+        {
+            name: "Dashboard",
+            path: `${FINAL_URL_ADMIN}`
+        },
+        {
+            name: "Quản lý vé",
+            path: `${FINAL_URL_ADMIN}/coaches/tickets`
+        },
+        {
+            name: !id ? "Thêm mới" : "Sửa",
+            path: ""
+        }
+    ]
+}
+export const scheduleListBreadcrumb = [
+    {
+        name: "Dashboard",
+        path: `${FINAL_URL_ADMIN}`
+    },
+    {
+        name: "Quản lý lộ trình",
+        path: ""
+    }
+]
+export const scheduleFormBreadcrumb = (id) => {
+    return [
+        {
+            name: "Dashboard",
+            path: `${FINAL_URL_ADMIN}`
+        },
+        {
+            name: "Quản lý lộ trình",
+            path: `${FINAL_URL_ADMIN}/coaches/schedules`
+        },
+        {
+            name: !id ? "Thêm mới" : "Sửa",
+            path: ""
+        }
+    ]
+}
 export const schedules = [
     {
         id: 1,
         departure: 'Hà Nội',
         stopOver: [
-            'Bỉm Sơn','Ninh Bình', 'Hưng Yên','Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+            'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên', 'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên'
         ],
         destination: 'Thanh Hóa',
         startTime: '06:00:00',
@@ -188,7 +243,7 @@ export const schedules = [
         id: 2,
         departure: 'Thanh Hóa',
         stopOver: [
-            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+            'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên'
         ],
         destination: 'Hà Nội',
         startTime: '12:00:00',
@@ -198,7 +253,7 @@ export const schedules = [
         id: 3,
         departure: 'Hà Nội',
         stopOver: [
-            'Bỉm Sơn','Ninh Bình', 'Hưng Yên'
+            'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên'
         ],
         destination: 'Thanh Hóa',
         startTime: '15:00:00',

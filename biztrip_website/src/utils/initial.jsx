@@ -11,3 +11,7 @@ export const initialCoachFormState = {
     imagePath: null,
     status: ""
 }
+export const initialTicketFormState = {
+    title: "",
+    fare: ""
+}

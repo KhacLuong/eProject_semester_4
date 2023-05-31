@@ -12,10 +12,10 @@ import {toast} from "react-toastify";
 import {utilityFormBreadcrumb} from "../../../utils/data.jsx";
 
 const UtilityForm = () => {
-    useDocumentTitle("Thêm mới tiện ích", true)
-    const dispatch = useDispatch()
-    const navigate = useNavigate();
     const id = useLocation().state?.id
+    useDocumentTitle(id ? "Sửa tiện ích" : "Thêm mới tiện ích", true)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const inputImageRef = useRef(null);
     const [imageDefault, setImageDefault] = useState(image_add)
     const [imageName, setImageName] = useState("")
@@ -129,8 +129,8 @@ const UtilityForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={utilityFormBreadcrumb}/>
-                <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>Thêm mới tiện ích</h1>
+                <Breadcrumb dataBreadcrumb={utilityFormBreadcrumb(id)}/>
+                <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa tiện ích" : "Thêm mới tiện ích"}</h1>
             </div>
             <div data-aos="fade-right"
                  data-aos-delay="300"

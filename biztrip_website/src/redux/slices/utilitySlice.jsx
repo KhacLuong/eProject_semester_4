@@ -5,8 +5,12 @@ import {initialState} from "../../utils/initial.jsx";
 export const fetchAllUtility = createAsyncThunk(
     'utility/getAllUtility',
     async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
-        const response = await instance.get(`utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-        return response.data
+        try {
+            const response = await instance.get(`utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
+            return response.data
+        } catch (err) {
+            console.error(err);
+        }
     }
 )
 export const fetchGetUtilityById = createAsyncThunk(

@@ -2,7 +2,6 @@ import {message} from "./message.jsx";
 
 export const validateForm = (formData, validationRules) => {
     let errors = {};
-
     validationRules.forEach((rule) => {
         const { fieldName, validationFn, errorMessage } = rule;
         const fieldValue = formData[fieldName];

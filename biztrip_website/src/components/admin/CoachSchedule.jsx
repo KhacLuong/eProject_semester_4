@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {schedules} from "../../utils/data.jsx";
 import {FiFilter} from "react-icons/all.js";
 
 const CoachSchedule = () => {
@@ -86,48 +85,48 @@ const CoachSchedule = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {
-                            schedules.map((item, index) => {
-                                return (
-                                    <tr key={`tr-${index}`} className={`bg-white border-b hover:bg-gray-50`}>
-                                        <td className="px-6 py-3 w-8">
-                                            <input type={"checkbox"}/>
-                                        </td>
-                                        <td className="px-6 py-3 w-24">
-                                            {item.departure}
-                                        </td>
-                                        <td className="px-6 py-3 w-96">
-                                            <div className={`w-full grid grid-cols-6`}>
-                                                {
-                                                    item.stopOver.map((stop, key) => {
-                                                        return (
-                                                            <React.Fragment key={key}>
-                                                             <p className="mb-4 bg-primaryColor text-center text-white text-xs font-medium px-2.5 py-1 rounded-r-full relative">
-                                                                 <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-5 h-full flex items-center justify-center text-blue-800 bg-blue-200`}>{key+1}</span>
-                                                                 {stop}
-                                                            </p>
-                                                                <div className={`mb-4 flex items-center last:hidden`}>
-                                                                    <span className={`w-full h-[2px] bg-primaryColor`}></span>
-                                                                </div>
-                                                            </React.Fragment>
-                                                        )
-                                                    })
-                                                }
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-3 w-24">
-                                            {item.destination}
-                                        </td>
-                                        <td className="px-6 py-3">
-                                            {item.startTime}
-                                        </td>
-                                        <td className="px-6 py-3">
-                                            {item.endTime}
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
+                        {/*{*/}
+                        {/*    schedules.map((item, index) => {*/}
+                        {/*        return (*/}
+                        {/*            <tr key={`tr-${index}`} className={`bg-white border-b hover:bg-gray-50`}>*/}
+                        {/*                <td className="px-6 py-3 w-8">*/}
+                        {/*                    <input type={"checkbox"}/>*/}
+                        {/*                </td>*/}
+                        {/*                <td className="px-6 py-3 w-24">*/}
+                        {/*                    {item.departure}*/}
+                        {/*                </td>*/}
+                        {/*                <td className="px-6 py-3 w-96">*/}
+                        {/*                    <div className={`w-full grid grid-cols-6`}>*/}
+                        {/*                        {*/}
+                        {/*                            item.stopOver.map((stop, key) => {*/}
+                        {/*                                return (*/}
+                        {/*                                    <React.Fragment key={key}>*/}
+                        {/*                                     <p className="mb-4 bg-primaryColor text-center text-white text-xs font-medium px-2.5 py-1 rounded-r-full relative">*/}
+                        {/*                                         <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-5 h-full flex items-center justify-center text-blue-800 bg-blue-200`}>{key+1}</span>*/}
+                        {/*                                         {stop}*/}
+                        {/*                                    </p>*/}
+                        {/*                                        <div className={`mb-4 flex items-center last:hidden`}>*/}
+                        {/*                                            <span className={`w-full h-[2px] bg-primaryColor`}></span>*/}
+                        {/*                                        </div>*/}
+                        {/*                                    </React.Fragment>*/}
+                        {/*                                )*/}
+                        {/*                            })*/}
+                        {/*                        }*/}
+                        {/*                    </div>*/}
+                        {/*                </td>*/}
+                        {/*                <td className="px-6 py-3 w-24">*/}
+                        {/*                    {item.destination}*/}
+                        {/*                </td>*/}
+                        {/*                <td className="px-6 py-3">*/}
+                        {/*                    {item.startTime}*/}
+                        {/*                </td>*/}
+                        {/*                <td className="px-6 py-3">*/}
+                        {/*                    {item.endTime}*/}
+                        {/*                </td>*/}
+                        {/*            </tr>*/}
+                        {/*        )*/}
+                        {/*    })*/}
+                        {/*}*/}
                         </tbody>
                     </table>
                 </div>

@@ -4,6 +4,7 @@ import {
     AdminHomePage,
     DashBoardPage,
     TicketListPage,
+    TicketFormPage,
     PolicyListPage,
     UtilityListPage,
     UtilityFormPage,
@@ -29,7 +30,7 @@ export const dataRouters = [
         isAuthentication: false,
     },
     {
-        path: "sign-in",
+        path: "admin/v1/sign-in",
         page: SignInPage,
         isIndex: false,
         isAuthentication: false,
@@ -177,6 +178,18 @@ export const dataRouters = [
             {
                 path: "coaches/tickets",
                 page: TicketListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/tickets/create",
+                page: TicketFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/tickets/edit",
+                page: TicketFormPage,
                 isIndex: false,
                 isAuthentication: true
             },
