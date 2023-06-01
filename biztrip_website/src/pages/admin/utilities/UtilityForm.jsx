@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux'
 import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
 import {fetchGetUtilityById, fetchSaveUtility} from "../../../redux/slices/utilitySlice.jsx";
 import {toast} from "react-toastify";
-import {utilityFormBreadcrumb} from "../../../utils/data.jsx";
+import {formBreadCrumb} from "../../../utils/data.jsx";
 
 const UtilityForm = () => {
     const id = useLocation().state?.id
@@ -129,7 +129,7 @@ const UtilityForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={utilityFormBreadcrumb(id)}/>
+                <Breadcrumb dataBreadcrumb={formBreadCrumb(id, "Quản lý tiện ích", "coaches/utilities")}/>
                 <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa tiện ích" : "Thêm mới tiện ích"}</h1>
             </div>
             <div data-aos="fade-right"

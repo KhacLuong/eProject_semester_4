@@ -7,7 +7,7 @@ import {message} from "../../../utils/message.jsx";
 import {initialTicketFormState} from "../../../utils/initial.jsx";
 import {fetchGetTicketById, fetchSaveTicket} from "../../../redux/slices/ticketSlice.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
-import {ticketFormBreadcrumb} from "../../../utils/data.jsx";
+import {formBreadCrumb} from "../../../utils/data.jsx";
 import {toast} from "react-toastify";
 
 const formTicketValidationRules = [
@@ -100,7 +100,7 @@ const TicketForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={ticketFormBreadcrumb(id)}/>
+                <Breadcrumb dataBreadcrumb={formBreadCrumb(id, "Quản lý vé", "coaches/tickets")}/>
                 <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa thông tin vé" : "Thêm mới vé"}</h1>
             </div>
             <div data-aos="fade-right"

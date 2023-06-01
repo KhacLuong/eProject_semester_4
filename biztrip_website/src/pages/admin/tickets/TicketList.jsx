@@ -6,7 +6,7 @@ import {fetchAllTicket, fetchRemoveTicket, selectTicket} from "../../../redux/sl
 import {produce} from "immer";
 import moment from "moment";
 import Banner from "../../../components/admin/Banner.jsx";
-import {tbodyActionDefault, ticketListBreadcrumb} from "../../../utils/data.jsx";
+import {listBreadcrumb, tbodyActionDefault} from "../../../utils/data.jsx";
 import Table from "../../../components/admin/Table.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
 
@@ -58,7 +58,7 @@ const TicketList = () => {
 
     return (
         <>
-            <Banner dataBreadcrumb={ticketListBreadcrumb}
+            <Banner dataBreadcrumb={listBreadcrumb("Quản lý vé")}
                     title={"Danh sách vé"}
                     pathCreate={"create"}
                     perPage={perPage}

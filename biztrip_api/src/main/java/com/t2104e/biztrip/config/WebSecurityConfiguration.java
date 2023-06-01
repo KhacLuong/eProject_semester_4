@@ -44,10 +44,6 @@ public class WebSecurityConfiguration {
 //                                "/swagger-ui.html").permitAll()
 //                        .anyRequest().authenticated()
 //                );
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                );
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

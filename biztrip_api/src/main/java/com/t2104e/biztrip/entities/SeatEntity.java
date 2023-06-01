@@ -23,7 +23,7 @@ public class SeatEntity {
     private String type;
     @Basic
     @Column(name = "coach_id", nullable = false)
-    private Long coachId;
+    private long coachId;
     @OneToOne
     @JoinColumn(name = "ticket_id")
     private TicketEntity tickets;

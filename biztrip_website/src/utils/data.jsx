@@ -124,25 +124,27 @@ export const dataSidebarAdmin = [
 export const tbodyActionDefault = ['edit', 'delete']
 export const tbodyActionSpecial = ['view', 'edit', 'delete']
 
-export const coachListBreadcrumb = [
-    {
-        name: "Dashboard",
-        path: `${FINAL_URL_ADMIN}`
-    },
-    {
-        name: "Quản lý xe",
-        path: ""
-    }
-]
-export const coachFormBreadcrumb = (id) => {
+export const listBreadcrumb = (name) => {
     return [
         {
             name: "Dashboard",
             path: `${FINAL_URL_ADMIN}`
         },
         {
-            name: "Quản lý xe",
-            path: `${FINAL_URL_ADMIN}/coaches/list`
+            name: name,
+            path: ""
+        }
+    ]
+}
+export const formBreadCrumb = (id, name, path) => {
+    return [
+        {
+            name: "Dashboard",
+            path: `${FINAL_URL_ADMIN}`
+        },
+        {
+            name: name,
+            path: `${FINAL_URL_ADMIN}/${path}`
         },
         {
             name: !id ? "Thêm mới" : "Sửa",
@@ -150,113 +152,3 @@ export const coachFormBreadcrumb = (id) => {
         }
     ]
 }
-export const utilityListBreadcrumb = [
-    {
-        name: "Dashboard",
-        path: `${FINAL_URL_ADMIN}`
-    },
-    {
-        name: "Quản lý tiện ích",
-        path: ""
-    }
-]
-export const utilityFormBreadcrumb = (id) => {
-    return [
-        {
-            name: "Dashboard",
-            path: `${FINAL_URL_ADMIN}`
-        },
-        {
-            name: "Quản lý tiện ích",
-            path: `${FINAL_URL_ADMIN}/coaches/utilities`
-        },
-        {
-            name: !id ? "Thêm mới" : "Sửa",
-            path: ""
-        }
-    ]
-}
-export const ticketListBreadcrumb = [
-    {
-        name: "Dashboard",
-        path: `${FINAL_URL_ADMIN}`
-    },
-    {
-        name: "Quản lý vé",
-        path: ""
-    }
-]
-export const ticketFormBreadcrumb = (id) => {
-    return [
-        {
-            name: "Dashboard",
-            path: `${FINAL_URL_ADMIN}`
-        },
-        {
-            name: "Quản lý vé",
-            path: `${FINAL_URL_ADMIN}/coaches/tickets`
-        },
-        {
-            name: !id ? "Thêm mới" : "Sửa",
-            path: ""
-        }
-    ]
-}
-export const scheduleListBreadcrumb = [
-    {
-        name: "Dashboard",
-        path: `${FINAL_URL_ADMIN}`
-    },
-    {
-        name: "Quản lý lộ trình",
-        path: ""
-    }
-]
-export const scheduleFormBreadcrumb = (id) => {
-    return [
-        {
-            name: "Dashboard",
-            path: `${FINAL_URL_ADMIN}`
-        },
-        {
-            name: "Quản lý lộ trình",
-            path: `${FINAL_URL_ADMIN}/coaches/schedules`
-        },
-        {
-            name: !id ? "Thêm mới" : "Sửa",
-            path: ""
-        }
-    ]
-}
-export const schedules = [
-    {
-        id: 1,
-        departure: 'Hà Nội',
-        stopOver: [
-            'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên', 'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên'
-        ],
-        destination: 'Thanh Hóa',
-        startTime: '06:00:00',
-        endTime: '11:00:00'
-    },
-    {
-        id: 2,
-        departure: 'Thanh Hóa',
-        stopOver: [
-            'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên'
-        ],
-        destination: 'Hà Nội',
-        startTime: '12:00:00',
-        endTime: '16:00:00'
-    },
-    {
-        id: 3,
-        departure: 'Hà Nội',
-        stopOver: [
-            'Bỉm Sơn', 'Ninh Bình', 'Hưng Yên'
-        ],
-        destination: 'Thanh Hóa',
-        startTime: '15:00:00',
-        endTime: '21:00:00'
-    }
-]

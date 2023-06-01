@@ -5,7 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import image_add from "../../../assets/image/image_add.png";
 import {fetchAllUtility, fetchGetCoachById} from "../../../redux/slices/coachSlice.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
-import {coachFormBreadcrumb} from "../../../utils/data.jsx";
+import {formBreadCrumb} from "../../../utils/data.jsx";
 import {components} from 'react-select';
 import AsyncSelect from 'react-select/async';
 import {produce} from "immer"
@@ -197,7 +197,7 @@ const CoachForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={coachFormBreadcrumb(id)}/>
+                <Breadcrumb dataBreadcrumb={formBreadCrumb(id, "Quản lý xe", "coaches/list")}/>
                 <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa thông tin xe" : "Thêm mới xe"}</h1>
             </div>
             <div data-aos="fade-right"

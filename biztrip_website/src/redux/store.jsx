@@ -9,6 +9,8 @@ import ticketSlice from "./slices/ticketSlice.jsx";
 import fileSlice from "./slices/fileSlice.jsx";
 import coachSlice from "./slices/coachSlice.jsx";
 import scheduleSlice from "./slices/scheduleSlice.jsx";
+import staffSlice from "./slices/staffSlice.jsx";
+import authSlice from "./slices/authSlice.jsx";
 
 const persistConfig = {
     key: 'root',
@@ -20,6 +22,8 @@ export const store = configureStore({
         utility: utilitySlice,
         ticket: ticketSlice,
         file: fileSlice,
-        schedule: scheduleSlice
+        schedule: scheduleSlice,
+        staff: staffSlice,
+        auth: authSlice
     }
 })
