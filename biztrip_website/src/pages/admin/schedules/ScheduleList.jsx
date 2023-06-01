@@ -3,7 +3,7 @@ import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import Banner from "../../../components/admin/Banner.jsx";
 import Table from "../../../components/admin/Table.jsx";
 import {
-    scheduleListBreadcrumb,
+    listBreadcrumb,
     tbodyActionDefault,
 } from "../../../utils/data.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
@@ -63,7 +63,7 @@ const ScheduleList = () => {
     }, [])
     return (
         <>
-            <Banner dataBreadcrumb={scheduleListBreadcrumb}
+            <Banner dataBreadcrumb={listBreadcrumb("Quản lý lộ trình")}
                     title={"Danh sách lộ trình"}
                     pathCreate={"create"}
                     perPage={perPage}

@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import {useNavigate} from "react-router-dom";
 import space from "../../../assets/image/space_man.jpg"
 import {validateEmail} from "../../../utils/helper.jsx";
 import {message} from "../../../utils/message.jsx";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchLogin} from "../../../redux/slices/authSlice.jsx";
 
 const SignIn = () => {
     useDocumentTitle("CMS - Đăng nhập", true)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [msg, setMsg] = useState("")
+    const test = useSelector(state => state.auth.account)
 
     const handleTogglePassword = () => {
         setShowPassword((showPassword) => !showPassword)
@@ -33,12 +37,17 @@ const SignIn = () => {
         return true;
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         if (!checkValidateLogin()) {
             return;
         }
-        navigate('/admin/v1')
+        const data = {
+            email: email,
+            password: password
+        }
+        await dispatch(fetchLogin({data}))
+        // navigate('/admin/v1')
     }
     return (
         <section

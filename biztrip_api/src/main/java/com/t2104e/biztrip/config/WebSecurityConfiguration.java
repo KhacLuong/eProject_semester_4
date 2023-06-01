@@ -42,15 +42,11 @@ public class WebSecurityConfiguration {
 //                                "/swagger-ui.html").permitAll()
 //                        .anyRequest().authenticated()
 //                );
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                );
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-//            .authenticationProvider(authenticationProvider)
-//            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
             .logoutUrl("/api/v1/auth/logout")
             .addLogoutHandler(logoutHandler)

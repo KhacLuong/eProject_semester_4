@@ -10,7 +10,7 @@ import {
     selectUtility,
 } from "../../../redux/slices/utilitySlice.jsx";
 import {produce} from "immer"
-import {tbodyActionDefault, utilityListBreadcrumb} from "../../../utils/data.jsx";
+import {listBreadcrumb, tbodyActionDefault} from "../../../utils/data.jsx";
 import moment from "moment";
 import {useNavigate} from "react-router-dom";
 
@@ -73,7 +73,7 @@ const UtilityList = () => {
 
     return (
         <>
-            <Banner dataBreadcrumb={utilityListBreadcrumb}
+            <Banner dataBreadcrumb={listBreadcrumb("Quản lý tiện ích")}
                     title={"Danh sách tiện ích"}
                     pathCreate={"create"}
                     perPage={perPage}

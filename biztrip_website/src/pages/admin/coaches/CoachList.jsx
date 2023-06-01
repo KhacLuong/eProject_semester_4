@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Banner from "../../../components/admin/Banner.jsx";
 import Table from "../../../components/admin/Table.jsx";
-import {coachListBreadcrumb, tbodyActionSpecial} from "../../../utils/data.jsx";
+import {listBreadcrumb, tbodyActionSpecial} from "../../../utils/data.jsx";
 import Paginate from "../../../components/admin/Paginate.jsx";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import {useDispatch, useSelector} from "react-redux";
@@ -44,7 +44,7 @@ const CoachList = () => {
 
     return (
         <>
-            <Banner dataBreadcrumb={coachListBreadcrumb}
+            <Banner dataBreadcrumb={listBreadcrumb("Quản lý xe")}
                     title={"Danh sách xe"}
                     pathCreate={"/admin/v1/cms/coaches/list/create"}
                     perPage={perPage}
