@@ -3,8 +3,7 @@ import instance from "../../config/axiosConfig.jsx";
 
 export const fetchLogin = createAsyncThunk('login', async ({data}) => {
     try {
-        const response = await instance.post(`auth/authenticate`, data)
-        return response.data
+        return await instance.post(`auth/authenticate`, data)
     } catch (err) {
         console.error(err)
     }
@@ -25,7 +24,11 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchLogin.pending, (state, action) => {
-                state.status = 'loading'
+                return {
+                    ...state,
+                    isAuthenticated: false,
+                    status: 'loading'
+                }
             })
             .addCase(fetchLogin.fulfilled, (state, action) => {
                 return {
@@ -35,12 +38,16 @@ export const authSlice = createSlice({
                         refreshToken: action?.payload?.data?.refresh_token,
                         email: action?.payload?.data?.email,
                     },
-                    isAuthenticated: true,
-                    status: 'succeeded'
+                    isAuthenticated: action?.payload?.code === 200,
+                    status: action?.payload?.code === 200 ? 'succeeded' : 'failed'
                 }
             })
             .addCase(fetchLogin.rejected, (state, action) => {
-                state.status = 'failed'
+                return {
+                    ...state,
+                    isAuthenticated: false,
+                    status: 'failed'
+                }
             })
     }
 })

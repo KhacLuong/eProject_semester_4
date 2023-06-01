@@ -7,6 +7,7 @@ import {message} from "../../../utils/message.jsx";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLogin} from "../../../redux/slices/authSlice.jsx";
+import {toast} from "react-toastify";
 
 const SignIn = () => {
     useDocumentTitle("CMS - Đăng nhập", true)
@@ -16,8 +17,7 @@ const SignIn = () => {
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [msg, setMsg] = useState("")
-    const test = useSelector(state => state.auth.account)
-
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const handleTogglePassword = () => {
         setShowPassword((showPassword) => !showPassword)
     }
@@ -46,8 +46,13 @@ const SignIn = () => {
             email: email,
             password: password
         }
-        await dispatch(fetchLogin({data}))
-        // navigate('/admin/v1')
+        const res = await dispatch(fetchLogin({data})).unwrap()
+        if (res && res.code === 200) {
+            toast.success(res.message)
+            navigate('/admin/v1/cms')
+        } else {
+            toast.error(res.message)
+        }
     }
     return (
         <section
