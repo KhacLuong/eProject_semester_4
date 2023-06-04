@@ -4,8 +4,7 @@ import {initialState} from "../../utils/initial.jsx";
 
 export const fetchAllStaff = createAsyncThunk('staff/getAllStaff', async ({pageNumber = 1, perPage = 100, sortField = '', sortDir = '', keyword = ''}) => {
     try {
-        const response = await instance.get(`staffs?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-        return response.data
+        return await instance.get(`staffs?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
     } catch (err) {
         console.error(err)
     }
@@ -13,8 +12,7 @@ export const fetchAllStaff = createAsyncThunk('staff/getAllStaff', async ({pageN
 
 export const fetchGetStaffById = createAsyncThunk('staff/getStaffById', async ({id}) => {
     try {
-        const response = await instance.get(`staffs/${id}`)
-        return response.data
+        return await instance.get(`staffs/${id}`)
     } catch (err) {
         console.error(err)
     }
@@ -22,8 +20,7 @@ export const fetchGetStaffById = createAsyncThunk('staff/getStaffById', async ({
 
 export const fetchRemoveStaff = createAsyncThunk('staff/removeStaff', async ({id}) => {
     try {
-        const response = await instance.delete(`staffs?id=${id}`)
-        return response.data
+        return await instance.delete(`staffs?id=${id}`)
     } catch (err) {
         console.error(err)
     }
@@ -32,8 +29,8 @@ export const fetchRemoveStaff = createAsyncThunk('staff/removeStaff', async ({id
 export const fetchSaveStaff = createAsyncThunk('staff/saveStaff', async ({data, navigate, toast}) => {
     try {
         const response = await instance.post(`staffs`, data)
-        if (response.data.code === 201) {
-            toast.success(response.data.message)
+        if (response.code === 201) {
+            toast.success(response.message)
             await navigate("/admin/v1/cms/users/staffs")
         }
     } catch (err) {

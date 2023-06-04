@@ -4,8 +4,7 @@ import {initialState} from "../../utils/initial.jsx";
 
 export const fetchAllLocation = createAsyncThunk('location/getAllLocation', async () => {
     try {
-        const response = await instance.get(`schedules/get-all-location`)
-        return response.data
+        return await instance.get(`schedules/get-all-location`)
     } catch (err) {
         console.error(err)
     }
@@ -13,8 +12,7 @@ export const fetchAllLocation = createAsyncThunk('location/getAllLocation', asyn
 
 export const fetchAllSchedule = createAsyncThunk('schedule/getAllSchedule', async ({pageNumber = 1, perPage = 100, sortField = '', sortDir = '', keyword = ''}) => {
     try {
-        const response = await instance.get(`schedules?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-        return response.data
+        return await instance.get(`schedules?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
     } catch (err) {
         console.error(err)
     }
@@ -22,16 +20,14 @@ export const fetchAllSchedule = createAsyncThunk('schedule/getAllSchedule', asyn
 
 export const fetchGetScheduleById = createAsyncThunk('schedule/getScheduleById', async ({id}) => {
     try {
-        const response = await instance.get(`schedules/${id}`)
-        return response.data
+        return await instance.get(`schedules/${id}`)
     } catch (err) {
         console.error(err)
     }
 })
 export const fetchRemoveSchedule = createAsyncThunk('schedule/removeSchedule', async ({id}) => {
     try {
-        const response = await instance.delete(`schedules?id=${id}`)
-        return response.data
+        return await instance.delete(`schedules?id=${id}`)
     } catch (err) {
         console.error(err)
     }
@@ -39,11 +35,11 @@ export const fetchRemoveSchedule = createAsyncThunk('schedule/removeSchedule', a
 export const fetchSaveSchedule  = createAsyncThunk('schedule/saveSchedule', async ({data, navigate, toast}) => {
     try {
         const response = await instance.post(`schedules`, data)
-        if (response.data.code === 201) {
-            toast.success(response.data.message)
+        if (response.code === 201) {
+            toast.success(response.message)
             await navigate("/admin/v1/cms/coaches/schedules")
         }
-        return response.data
+        return response
     } catch (err) {
         console.error(err)
     }
