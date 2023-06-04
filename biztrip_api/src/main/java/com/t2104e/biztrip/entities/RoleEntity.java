@@ -1,6 +1,6 @@
 package com.t2104e.biztrip.entities;
 
-public enum Role {
+public enum RoleEntity {
     USER,
     ADMIN
 }

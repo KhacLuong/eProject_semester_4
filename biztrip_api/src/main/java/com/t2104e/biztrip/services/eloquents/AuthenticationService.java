@@ -4,13 +4,12 @@ import com.t2104e.biztrip.command.AuthenticationRequest;
 import com.t2104e.biztrip.dto.AuthenticationResponse;
 import com.t2104e.biztrip.command.RegisterRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.Role;
-import com.t2104e.biztrip.entities.User;
+import com.t2104e.biztrip.entities.RoleEntity;
+import com.t2104e.biztrip.entities.UserEntity;
 import com.t2104e.biztrip.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,58 +28,44 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public ResponseDTO<?> register(RegisterRequest request) {
-        var existUserByEmail = userRepository.findByEmail(request.getEmail());
-        if (existUserByEmail.isPresent()) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseService.conflict("Đã tồn tại tài khoản với email này. Hãy chọn email khác.");
         }
-        var existUserByPhoneNumber = userRepository.findByPhoneNumber(request.getPhoneNumber());
-        if (existUserByPhoneNumber.isPresent()) {
+        if (userRepository.findByPhoneNumber(request.getPhoneNumber()).isPresent()) {
             return ResponseService.conflict("Đã tồn tại tài khoản với số điện thoại này. Hãy chọn số điện thoại khác.");
         }
 
-        var user = User.builder()
+        var user = UserEntity.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
-                .role(Role.USER)
+                .role(RoleEntity.USER)
                 .createdAt(new Date())
                 .build();
         var savedUser = userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, refreshToken);
         var data = AuthenticationResponse.builder()
                 .email(savedUser.getEmail())
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
                 .build();
         return ResponseService.created(data, "Tạo tài khoản mới thành công.");
     }
 
     public ResponseDTO<?> admin_register(RegisterRequest request) {
-        var existUser = userRepository.findByEmail(request.getEmail());
-        if (existUser.isPresent()) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseService.conflict("Đã tồn tại tài khoản với email này. Hãy chọn email khác.");
         }
-        var existUserByPhoneNumber = userRepository.findByPhoneNumber(request.getPhoneNumber());
-        if (existUserByPhoneNumber.isPresent()) {
+        if (userRepository.findByPhoneNumber(request.getPhoneNumber()).isPresent()) {
             return ResponseService.conflict("Đã tồn tại tài khoản với số điện thoại này. Hãy chọn số điện thoại khác.");
         }
-        var user = User.builder()
+        var user = UserEntity.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
-                .role(Role.ADMIN)
+                .role(RoleEntity.ADMIN)
                 .createdAt(new Date())
                 .build();
         var savedUser = userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, refreshToken);
         var data = AuthenticationResponse.builder()
                 .email(savedUser.getEmail())
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
                 .build();
         return ResponseService.created(data, "Tạo tài khoản quản trị mới thành công.");
     }
@@ -110,40 +95,40 @@ public class AuthenticationService {
         return ResponseService.ok(data, "Đăng nhập thành công.");
     }
 
-    private void saveUserToken(User user, String refreshToken) {
+    private void saveUserToken(UserEntity user, String refreshToken) {
         user.setRefreshToken(refreshToken);
         user.setTokenRevoked(false);
         user.setTokenExpired(false);
         userRepository.save(user);
     }
 
-    private void revokeAllUserTokens(User user) {
-        user.setTokenExpired(true);
+    private void revokeAllUserTokens(UserEntity user) {
+        user.setTokenRevoked(true);
         user.setTokenExpired(true);
         userRepository.save(user);
     }
 
     public ResponseDTO<?> refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
+            HttpServletRequest request
     ) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshTokenHeader = request.getHeader("REFRESH-TOKEN");
         final String refreshToken;
         final String userEmail;
-        if (authHeader == null || !authHeader.toLowerCase().startsWith("bearer ")) {
-            return ResponseService.unAuthorized("Không có JWT hoặc JWT ko bắt đầu với `bearer`");
+        if (refreshTokenHeader == null) {
+            return ResponseService.unAuthorized("Không có Refresh Token");
         }
-        refreshToken = authHeader.substring(7);
+        refreshToken = refreshTokenHeader;
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
             var user = this.userRepository.findByEmail(userEmail).orElseThrow();
-            if (jwtService.isTokenValid(refreshToken, user)) {
+            if (user.getRefreshToken().equals(refreshToken)) {
                 var accessToken = jwtService.generateToken(user);
-                revokeAllUserTokens(user);
-                var data =  AuthenticationResponse.builder()
+                var newRefreshToken = jwtService.generateRefreshToken(user);
+                saveUserToken(user, newRefreshToken);
+                var data = AuthenticationResponse.builder()
                         .email(userEmail)
                         .accessToken(accessToken)
-                        .refreshToken(refreshToken)
+                        .refreshToken(newRefreshToken)
                         .build();
                 return ResponseService.ok(data, "JWT được tạo mới thành công.");
             } else {

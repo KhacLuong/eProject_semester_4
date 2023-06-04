@@ -1,5 +1,6 @@
 package com.t2104e.biztrip.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,15 +8,29 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO<T> {
     private int code;
     private String status;
     private String message;
-    private int pageNumber;
-    private int perPage;
-    private long totalItems;
-    private int totalPages;
+    private Integer pageNumber;
+    private Integer perPage;
+    private Long totalItems;
+    private Integer totalPages;
     private String sortField;
     private String sortDir;
     private T data;
+
+    public ResponseDTO(int code, String status, String message) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+    }
+
+    public ResponseDTO(int code, String status, String message, T data) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
 }

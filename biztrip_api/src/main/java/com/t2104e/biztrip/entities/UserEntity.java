@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor // thay thế constructor có tham số
 @Entity(name = "users")
 @Table(name = "users", schema = "biztrip_database", catalog = "")
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -84,7 +84,7 @@ public class User implements UserDetails {
     @Basic
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private RoleEntity role;
     @Basic
     @Column(name = "created_at" ,columnDefinition="TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")

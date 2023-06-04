@@ -54,7 +54,7 @@ public class StaffEntity {
     private StaffPositionEntity staffPosition;
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
     @Basic
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")

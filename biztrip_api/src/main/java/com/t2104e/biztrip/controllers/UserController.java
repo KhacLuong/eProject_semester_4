@@ -17,14 +17,16 @@ public class UserController {
     public ResponseEntity<?> index(@RequestParam(value = "keyword", required = false) String keyword) {
         if (keyword != null && !keyword.isEmpty())
         {
+            var data = userImplService.getListUsersByKeyword(keyword);
             return new ResponseEntity<>(
-                    userImplService.getListUsersByKeyword(keyword),
-                    HttpStatusCode.valueOf(userImplService.getListUsersByKeyword(keyword).getCode())
+                    data,
+                    HttpStatusCode.valueOf(data.getCode())
             );
         }
+        var data = userImplService.getListUsers();
         return new ResponseEntity<>(
-                userImplService.getListUsers(),
-                HttpStatusCode.valueOf(userImplService.getListUsers().getCode())
+                data,
+                HttpStatusCode.valueOf(data.getCode())
         );
     }
 }

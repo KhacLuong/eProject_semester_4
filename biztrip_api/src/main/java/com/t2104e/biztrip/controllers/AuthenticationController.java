@@ -26,9 +26,10 @@ public class AuthenticationController {
     public ResponseEntity<?> register(
             @RequestBody RegisterRequest request
     ) {
+        var data = authenticationService.register(request);
         return new ResponseEntity<>(
-                authenticationService.register(request),
-                HttpStatusCode.valueOf(authenticationService.register(request).getCode())
+                data,
+                HttpStatusCode.valueOf(data.getCode())
         );
     }
 
@@ -36,9 +37,10 @@ public class AuthenticationController {
     public ResponseEntity<?> admin_register(
             @RequestBody RegisterRequest request
     ) {
+        var data = authenticationService.admin_register(request);
         return new ResponseEntity<>(
-                authenticationService.admin_register(request),
-                HttpStatusCode.valueOf(authenticationService.admin_register(request).getCode())
+                data,
+                HttpStatusCode.valueOf(data.getCode())
         );
     }
 
@@ -46,20 +48,21 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
+        var data = authenticationService.authenticate(request);
         return new ResponseEntity<>(
-                authenticationService.authenticate(request),
-                HttpStatusCode.valueOf(authenticationService.authenticate(request).getCode())
+                data,
+                HttpStatusCode.valueOf(data.getCode())
         );
     }
 
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
+            HttpServletRequest request
     ) throws IOException {
+        var data = authenticationService.refreshToken(request);
         return new ResponseEntity<>(
-                authenticationService.refreshToken(request, response),
-                HttpStatusCode.valueOf(authenticationService.refreshToken(request, response).getCode())
+                data,
+                HttpStatusCode.valueOf(data.getCode())
         );
     }
 }
