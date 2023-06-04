@@ -4,24 +4,21 @@ import {initialState} from "../../utils/initial.jsx";
 
 export const fetchAllTicket = createAsyncThunk('ticket/getAllTicket', async ({pageNumber = 1, perPage = 100, sortField = '', sortDir = '', keyword = ''}) => {
     try {
-        const response = await instance.get(`tickets?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-        return response.data
+        return await instance.get(`tickets?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
     } catch (err) {
         console.error(err)
     }
 })
 export const fetchGetTicketById = createAsyncThunk('ticket/getTicketById', async ({id}) => {
     try {
-        const response = await instance.get(`tickets/${id}`)
-        return response.data;
+        return await instance.get(`tickets/${id}`)
     } catch (err) {
         console.error(err);
     }
 })
 export const fetchRemoveTicket = createAsyncThunk('ticket/removeTicket', async ({id}) => {
     try {
-        const response = await instance.delete(`tickets?id=${id}`)
-        return response.data;
+        return await instance.delete(`tickets?id=${id}`)
     } catch (err) {
         console.error(err);
     }
@@ -29,11 +26,11 @@ export const fetchRemoveTicket = createAsyncThunk('ticket/removeTicket', async (
 export const fetchSaveTicket = createAsyncThunk('ticket/saveTicket', async ({data, navigate, toast}) => {
     try {
         const response = await instance.post(`tickets`, data)
-        if (response.data.code === 201) {
-            toast.success(response.data.message)
+        if (response.code === 201) {
+            toast.success(response.message)
             await navigate("/admin/v1/cms/coaches/tickets")
         }
-        return response.data
+        return response
     } catch (err) {
         console.error(err)
     }

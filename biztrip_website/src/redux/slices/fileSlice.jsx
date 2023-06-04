@@ -6,8 +6,7 @@ export const fetchCreateFile = createAsyncThunk(
     'file/createFile',
     async ({data, containerName}) => {
         try {
-            const response = await instance.post(`file?containerName=${containerName}`, data)
-            return response.data
+            return await instance.post(`file?containerName=${containerName}`, data)
         } catch (err) {
             console.error(err)
         }
