@@ -15,6 +15,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Override
     public void logout(
@@ -23,32 +24,43 @@ public class LogoutService implements LogoutHandler {
             Authentication authentication
     ) {
         final String authHeader = request.getHeader("Authorization");
-        final String refreshToken;
         response.setContentType("application/json");
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             try {
-                response.getWriter().write("Không có JWT hoặc JWT ko bắt đầu với `bearer`.");
+                response.getWriter().write("Không có token hoặc token ko bắt đầu với bearer.");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
-        refreshToken = authHeader.substring(7);
-        var user = userRepository.findByRefreshToken(refreshToken).orElse(null);
-        if (user == null) {
+        var authToken = authHeader.substring(7);
+        var userEmail = jwtService.extractUsername(authToken);
+        if (userEmail == null) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            try {
+                response.getWriter().write("Token không đúng.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+        var optionalUser = userRepository.findByEmail(userEmail);
+        if (optionalUser.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             try {
-                response.getWriter().write("Không tìm được tài khoản nào có email từ token.");
+                response.getWriter().write("Tài khoản không tồn tại.");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
+        var user = optionalUser.get();
         user.setRefreshToken(null);
         user.setTokenExpired(true);
         user.setTokenRevoked(true);
         userRepository.save(user);
+
         SecurityContextHolder.clearContext();
         response.setStatus(HttpServletResponse.SC_OK);
         try {
