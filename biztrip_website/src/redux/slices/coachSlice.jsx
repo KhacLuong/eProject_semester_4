@@ -3,14 +3,16 @@ import instance from "../../config/axiosConfig.jsx";
 import {initialState} from "../../utils/initial.jsx";
 
 export const fetchAllCoach = createAsyncThunk('coach/getAllCoach', async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
-    const response = await instance.get(`coaches?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-    return response.data
+    try {
+        return await instance.get(`coaches?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
+    } catch (err) {
+        console.error(err)
+    }
 })
 
 export const fetchGetCoachById = createAsyncThunk('coach/getCoachById', async ({id}) => {
     try {
-        const response = await instance.get(`coaches/${id}`)
-        return response.data;
+        return await instance.get(`coaches/${id}`)
     } catch (err) {
         console.error(err);
     }
@@ -18,8 +20,7 @@ export const fetchGetCoachById = createAsyncThunk('coach/getCoachById', async ({
 
 export const fetchRemoveCoach = createAsyncThunk('coach/removeCoach', async ({id}) => {
     try {
-        const response = await instance.delete(`coaches?id=${id}`)
-        return response.data;
+        return await instance.delete(`coaches?id=${id}`)
     } catch (err) {
         console.error(err);
     }
@@ -27,8 +28,7 @@ export const fetchRemoveCoach = createAsyncThunk('coach/removeCoach', async ({id
 export const fetchSaveCoach = createAsyncThunk(
     'coach/saveCoach', async ({data, navigate, toast}) => {
         try {
-            const response = await instance.post(`coaches`, data)
-            return response.data
+            return instance.post(`coaches`, data)
         } catch (err) {
             console.error(err)
         }
@@ -36,8 +36,7 @@ export const fetchSaveCoach = createAsyncThunk(
 )
 export const fetchAllUtility = createAsyncThunk('coach/getUtility', async () => {
     try {
-        const response = await instance.get(`coaches/get-all-utility`)
-        return response.data
+        return await instance.get(`coaches/get-all-utility`)
     } catch (err) {
         console.error(err)
     }

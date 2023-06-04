@@ -6,8 +6,7 @@ export const fetchAllUtility = createAsyncThunk(
     'utility/getAllUtility',
     async ({pageNumber, perPage, sortField, sortDir, keyword}) => {
         try {
-            const response = await instance.get(`utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
-            return response.data
+            return await instance.get(`utilities?pageNumber=${pageNumber}&perPage=${perPage}&sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
         } catch (err) {
             console.error(err);
         }
@@ -17,8 +16,7 @@ export const fetchGetUtilityById = createAsyncThunk(
     'utility/getUtilityById',
     async ({id}) => {
         try {
-            const response = await instance.get(`utilities/${id}`)
-            return response.data;
+            return await instance.get(`utilities/${id}`)
         } catch (err) {
             console.error(err);
         }
@@ -28,8 +26,7 @@ export const fetchRemoveUtility = createAsyncThunk(
     "utility/removeUtility",
     async ({id}) => {
         try {
-            const response = await instance.delete(`utilities?id=${id}`)
-            return response.data;
+            return await instance.delete(`utilities?id=${id}`)
         } catch (err) {
             console.error(err);
         }
@@ -40,11 +37,11 @@ export const fetchSaveUtility = createAsyncThunk(
     async ({dataUtility, navigate, toast}) => {
         try {
             const response = await instance.post(`utilities`, dataUtility)
-            if (response.data.code === 201) {
-                toast.success(response.data.message)
+            if (response.code === 201) {
+                toast.success(response.message)
                 await navigate("/admin/v1/cms/coaches/utilities")
             }
-            return response.data
+            return response
         } catch (err) {
             console.error(err)
         }
