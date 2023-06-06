@@ -29,4 +29,13 @@ public class UserController {
                 HttpStatusCode.valueOf(data.getCode())
         );
     }
+
+    @GetMapping(value = "/verify")
+    public ResponseEntity<?> verify(@RequestParam(value = "token") String token){
+        var data = userImplService.verifyAccount(token);
+        return new ResponseEntity<>(
+                data,
+                HttpStatusCode.valueOf(data.getCode())
+        );
+    }
 }

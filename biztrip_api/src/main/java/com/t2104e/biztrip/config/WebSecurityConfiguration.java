@@ -40,7 +40,8 @@ public class WebSecurityConfiguration {
 //                                "/configuration/security",
 //                                "/swagger-ui/**",
 //                                "/webjars/**",
-//                                "/swagger-ui.html").permitAll()
+//                                "/swagger-ui.html",
+//                                "/api/v1/users/verify").permitAll()
 //                        .anyRequest().authenticated()
 //                );
         http.sessionManagement()

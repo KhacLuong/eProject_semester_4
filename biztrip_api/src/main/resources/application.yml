@@ -16,6 +16,15 @@ spring:
     multipart:
       max-file-size: 6MB
       max-request-size: 6MB
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: fe1f5b1b49d1ea
+    password: 267a67eb534177
+    properties:
+      mail:
+        smtp:
+          auth: no
 server:
    port: 9090
 #  port: 8443

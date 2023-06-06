@@ -12,7 +12,10 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     Optional<UserEntity> findByEmail(String email);
     @Query("SELECT u from users u where concat(u.email, u.phoneNumber) like %?1%")
-    public List<UserEntity> findByKeyword(String Keyword);
-    public Optional<UserEntity> findByRefreshToken(String token);
-    public Optional<UserEntity> findByPhoneNumber(String phoneNumber);
+    List<UserEntity> findByKeyword(String Keyword);
+    Optional<UserEntity> findByPhoneNumber(String phoneNumber);
+    boolean existsByVerifyToken(String token);
+    boolean existsByPasswordResetToken(String token);
+    Optional<UserEntity> findByVerifyToken(String token);
+
 }

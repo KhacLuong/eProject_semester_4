@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import  org.springframework.security.core.AuthenticationException;
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -27,6 +29,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EMailImplService eMailImplService;
 
     public ResponseDTO<?> register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -41,12 +44,20 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
                 .role(RoleEntity.USER)
+                .verifyToken(createRandomToken())
                 .createdAt(new Date())
                 .build();
+        eMailImplService.sendSimpleMessage(
+                "${spring.mail.username}",
+                "Verification Account",
+                "Click this link to verification account.\n" +
+                        "localhost:7000/api/v1/users/verify?token=" + user.getVerifyToken()
+        );
         var savedUser = userRepository.save(user);
         var data = AuthenticationResponse.builder()
                 .email(savedUser.getEmail())
                 .build();
+
         return ResponseService.created(data, "Tạo tài khoản mới thành công.");
     }
 
@@ -62,8 +73,15 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
                 .role(RoleEntity.ADMIN)
+                .verifyToken(createRandomToken())
                 .createdAt(new Date())
                 .build();
+        eMailImplService.sendSimpleMessage(
+                user.getEmail(),
+                "Verification Account",
+                "Click this link to verification account.\n" +
+                        "localhost:7000/api/v1/users/verify?token=" + user.getVerifyToken()
+        );
         var savedUser = userRepository.save(user);
         var data = AuthenticationResponse.builder()
                 .email(savedUser.getEmail())
@@ -162,4 +180,18 @@ public class AuthenticationService {
         SecurityContextHolder.clearContext();
         return ResponseService.ok(null,"Đăng xuất thành công.");
     }
+
+    private String createRandomToken() {
+        byte[] randomBytes = new byte[32];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(randomBytes);
+        String token = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+
+        if (userRepository.existsByVerifyToken(token) || userRepository.existsByPasswordResetToken(token)) {
+            return createRandomToken();
+        }
+
+        return token;
+    }
+
 }
