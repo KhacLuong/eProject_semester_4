@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -60,6 +57,17 @@ public class AuthenticationController {
             HttpServletRequest request
     ) throws IOException {
         var data = authenticationService.refreshToken(request);
+        return new ResponseEntity<>(
+                data,
+                HttpStatusCode.valueOf(data.getCode())
+        );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(
+            HttpServletRequest request
+    ) {
+        var data = authenticationService.logout(request);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())

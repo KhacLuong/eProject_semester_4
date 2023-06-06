@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -136,5 +137,29 @@ public class AuthenticationService {
             }
         }
         return ResponseService.notFound("Không tìm thấy tài khoản tồn tại với email lấy từ refresh token.");
+    }
+
+    public ResponseDTO<?> logout(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            return ResponseService.unAuthorized("Không có token hoặc token không bắt đầu với Bearer.");
+        }
+        var authToken = authHeader.substring(7);
+        var userEmail = jwtService.extractUsername(authToken);
+        if (userEmail == null) {
+            return ResponseService.conflict("Token không đúng.");
+        }
+        var optionalUser = userRepository.findByEmail(userEmail);
+        if (optionalUser.isEmpty()) {
+            return ResponseService.notFound("Tài khoản không tồn tại.");
+        }
+        var user = optionalUser.get();
+        user.setRefreshToken(null);
+        user.setTokenExpired(true);
+        user.setTokenRevoked(true);
+        userRepository.save(user);
+
+        SecurityContextHolder.clearContext();
+        return ResponseService.ok(null,"Đăng xuất thành công.");
     }
 }
