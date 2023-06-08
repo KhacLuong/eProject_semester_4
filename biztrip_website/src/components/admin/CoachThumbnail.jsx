@@ -164,7 +164,7 @@ const CoachThumbnail = () => {
                                 <button onClick={handleOpenManageThumbnail}
                                         className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-primaryColor hover:bg-primaryColor_hover sm:ml-auto shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform duration-300`}>
                                     <MdKeyboardDoubleArrowUp
-                                        className={`mr-2 -ml-1 w-4 h-4 transition-transform duration-300 ${showManageThumbnail ? 'rotate-x-180' : ''}`}/>
+                                        className={`mr-2 -ml-1 w-4 h-4 transition-transform duration-300 ${showManageThumbnail ? 'rotate-180' : ''}`}/>
                                     Quản lý ảnh
                                 </button>
                             </div>

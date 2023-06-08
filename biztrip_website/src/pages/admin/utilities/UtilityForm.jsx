@@ -176,11 +176,11 @@ const UtilityForm = () => {
                                 </label>
                             </div>
                             <div className={`group relative z-0 w-full mb-6`}>
-                                <label htmlFor="stauts"
+                                <label htmlFor="status"
                                        className="block mb-2 text-sm font-medium text-gray-900">
                                     Lựa chọn trạng thái
                                 </label>
-                                <select id="stauts"
+                                <select id="status"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         value={status}
                                         onChange={(e) => handleOnChangeStatus(e)}>

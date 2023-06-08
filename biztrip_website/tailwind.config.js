@@ -19,12 +19,15 @@ const rotateX = plugin(function ({ addUtilities }) {
         '.rotate-x-180': {
             transform: 'rotateX(180deg)',
         },
+        '.rotate-y-180': {
+            transform: 'rotateY(180deg)'
+        }
     })
 })
 export default {
     content: [
         './src/**/*.{html,js,jsx}',
-        'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
+        'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
     ],
     theme: {
         extend: {

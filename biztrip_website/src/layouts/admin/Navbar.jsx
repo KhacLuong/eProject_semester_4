@@ -8,8 +8,11 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import avatar from "../../assets/image/avatar/me.jpg"
 import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {fetchLogout} from "../../redux/slices/authSlice.jsx";
 
 const Navbar = () => {
+    const dispatch = useDispatch()
     const MySwal = withReactContent(Swal)
     const navigate = useNavigate()
     const menuRef = useRef();
@@ -40,7 +43,9 @@ const Navbar = () => {
             cancelButtonText: 'Hủy'
         }).then(async (result) => {
             if (result.isConfirmed) {
-               navigate("/admin/v1/sign-in")
+                const res = await dispatch(fetchLogout()).unwrap()
+                console.log(res)
+                navigate("/admin/v1/cms/sign-in")
             }
         })
     }
@@ -51,7 +56,8 @@ const Navbar = () => {
         <div className={`py-3 px-3 lg:px-5 lg:pl-3`}>
             <div className={`flex justify-between items-center`}>
                 <div className="flex justify-start items-center">
-                    <button onClick={handleOpenSidebar} id={`toggleSidebarMobile`} aria-expanded={true} aria-controls={`sidebar`}
+                    <button onClick={handleOpenSidebar} id={`toggleSidebarMobile`} aria-expanded={true}
+                            aria-controls={`sidebar`}
                             className={`p-2 mr-2 text-gray-600 rounded cursor-pointer lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100`}>
                         <HiOutlineBars3CenterLeft className={`w-6 h-6 text-black`}/>
                         <MdOutlineClose className="w-6 h-6 hidden text-black"/>
@@ -167,9 +173,10 @@ const Navbar = () => {
                                     <img src={avatar} className={`w-8 h-8 rounded-full`} alt={`user avatar`}/>
                                 </button>
                             </div>
-                            <div className={`${openMenu ? '' : 'hidden'} absolute -left-32 z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-300 dark:shadow-gray-600`}
-                                 id="dropdown-2"
-                                 data-popper-placement="bottom">
+                            <div
+                                className={`${openMenu ? '' : 'hidden'} absolute -left-32 z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-300 dark:shadow-gray-600`}
+                                id="dropdown-2"
+                                data-popper-placement="bottom">
                                 <div className="py-3 px-4" role="none">
                                     <p className="text-sm" role="none">
                                         Đức Anh
@@ -180,16 +187,22 @@ const Navbar = () => {
                                 </div>
                                 <ul className="py-1" role="none">
                                     <li>
-                                        <button className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem">Cài đặt</button>
+                                        <button
+                                            className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">Cài đặt
+                                        </button>
                                     </li>
                                     <li>
-                                        <button className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem">Dark Mode</button>
+                                        <button
+                                            className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">Dark Mode
+                                        </button>
                                     </li>
                                     <li>
-                                        <button onClick={(e) => handleLogout(e)} className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem">Đăng xuất</button>
+                                        <button onClick={(e) => handleLogout(e)}
+                                                className="block w-full text-start py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem">Đăng xuất
+                                        </button>
                                     </li>
                                 </ul>
                             </div>

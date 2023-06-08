@@ -43,7 +43,7 @@ const ScheduleList = () => {
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
 
     useEffect(() => {
-        if (schedules.length >= 0) {
+        if (schedules && schedules.length >= 0) {
             const nextState = produce([], draft => {
                 schedules.map((item) => {
                     draft.push({

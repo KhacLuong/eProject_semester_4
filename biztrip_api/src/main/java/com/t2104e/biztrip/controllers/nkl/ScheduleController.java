@@ -24,10 +24,6 @@ public class ScheduleController {
     @Autowired
     private ValidationHandle validationHandle;
 
-
-    private ResponseDTO RESPONSE_DTO;
-
-
     @GetMapping("")
     public ResponseEntity<?> index(@RequestParam("pageNumber") int pageNumber,
                                    @RequestParam("perPage") int perPage,

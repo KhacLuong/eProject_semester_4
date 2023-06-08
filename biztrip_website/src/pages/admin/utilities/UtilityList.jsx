@@ -46,7 +46,7 @@ const UtilityList = () => {
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
 
     useEffect(() => {
-        if (utilities.length >= 0) {
+        if (utilities && utilities.length >= 0) {
             const nextState = produce([], draft => {
                 utilities.map((item) => {
                     draft.push({

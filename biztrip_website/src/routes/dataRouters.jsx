@@ -9,6 +9,7 @@ import {
     UtilityListPage,
     UtilityFormPage,
     ScheduleListPage,
+    ScheduleFormPage,
     NewsListPage,
     BookingListPage,
     RevenuePage,
@@ -18,7 +19,6 @@ import {
     UserFormPage,
     UserListPage,
     CoachCarListPage,
-    StaffListPage,
     CustomerHomePage, CoachCarFormPage,
 } from "../utils/import.jsx";
 
@@ -30,7 +30,7 @@ export const dataRouters = [
         isAuthentication: false,
     },
     {
-        path: "admin/v1/sign-in",
+        path: "admin/v1/cms/sign-in",
         page: SignInPage,
         isIndex: false,
         isAuthentication: false,
@@ -176,6 +176,18 @@ export const dataRouters = [
                 isAuthentication: true
             },
             {
+                path: "coaches/schedules/edit",
+                page: ScheduleFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/schedules/create",
+                page: ScheduleFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
                 path: "coaches/tickets",
                 page: TicketListPage,
                 isIndex: false,
@@ -196,12 +208,6 @@ export const dataRouters = [
             {
                 path: "policies",
                 page: PolicyListPage,
-                isIndex: false,
-                isAuthentication: true
-            },
-            {
-                path: "users/staffs",
-                page: StaffListPage,
                 isIndex: false,
                 isAuthentication: true
             },
