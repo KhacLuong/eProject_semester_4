@@ -316,7 +316,8 @@ const CoachForm = () => {
                                     </div>
                                 </div>
                             </TabPanel>
-                            <TabPanel value={`tab-2`}>                                <CoachSeat/>
+                            <TabPanel value={`tab-2`}>
+                                <CoachSeat/>
                             </TabPanel>
                             <TabPanel value={`tab-3`}>
                                 <CoachSchedule/>
