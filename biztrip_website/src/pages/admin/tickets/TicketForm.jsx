@@ -107,7 +107,7 @@ const TicketForm = () => {
                  data-aos-delay="300"
                  className={`flex flex-col p-4 my-4 mx-4 rounded-2xl shadow-xl shadow-gray-200`}>
                 <form className={``}>
-                    <div className={`grid md:grid-cols-2 mb:gap-6`}>
+                    <div className={`grid md:grid-cols-2 md:gap-6`}>
                         <div className={`w-full`}>
                             <div className={`group relative z-0 w-full mb-6`}>
                                 <input type={"text"}

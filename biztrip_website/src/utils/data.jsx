@@ -83,12 +83,6 @@ export const dataSidebarAdmin = [
                 icon: <></>,
             },
             {
-                name: "Nhân viên",
-                isSubcategory: true,
-                url: `${FINAL_URL_ADMIN}/users/staffs`,
-                icon: <></>,
-            },
-            {
                 name: "Phản hồi",
                 isSubcategory: true,
                 url: `${FINAL_URL_ADMIN}/users/testimonials`,

@@ -15,3 +15,9 @@ export const initialTicketFormState = {
     title: "",
     fare: ""
 }
+export const initialScheduleFormState = {
+    departure: [],
+    stopover: [],
+    destination: [],
+    status: ""
+}

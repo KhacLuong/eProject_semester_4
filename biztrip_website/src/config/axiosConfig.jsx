@@ -16,7 +16,7 @@ instance.interceptors.request.use( (config) => {
     const accessToken = store.getState().auth.account.accessToken
     const refreshToken = store.getState().auth.account.refreshToken
     config.headers["Authorization"] = `Bearer ${accessToken}`
-    config.headers["refresh-token"] = `${refreshToken}`
+    config.headers["REFRESH-TOKEN"] = `${refreshToken}`
     NProgress.start()
     return config;
 }, function (error) {
@@ -30,21 +30,17 @@ instance.interceptors.response.use((response) => {
     NProgress.done();
     return response && response.data ? response.data : response;
 }, async function (error) {
-    const refreshToken = store.getState().auth.account.refreshToken
     const originalRequest = error.config;
-    // if (error.response.status === 401) {
-    //     instance.defaults.headers.common["Authorization"] = `Bearer ${refreshToken}`
-    //     // const res = await store.dispatch(fetchRefreshToken()).unwrap()
-    //     if (res.code === 200) {
-    //         instance.defaults.headers.common["Authorization"] = `Bearer ${res.data.access_token}`
-    //     } else {
-    //         window.location.href = '/admin/v1/sign-in'
-    //     }
-    //     return instance(originalRequest)
-    // }
-
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+    if (error.response.status === 401) {
+        const res = await store.dispatch(fetchRefreshToken()).unwrap()
+        if (res && res.code === 200) {
+            instance.defaults.headers.common["Authorization"] = `Bearer ${res.data.access_token}`
+            instance.defaults.headers.common["REFRESH-TOKEN"] = `Bearer ${res.data.refresh_token}`
+        } else {
+            window.location.href = '/admin/v1/cms/sign-in'
+        }
+        return instance(originalRequest)
+    }
     NProgress.done();
     return error && error.response && error.response.data ? error.response.data : Promise.reject(error);
 });

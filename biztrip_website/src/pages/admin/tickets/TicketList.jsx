@@ -17,7 +17,8 @@ const TicketList = () => {
         {field: 'title', name: 'Loại vé'},
         {field: 'fare', name: 'Giá vé'},
         {field: 'createdAt', name: 'Ngày thêm vào'},
-        {field: 'updatedAt', name: 'Ngày cập nhật'}, 'Action'
+        {field: 'updatedAt', name: 'Ngày cập nhật'},
+        'Action'
     ]
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -38,7 +39,7 @@ const TicketList = () => {
         dispatch(fetchAllTicket({pageNumber, perPage, sortField, sortDir, keyword}))
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
     useEffect(() => {
-        if(tickets.length >= 0) {
+        if(tickets && tickets.length >= 0) {
             const nextState = produce([], draft => {
                 tickets.map((item) => {
                     draft.push({

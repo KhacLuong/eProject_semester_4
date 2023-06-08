@@ -119,7 +119,7 @@ const Table = ({
                                                                         <td key={`td-${index}`}
                                                                             className={`px-6 py-3`}>{item}</td>
                                                                     )
-                                                                } else if ( typeof item === "number") {
+                                                                } else if (typeof item === "number") {
                                                                     return (
                                                                         <td key={`td-${index}`}
                                                                             className={`px-6 py-3 text-successColor`}>{item} VNĐ</td>

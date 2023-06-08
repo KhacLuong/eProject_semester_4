@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
 
-export const fetchLogin = createAsyncThunk('login', async ({data}) => {
+export const fetchLogin = createAsyncThunk('auth/login', async ({data}) => {
     try {
         return await instance.post(`auth/authenticate`, data)
     } catch (err) {
@@ -10,11 +10,12 @@ export const fetchLogin = createAsyncThunk('login', async ({data}) => {
 })
 export const fetchLogout = createAsyncThunk('auth/logout', async () => {
     try {
-
+        return await instance.get(`auth/logout`)
     } catch (err) {
         console.error(err)
     }
 })
+
 export const fetchAdminRegister = createAsyncThunk('auth/adminRegister', async ({data}) => {
     try {
 
@@ -31,8 +32,7 @@ export const fetchCustomerRegister = createAsyncThunk('auth/customerRegister', a
 })
 export const fetchRefreshToken = createAsyncThunk('auth/refreshToken', async () => {
     try {
-        console.log(instance.defaults)
-        return  await instance.post(`auth/refresh-token`)
+        return await instance.post(`auth/refresh-token`)
     } catch (err) {
         console.error(err)
     }
@@ -86,22 +86,45 @@ export const authSlice = createSlice({
                 }
             })
             .addCase(fetchRefreshToken.fulfilled, (state, action) => {
-                console.log(action)
                 return {
                     ...state,
-                    // account: {
-                    //     ...state.account,
-                    //     accessToken: action?.payload?.data?.access_token,
-                    //     refreshToken: action?.payload?.data?.refresh_token,
-                    // },
-                    // isAuthenticated: action?.payload?.code === 200,
-                    // status: action?.payload?.code === 200 ? 'succeeded' : 'failed'
+                    account: {
+                        ...state.account,
+                        accessToken: action?.payload?.data?.access_token,
+                        refreshToken: action?.payload?.data?.refresh_token,
+                    },
+                    isAuthenticated: action?.payload?.code === 200,
+                    status: action?.payload?.code === 200 ? 'succeeded' : 'failed'
                 }
             })
             .addCase(fetchRefreshToken.rejected, (state, action) => {
                 return {
                     ...state,
                     isAuthenticated: false,
+                    status: 'failed'
+                }
+            })
+            .addCase(fetchLogout.pending, (state, action) => {
+                return {
+                    ...state,
+                    status: 'loading'
+                }
+            })
+            .addCase(fetchLogout.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    account: {
+                        accessToken: '',
+                        refreshToken: '',
+                        email: '',
+                    },
+                    isAuthenticated: false,
+                    status: 'succeeded',
+                }
+            })
+            .addCase(fetchLogout.rejected, (state, action) => {
+                return {
+                    ...state,
                     status: 'failed'
                 }
             })

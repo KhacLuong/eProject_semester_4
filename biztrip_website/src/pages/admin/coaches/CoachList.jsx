@@ -41,7 +41,11 @@ const CoachList = () => {
     useEffect(() => {
         dispatch(fetchAllCoach({pageNumber, perPage, sortField, sortDir, keyword}))
     }, [navigate, dispatch, pageNumber, perPage, sortField, sortDir])
-
+    useEffect(() => {
+        if (coaches && coaches.length >= 0) {
+            console.log(coaches)
+        }
+    }, [coaches])
     return (
         <>
             <Banner dataBreadcrumb={listBreadcrumb("Quản lý xe")}
@@ -88,7 +92,8 @@ const CoachList = () => {
                     firstItemPerPage={firstItemPerPage}/>
                 {
                     totalItems > 0 && totalPages > 0 ?
-                        <Paginate setPageNumber={setPageNumber}
+                        <Paginate pageNumber={pageNumber}
+                                  setPageNumber={setPageNumber}
                                   sortField={sortField}
                                   sortDir={sortDir}
                                   fetchData={fetchAllCoach}

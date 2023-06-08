@@ -4,9 +4,23 @@ import {MdOutlineKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
 import {HiOutlineArrowNarrowRight} from "react-icons/all.js";
 import {useDispatch} from "react-redux";
 
-const Paginate = ({sortField, sortDir, fetchData, totalPages, perPage, totalItems, setPageNumber, firstItemPerPage, setFirstItemPerPage, lastItemPerPage, setLastItemPerPage, pageNumber}) => {
+const Paginate = ({
+                      sortField,
+                      sortDir,
+                      fetchData,
+                      totalPages,
+                      perPage,
+                      totalItems,
+                      setPageNumber,
+                      firstItemPerPage,
+                      setFirstItemPerPage,
+                      lastItemPerPage,
+                      setLastItemPerPage,
+                      pageNumber
+                  }) => {
     const dispatch = useDispatch()
     const [turnOffPrevNextBtn, setTurnOffPrevNextBtn] = useState(true)
+
     useEffect(() => {
         setFirstItemPerPage(perPage * (pageNumber - 1) + 1)
         if (totalPages === pageNumber) {
