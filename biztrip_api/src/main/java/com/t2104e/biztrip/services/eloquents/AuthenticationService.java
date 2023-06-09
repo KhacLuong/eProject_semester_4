@@ -56,6 +56,7 @@ public class AuthenticationService {
         var savedUser = userRepository.save(user);
         var data = AuthenticationResponse.builder()
                 .email(savedUser.getEmail())
+                .role(savedUser.getRole())
                 .build();
 
         return ResponseService.created(data, "Tạo tài khoản mới thành công.");
@@ -85,6 +86,7 @@ public class AuthenticationService {
         var savedUser = userRepository.save(user);
         var data = AuthenticationResponse.builder()
                 .email(savedUser.getEmail())
+                .role(savedUser.getRole())
                 .build();
         return ResponseService.created(data, "Tạo tài khoản quản trị mới thành công.");
     }
@@ -108,6 +110,7 @@ public class AuthenticationService {
         saveUserToken(user, refreshToken);
         var data = AuthenticationResponse.builder()
                 .email(user.getEmail())
+                .role(user.getRole())
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -146,6 +149,7 @@ public class AuthenticationService {
                 saveUserToken(user, newRefreshToken);
                 var data = AuthenticationResponse.builder()
                         .email(userEmail)
+                        .role(user.getRole())
                         .accessToken(accessToken)
                         .refreshToken(newRefreshToken)
                         .build();
