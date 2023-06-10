@@ -29,7 +29,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final EMailImplService eMailImplService;
+    private final EmailImplService eMailImplService;
 
     public ResponseDTO<?> register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -48,10 +48,10 @@ public class AuthenticationService {
                 .createdAt(new Date())
                 .build();
         eMailImplService.sendSimpleMessage(
-                "${spring.mail.username}",
-                "Verification Account",
-                "Click this link to verification account.\n" +
-                        "localhost:7000/api/v1/users/verify?token=" + user.getVerifyToken()
+                user.getEmail(),
+                "Xác thực tài khoản",
+                "Bấm vào đường dẫn này:\n" +
+                        "localhost:9090/api/v1/users/verify?token=" + user.getVerifyToken()
         );
         var savedUser = userRepository.save(user);
         var data = AuthenticationResponse.builder()
@@ -59,7 +59,7 @@ public class AuthenticationService {
                 .role(savedUser.getRole())
                 .build();
 
-        return ResponseService.created(data, "Tạo tài khoản mới thành công.");
+        return ResponseService.created(data, "Tạo tài khoản mới thành công. Kiểm tra email để xác thực tài khoản.");
     }
 
     public ResponseDTO<?> admin_register(RegisterRequest request) {
@@ -79,9 +79,9 @@ public class AuthenticationService {
                 .build();
         eMailImplService.sendSimpleMessage(
                 user.getEmail(),
-                "Verification Account",
-                "Click this link to verification account.\n" +
-                        "localhost:7000/api/v1/users/verify?token=" + user.getVerifyToken()
+                "Xác thực tài khoản",
+                "Bấm vào đường dẫn này:\n" +
+                        "localhost:9090/api/v1/users/verify?token=" + user.getVerifyToken()
         );
         var savedUser = userRepository.save(user);
         var data = AuthenticationResponse.builder()
