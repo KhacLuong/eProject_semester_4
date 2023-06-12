@@ -1,5 +1,6 @@
 package com.t2104e.biztrip.controllers;
 
+import com.t2104e.biztrip.command.ChangePasswordRequest;
 import com.t2104e.biztrip.command.ResetPasswordRequest;
 import com.t2104e.biztrip.services.eloquents.UserImplService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,15 @@ public class UserController {
     @PostMapping(value = "/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request){
         var data = userImplService.resetPassword(request);
+        return new ResponseEntity<>(
+                data,
+                HttpStatusCode.valueOf(data.getCode())
+        );
+    }
+
+    @PutMapping(value = "/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
+        var data = userImplService.changePassword(request);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())

@@ -1,5 +1,6 @@
 package com.t2104e.biztrip.services.eloquents;
 
+import com.t2104e.biztrip.command.ChangePasswordRequest;
 import com.t2104e.biztrip.command.ResetPasswordRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.repositories.UserRepository;
@@ -99,6 +100,21 @@ public class UserImplService implements IUserService {
         user.setPasswordResetExpired(null);
         userRepository.save(user);
         return ResponseService.ok(null, "Tạo mới mật khẩu thành công.");
+    }
+
+    @Override
+    public ResponseDTO<?> changePassword(ChangePasswordRequest request){
+        var data = userRepository.findById(request.getId());
+        if (data.isEmpty()) {
+            return ResponseService.notFound("Không tìm thấy tài khoản.");
+        }
+        var user = data.get();
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
+            return ResponseService.conflict("Mật khẩu cũ không đúng.");
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+        return ResponseService.ok(null, "Đổi mật khẩu thành công.");
     }
 
     private String createRandomToken() {
