@@ -37,7 +37,11 @@ instance.interceptors.response.use((response) => {
             instance.defaults.headers.common["Authorization"] = `Bearer ${res.data.access_token}`
             instance.defaults.headers.common["REFRESH-TOKEN"] = `Bearer ${res.data.refresh_token}`
         } else {
-            window.location.href = '/admin/v1/cms/sign-in'
+            if (window.location.pathname.includes("admin")) {
+                window.location.href = '/admin/v1/cms/sign-in'
+            } else {
+                window.location.href = '/v1/sign-in'
+            }
         }
         return instance(originalRequest)
     }

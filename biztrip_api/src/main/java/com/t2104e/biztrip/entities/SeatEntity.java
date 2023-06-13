@@ -22,6 +22,9 @@ public class SeatEntity {
     @Column(name = "type", nullable = false)
     private String type;
     @Basic
+    @Column(name = "position")
+    private long position;
+    @Basic
     @Column(name = "coach_id", nullable = false)
     private long coachId;
     @OneToOne

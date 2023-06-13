@@ -10,7 +10,7 @@ import {toast} from "react-toastify"
 import {useDispatch} from "react-redux"
 import {fetchAllTicket} from "../../redux/slices/ticketSlice.jsx"
 
-const CoachSeat = () => {
+const CoachSeat = ({setListSeat}) => {
     const maxBoxesPerRow = 5
     const [rows, setRows] = useState(8)
     const [selectedBox, setSelectedBox] = useState(null)
@@ -27,8 +27,8 @@ const CoachSeat = () => {
     const [tickets, setTickets] = useState([])
     const [ticketId, setTicketId] = useState(0)
     const [seatCode, setSeatCode] = useState('')
+    const [boxId, setBoxId] = useState(null)
     const dispatch = useDispatch()
-
     useEffect(() => {
         const test = async () => {
             const res = await dispatch(fetchAllTicket({})).unwrap()
@@ -44,7 +44,7 @@ const CoachSeat = () => {
         updatedLayout[selectedBox[0]][selectedBox[1]] = {
             type: boxType,
             seatCode: boxType === 'seat' ? seatCode : null,
-            ticketId: boxType === 'seat' ? ticketId : null,
+            ticketId: boxType === 'seat' ? ticketId : 0,
         };
 
         setCoachLayout(updatedLayout);
@@ -52,17 +52,18 @@ const CoachSeat = () => {
         setBoxType(null)
         setTicketId(0);
         setSeatCode('');
+        setBoxId(null)
     };
     const handleBoxClick = (rowIndex, columnIndex) => {
         const selectedBoxData = coachLayout[rowIndex][columnIndex];
         setSelectedBox([rowIndex, columnIndex]);
         setBoxType(selectedBoxData.type);
+        setBoxId(rowIndex * maxBoxesPerRow + columnIndex + 1)
         setSeatCode(selectedBoxData.seatCode || '');
         setTicketId(selectedBoxData.ticketId || 0);
     };
-    const handleCreateButtonClick = (e) => {
+    const handleSaveAllSeat = (e) => {
         e.preventDefault();
-
         const dataToSend = coachLayout.flatMap((row, rowIndex) =>
             row.map((position, columnIndex) => {
                 const positionIndex = rowIndex * maxBoxesPerRow + columnIndex + 1;
@@ -70,10 +71,10 @@ const CoachSeat = () => {
                     ...position,
                     position: positionIndex,
                 };
-
             })
         );
-        console.log(dataToSend);
+        setListSeat(dataToSend)
+        toast.success("Lưu sơ đồ xe thành công")
     };
 
     const handleAddRow = (e) => {
@@ -116,7 +117,7 @@ const CoachSeat = () => {
                 columns.push(
                     <div
                         key={`${row}-${column}`}
-                        className={`border-2 w-16 h-16 cursor-pointer bg-white hover:bg-primaryColor hover:text-white transition-all duration-300 ease-in-out mr-1.5 last:mr-0 relative ${position.type}`}
+                        className={`border-2 w-16 h-16 cursor-pointer text-sm hover:bg-primaryColor hover:text-white transition-all duration-300 ease-in-out mr-1.5 last:mr-0 relative ${position.type} ${(row * maxBoxesPerRow + column + 1) === boxId ? 'bg-primaryColor text-white' : 'bg-white'}`}
                         onClick={() => handleBoxClick(row, column)}
                     >
                         <span className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}>
@@ -126,7 +127,6 @@ const CoachSeat = () => {
                     </div>
                 );
             }
-
             layout.push(<div key={row}
                              className={`flex justify-center items-center mb-1.5 ${row === rows - 1 ? 'relative' : ''}`}>
                 {
@@ -170,16 +170,24 @@ const CoachSeat = () => {
                                 <div
                                     className="sticky top-24 bg-white shadow-xl p-4 rounded-xl">
                                     <div className={`flex flex-col mb-4`}>
-                                        <label htmlFor="position-type">Loại vị trí</label>
+                                        <label htmlFor={`position`} className={`block mb-2 text-sm font-medium text-gray-900`}>Vị trí</label>
+                                        <input id={`position`}
+                                               value={selectedBox[0] * maxBoxesPerRow + selectedBox[1] + 1}
+                                               readOnly={true}
+                                               className={`bg-gray-200 border-none shadow-none outline-none ring-0 text-gray-900 text-sm rounded-lg block w-full p-2.5 f`}/>
+                                    </div>
+                                    <div className={`flex flex-col mb-4`}>
+                                        <label htmlFor="position-type" className={`block mb-2 text-sm font-medium text-gray-900`}>Loại vị trí</label>
                                         <select
+                                            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
                                             id="position-type"
                                             value={boxType || ''}
                                             onChange={(e) => setBoxType(e.target.value)}
                                         >
                                             <option value="">-- Lựa chọn --</option>
                                             <option value="seat">Ghế cho hành khách</option>
-                                            <option value="driver">Ghế cho lái xe</option>
                                             <option value="space">Khoảng trống</option>
+                                            <option value="driver">Ghế cho lái xe</option>
                                         </select>
                                     </div>
                                     {
@@ -215,7 +223,7 @@ const CoachSeat = () => {
                                         <button onClick={handleSaveSeat}
                                                 className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-successColor hover:bg-successColor_hover sm:ml-auto shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform duration-300`}>
                                             <MdOutlineSave className={`mr-2 -ml-1 w-4 h-4`}/>
-                                            Lưu
+                                            Xác nhận
                                         </button>
                                     </div>
                                 </div>
@@ -223,8 +231,10 @@ const CoachSeat = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                <button onClick={handleCreateButtonClick}>Tạo ghế</button>
+            <div className={`flex justify-end items-center`}>
+                <button onClick={handleSaveAllSeat}
+                        className=" duration-300 text-white bg-successColor hover:bg-successColor_hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Lưu
+                </button>
             </div>
         </div>
     )

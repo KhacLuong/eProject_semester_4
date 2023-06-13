@@ -21,3 +21,11 @@ export const initialScheduleFormState = {
     destination: [],
     status: ""
 }
+export const initialTestimonialFormState = {
+    fullName: "",
+    job: "",
+    isHot: 2,
+    status: 2,
+    contentJson: '',
+    avatarPath: ""
+}

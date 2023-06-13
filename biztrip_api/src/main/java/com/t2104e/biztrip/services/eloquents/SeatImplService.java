@@ -2,7 +2,6 @@ package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.command.SeatRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.CoachEntity;
 import com.t2104e.biztrip.entities.SeatEntity;
 import com.t2104e.biztrip.entities.TicketEntity;
 import com.t2104e.biztrip.repositories.SeatRepository;

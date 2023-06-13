@@ -9,8 +9,9 @@ import {
 import img1 from "../../assets/image/lazycat_code-01.png"
 import img2 from "../../assets/image/space_man.jpg"
 import img3 from "../../assets/image/travel.jpg"
+import {toast} from "react-toastify";
 
-const CoachThumbnail = () => {
+const CoachThumbnail = ({setListThumbnail}) => {
     const thumbRef = useRef()
     const [showManageThumbnail, setShowManageThumbnail] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -18,43 +19,7 @@ const CoachThumbnail = () => {
     const [countThumbnail, setCountThumbnail] = useState(0)
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState("")
-    const [data, setData] = useState([
-        {
-            id: 1,
-            img: img1,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-        {
-            id: 2,
-            img: img2,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-        {
-            id: 3,
-            img: img3,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-        {
-            id: 4,
-            img: img2,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-        {
-            id: 5,
-            img: img1,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-        {
-            id: 6,
-            img: img3,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-        {
-            id: 7,
-            img: img1,
-            description: "askj asdjkl; asdklj daskld asbre"
-        },
-    ]);
+    const [data, setData] = useState([]);
     useEffect(() => {
         const count = data.reduce(
             (count, item) => (item.checked ? count + 1 : count),
@@ -126,6 +91,7 @@ const CoachThumbnail = () => {
     const handleAddThumbnail = (e) => {
         e.preventDefault()
         const newImage = {
+            id: 0,
             img: window.URL.createObjectURL(image),
             description: description,
         };
@@ -133,19 +99,20 @@ const CoachThumbnail = () => {
         setImage(null);
         thumbRef.current.value = null;
         setShowModal(false)
+        toast.success("Thêm ảnh thu nhỏ thành công")
     }
-    const handleUpdateThumbnail = (e) => {
-        e.preventDefault()
-        // setShowManageThumbnail(false)
-        // setCountThumbnail(0)
-        return data.filter((item) => item.checked);
-    }
+
     const handleRemoveThumbnail = (e) => {
         e.preventDefault()
-        // setShowManageThumbnail(false)
-        // setCountThumbnail(0)
-        const checkedData = data.filter((item) => item.checked);
-        return checkedData.map((item) => item.id);
+        setShowManageThumbnail(false)
+        setCountThumbnail(0)
+        setData((data) => data.filter((item) => !item.checked))
+        toast.success("Xóa ảnh thu nhỏ thành công")
+    }
+    const handleSaveAllThumbnail = (e) => {
+        e.preventDefault()
+        toast.success("Lưu ảnh thu nhỏ thành công")
+        setListThumbnail(data)
     }
     return (
         <>
@@ -225,15 +192,9 @@ const CoachThumbnail = () => {
                                                 }
                                             </button>
                                         </div>
-                                        <div className={`flex items-centers justify-center mr-4`}>
-                                            <button onClick={(e) => console.log(handleUpdateThumbnail(e))}
-                                                    className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg sm:ml-auto shadow-md shadow-gray-300 transition-transform duration-300 ${countThumbnail === 0 ? 'bg-gray-400' : 'hover:scale-[1.02] bg-primaryColor hover:bg-primaryColor_hover'}`}>
-                                                <MdOutlineEdit className={`mr-2 -ml-1 w-4 h-4`}/>
-                                                Cập nhật {countThumbnail > 0 ? countThumbnail : ''} ảnh
-                                            </button>
-                                        </div>
+
                                         <div className={`flex items-centers justify-center`}>
-                                            <button onClick={(e) => console.log(handleRemoveThumbnail(e))}
+                                            <button onClick={(e) => handleRemoveThumbnail(e)}
                                                     className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg sm:ml-auto shadow-md shadow-gray-300 transition-transform duration-300 ${countThumbnail === 0 ? 'bg-gray-400' : 'bg-dangerColor-default_2 hover:bg-dangerColor-hover_2  hover:scale-[1.02]'}`}
                                                     disabled={countThumbnail === 0}>
                                                 <AiOutlineDelete className={`mr-2 -ml-1 w-4 h-4`}/>
@@ -245,7 +206,8 @@ const CoachThumbnail = () => {
                                 : null
                         }
                     </div>
-                    <div className={`w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[1680px]:grid-cols-5 gap-6 mb-4`}>
+                    <div
+                        className={`w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[1680px]:grid-cols-5 gap-6 mb-4`}>
                         {
                             data.map((item, index) => {
                                 return (
@@ -264,21 +226,29 @@ const CoachThumbnail = () => {
                                         </div>
                                         <div className={`h-1/6 w-full`}>
                                             {item.editing ? (
-                                                <input className={`mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full h-full`}
-                                                       type="text"
-                                                       value={item.description}
-                                                       onChange={(e) =>
-                                                           handleEditDescription(index, e.target.value)
-                                                       }
+                                                <input
+                                                    className={`mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full h-full`}
+                                                    type="text"
+                                                    value={item.description}
+                                                    onChange={(e) =>
+                                                        handleEditDescription(index, e.target.value)
+                                                    }
                                                 />
                                             ) : (
-                                                <p title={item.description} className={`mt-2 line-clamp-2`}>{item.description}</p>
+                                                <p title={item.description}
+                                                   className={`mt-2 line-clamp-2`}>{item.description}</p>
                                             )}
                                         </div>
                                     </div>
                                 )
                             })
                         }
+
+                    </div>
+                    <div className={`flex justify-end items-center`}>
+                        <button onClick={handleSaveAllThumbnail}
+                                className=" duration-300 text-white bg-successColor hover:bg-successColor_hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Lưu
+                        </button>
                     </div>
                 </div>
             </div>

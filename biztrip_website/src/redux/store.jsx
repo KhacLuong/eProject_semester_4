@@ -19,6 +19,7 @@ import coachSlice from "./slices/coachSlice.jsx";
 import scheduleSlice from "./slices/scheduleSlice.jsx";
 import authSlice from "./slices/authSlice.jsx";
 import userSlice from "./slices/userSlice.jsx";
+import testimonialSlice from "./slices/testimonialSlice.jsx";
 
 const authPersistConfig = {
     key: 'auth',
@@ -36,6 +37,7 @@ export const store = configureStore({
         ticket: ticketSlice,
         file: fileSlice,
         schedule: scheduleSlice,
+        testimonial: testimonialSlice,
         user: userSlice,
         auth: rootReducerWithPersistence
     },

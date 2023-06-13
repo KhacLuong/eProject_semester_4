@@ -80,9 +80,9 @@ const UtilityForm = () => {
         }
         if (imageDefault) {
             if (imageName) {
-                const data = new FormData()
-                data.append('file', imageName)
-                const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
+                const fileData = new FormData()
+                fileData.append('file', imageName)
+                const uploadFile = await dispatch(fetchCreateFile({fileData, containerName})).unwrap()
                 if (uploadFile && uploadFile.code === 200) {
                     imagePath = uploadFile.data
                     setImageDefault(imagePath)
@@ -178,7 +178,7 @@ const UtilityForm = () => {
                             <div className={`group relative z-0 w-full mb-6`}>
                                 <label htmlFor="status"
                                        className="block mb-2 text-sm font-medium text-gray-900">
-                                    Lựa chọn trạng thái
+                                    Trạng thái
                                 </label>
                                 <select id="status"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

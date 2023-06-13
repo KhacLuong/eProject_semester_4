@@ -100,6 +100,11 @@ const ScheduleList = () => {
                        tbodyData={tbodyData}
                        tbodyAction={tbodyActionDefault}
                        fetchDelete={fetchRemoveSchedule}
+                       pageNumber={pageNumber}
+                       perPage={perPage}
+                       sortField={sortField}
+                       sortDir={sortDir}
+                       fetchAll={fetchAllSchedule}
                        status={status}
                        setSortField={setSortField}
                        setSortDir={setSortDir}
