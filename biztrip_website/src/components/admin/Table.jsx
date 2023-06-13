@@ -14,6 +14,11 @@ const Table = ({
                    tbodyData,
                    tbodyAction,
                    fetchDelete,
+                   pageNumber,
+                   perPage,
+                   sortField,
+                   sortDir,
+                   fetchAll,
                    status,
                    setSortField,
                    setSortDir,
@@ -23,7 +28,7 @@ const Table = ({
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch()
     const handleDelete = async (id) => {
-         MySwal.fire({
+        MySwal.fire({
             title: 'Bạn có chắc chắn không?',
             text: "Nếu xác nhận, Bạn sẽ không thể khôi phục dữ liệu này!",
             icon: 'warning',
@@ -37,6 +42,8 @@ const Table = ({
                 const res = await dispatch(fetchDelete({id})).unwrap()
                 if (res) {
                     if (res.code === 200) {
+                        const keyword = ""
+                        dispatch(fetchAll({pageNumber, perPage, sortField, sortDir, keyword}))
                         toast.success(res.message)
                     } else {
                         toast.error(res.message)
@@ -138,6 +145,7 @@ const Table = ({
                                                                             </td>
                                                                         )
                                                                     }
+
                                                                     return <td key={`td-${index}`}
                                                                                className={`px-6 py-3 w-24`}>
                                                                         <img src={item?.imagePath} alt={item?.imgName}

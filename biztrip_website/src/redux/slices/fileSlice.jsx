@@ -4,9 +4,9 @@ import {initialState} from "../../utils/initial.jsx";
 
 export const fetchCreateFile = createAsyncThunk(
     'file/createFile',
-    async ({data, containerName}) => {
+    async ({fileData, containerName}) => {
         try {
-            return await instance.post(`file?containerName=${containerName}`, data)
+            return await instance.post(`file?containerName=${containerName}`, fileData)
         } catch (err) {
             console.error(err)
         }

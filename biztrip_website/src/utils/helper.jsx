@@ -3,7 +3,7 @@ import {message} from "./message.jsx";
 export const validateForm = (formData, validationRules) => {
     let errors = {};
     validationRules.forEach((rule) => {
-        const { fieldName, validationFn, errorMessage } = rule;
+        const {fieldName, validationFn, errorMessage} = rule;
         const fieldValue = formData[fieldName];
 
         if (typeof fieldValue === "string" && fieldValue.trim() === "") {
@@ -20,7 +20,6 @@ export const validateForm = (formData, validationRules) => {
             errors[fieldName] = errorMessage;
         }
     });
-
     return errors;
 }
 export const validateEmpty = (value) => {
@@ -28,6 +27,12 @@ export const validateEmpty = (value) => {
 }
 export const validateSelectOption = (value) => {
     return value !== null
+}
+export const validateLengthOfString = (value, min, max) => {
+    if (value.length <= max && value.length >= min) {
+        return null
+    }
+    return message.error.content.invalidLength(min, max)
 }
 export const validateFile = (file) => {
     // Check if a file is selected
@@ -56,7 +61,9 @@ export const validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
+export const validateName = (name) => {
 
+}
 export const handleChangeImage = (e, setImageDefault, setImageName, setErrMsg) => {
     setErrMsg("")
     const fileObj = e.target.files && e.target.files[0];

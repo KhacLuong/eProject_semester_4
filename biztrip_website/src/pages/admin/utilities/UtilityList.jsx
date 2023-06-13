@@ -110,6 +110,11 @@ const UtilityList = () => {
                        tbodyData={tbodyData}
                        tbodyAction={tbodyActionDefault}
                        fetchDelete={fetchRemoveUtility}
+                       pageNumber={pageNumber}
+                       perPage={perPage}
+                       sortField={sortField}
+                       sortDir={sortDir}
+                       fetchAll={fetchAllUtility}
                        status={status}
                        setSortField={setSortField}
                        setSortDir={setSortDir}

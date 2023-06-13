@@ -12,10 +12,8 @@ import {produce} from "immer"
 import makeAnimated from 'react-select/animated';
 import {initialCoachFormState} from "../../../utils/initial.jsx";
 import {
-    validateEmpty,
     validateFile,
     validateForm,
-    validateSelectOption
 } from "../../../utils/helper.jsx";
 import {message} from "../../../utils/message.jsx";
 import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
@@ -29,19 +27,9 @@ import {
 import CoachSchedule from "../../../components/admin/CoachSchedule.jsx";
 import CoachThumbnail from "../../../components/admin/CoachThumbnail.jsx";
 import CoachSeat from "../../../components/admin/CoachSeat.jsx";
+import {formCoachValidationRules} from "../../../utils/validationRules.jsx";
 
-const formCoachValidationRules = [
-    {
-        fieldName: "plateNumber",
-        validationFn: validateEmpty,
-        errorMessage: message.error.plateNumber.isEmpty
-    },
-    {
-        fieldName: "status",
-        validationFn: validateSelectOption,
-        errorMessage: message.error.status.isEmpty
-    },
-]
+
 const CoachForm = () => {
     const id = useLocation().state?.id
     useDocumentTitle(id ? "Sửa thông tin xe" : "Thêm mới xe", true)
@@ -57,6 +45,9 @@ const CoachForm = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileError, setFileError] = useState("");
     const fileInputRef = useRef(null);
+
+    const [listSeat, setListSeat] = useState([])
+    const [listThumbnail, setListThumbnail] = useState([])
 
     useEffect(() => {
         if (id) {
@@ -121,10 +112,6 @@ const CoachForm = () => {
             i.label.toLowerCase().includes(inputValue.toLowerCase())
         );
     };
-    const handleFormReset = () => {
-        setDisableButton(false)
-        setFormState(initialCoachFormState);
-    };
     const loadOptions = (inputValue, callback) => {
         setTimeout(() => {
             callback(filter(inputValue));
@@ -132,7 +119,6 @@ const CoachForm = () => {
     };
     const handleSubmitForm = async (e) => {
         e.preventDefault()
-        const errors = validateForm(formState, formCoachValidationRules);
         const fileError = validateFile(selectedFile)
 
         if (fileError) {
@@ -141,9 +127,9 @@ const CoachForm = () => {
         } else {
             // const containerName = 'coaches'
             // let imagePath = ""
-            // const data = new FormData()
-            // data.append('file', selectedFile)
-            // const uploadFile = await dispatch(fetchCreateFile({data, containerName})).unwrap()
+            // const fileData = new FormData()
+            // fileData.append('file', selectedFile)
+            // const uploadFile = await dispatch(fetchCreateFile({fileData, containerName})).unwrap()
             // if (uploadFile && uploadFile.code === 200) {
             //     imagePath = uploadFile.data
             //     // setImageDefault(imagePath)
@@ -153,7 +139,10 @@ const CoachForm = () => {
             //     imagePath: imagePath
             // }))
         }
-        console.log(formState)
+        const errors = validateForm(formState, formCoachValidationRules);
+        console.log(errors)
+        console.log(listSeat)
+        console.log(listThumbnail)
         if (Object.keys(errors).length === 0) {
             setDisableButton(true)
             try {
@@ -209,8 +198,9 @@ const CoachForm = () => {
                                     indicatorProps={{
                                         className: "bg-transparent border-b-2 border-primaryColor shadow-none mt-4 rounded-none",
                                     }}>
-                            {dataTab.map(({ label, value }) => (
-                                <Tab key={value} value={value} className={`before:content[''] before:inline-block before:absolute before:w-0 before:bg-primaryColor before:h-[2px] before:bottom-[-16px] hover:before:w-full hover:before:duration-300 `}>
+                            {dataTab.map(({label, value}) => (
+                                <Tab key={value} value={value}
+                                     className={`before:content[''] before:inline-block before:absolute before:w-0 before:bg-primaryColor before:h-[2px] before:bottom-[-16px] hover:before:w-full hover:before:duration-300 `}>
                                     {label}
                                 </Tab>
                             ))}
@@ -238,12 +228,12 @@ const CoachForm = () => {
                                             </label>
                                         </div>
                                         <div className={`group relative z-0 w-full mb-6`}>
-                                <textarea name="description"
-                                          id="description"
-                                          placeholder={" "}
-                                          onChange={handleInputChange}
-                                          value={formState.description}
-                                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none h-44"></textarea>
+                                        <textarea name="description"
+                                                  id="description"
+                                                  placeholder={" "}
+                                                  onChange={handleInputChange}
+                                                  value={formState.description}
+                                                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none h-44"></textarea>
                                             <label htmlFor="description"
                                                    className="peer-focus:font-medium absolute text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                                 Miêu tả <span className={`text-lightColor`}>(Optional)</span>
@@ -310,38 +300,31 @@ const CoachForm = () => {
                                             fileError &&
                                             <span
                                                 className={`text-dangerColor-default_2 text-sm font-medium flex items-center justify-center mt-6`}>
-                                    {fileError}
-                                </span>
+                                                {fileError}
+                                            </span>
                                         }
+                                    </div>
+                                    <div className={`flex items-center justify-end w-full`}>
+                                        <button disabled={disableButton}
+                                                onClick={handleSubmitForm}
+                                                type="submit"
+                                                className=" duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                            {id ? 'Cập nhật' : 'Tạo'}
+                                        </button>
                                     </div>
                                 </div>
                             </TabPanel>
-                            <TabPanel value={`tab-2`}>                                <CoachSeat/>
+                            <TabPanel value={`tab-2`}>
+                                <CoachSeat setListSeat={setListSeat}/>
                             </TabPanel>
                             <TabPanel value={`tab-3`}>
                                 <CoachSchedule/>
                             </TabPanel>
                             <TabPanel value={`tab-4`}>
-                                <CoachThumbnail/>
+                                <CoachThumbnail setListThumbnail={setListThumbnail}/>
                             </TabPanel>
                         </TabsBody>
                     </Tabs>
-                    <div className={`flex items-center justify-end`}>
-                        <button disabled={disableButton}
-                                onClick={handleSubmitForm}
-                                type="submit"
-                                className="duration-300 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-                            {id ? 'Cập nhật' : 'Tạo'}
-                        </button>
-                        {
-                            !id ?
-                                <button onClick={handleFormReset}
-                                        type="reset"
-                                        className="ml-4 duration-300 bg-gray-100 text-gray-400 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset
-                                </button> :
-                                <></>
-                        }
-                    </div>
                 </form>
             </div>
         </>

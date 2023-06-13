@@ -5,13 +5,13 @@ export const message = {
             isEmpty: 'Vui lòng nhập email!'
         },
         password: {
-            confirm_password: 'Confirmation password is incorrect',
+            confirm_password: 'Mật khẩu nhập lại không đúng',
             isEmpty: 'Vui lòng nhập mật khẩu!',
             isShort: 'Mật khẩu bắt buộc phải nhiều hơn 6 ký tự!'
         },
         name: {
-            name_has_number: 'Invalid user name',
-            name_is_empty: 'Username is required'
+            isInvalid: 'Tên không hợp lệ',
+            isEmpty: 'Vui lòng nhập tên'
         },
         title: {
             isEmpty: 'Vui lòng nhập tiêu đề',
@@ -29,6 +29,13 @@ export const message = {
         },
         fare: {
             isEmpty: 'Vui lòng nhập giá vé!'
+        },
+        job: {
+            isEmpty: "Vui lòng nhập nghề nghiệp"
+        },
+        content: {
+            isEmpty: "Vui lòng nhập nội dung",
+            invalidLength: (min, max)=> `Nội dung phải trong giới hạn cho phép (min: ${min}, max: ${max})`
         }
     },
     success: 'Successfully added new'

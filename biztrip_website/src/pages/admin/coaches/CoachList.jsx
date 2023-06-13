@@ -86,6 +86,11 @@ const CoachList = () => {
                     tbodyData={tbodyData}
                     tbodyAction={tbodyActionSpecial}
                     fetchDelete={fetchRemoveCoach}
+                    pageNumber={pageNumber}
+                    perPage={perPage}
+                    sortField={sortField}
+                    sortDir={sortDir}
+                    fetchAll={fetchAllCoach}
                     status={status}
                     setSortField={setSortField}
                     setSortDir={setSortDir}

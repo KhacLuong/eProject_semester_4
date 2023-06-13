@@ -16,20 +16,7 @@ export const fetchLogout = createAsyncThunk('auth/logout', async () => {
     }
 })
 
-export const fetchAdminRegister = createAsyncThunk('auth/adminRegister', async ({data}) => {
-    try {
 
-    } catch (err) {
-        console.error(err)
-    }
-})
-export const fetchCustomerRegister = createAsyncThunk('auth/customerRegister', async ({data}) => {
-    try {
-
-    } catch (err) {
-        console.error(err)
-    }
-})
 export const fetchRefreshToken = createAsyncThunk('auth/refreshToken', async () => {
     try {
         return await instance.post(`auth/refresh-token`)

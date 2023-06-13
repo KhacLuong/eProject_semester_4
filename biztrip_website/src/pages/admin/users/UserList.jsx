@@ -24,7 +24,8 @@ const UserList = () => {
         {field: 'address', name: 'Địa chỉ'},
         {field: 'type', name: 'Vai trò'},
         {field: 'createdAt', name: 'Ngày thêm vào'},
-        {field: 'updatedAt', name: 'Ngày cập nhật'},'Action'
+        {field: 'updatedAt', name: 'Ngày cập nhật'},
+        'Action'
     ]
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -55,7 +56,6 @@ const UserList = () => {
                                 imagePath: item?.detail?.avatarPath || "",
                                 imageName: item?.detail?.avatarName || ""
                             },
-
                             item?.detail?.fullName,
                             item?.email,
                             item?.phoneNumber,
@@ -112,6 +112,11 @@ const UserList = () => {
                        tbodyData={tbodyData}
                        tbodyAction={tbodyActionDefault}
                        fetchDelete={fetchRemoveUser}
+                       pageNumber={pageNumber}
+                       perPage={perPage}
+                       sortField={sortField}
+                       sortDir={sortDir}
+                       fetchAll={fetchAllUser}
                        status={status}
                        setSortField={setSortField}
                        setSortDir={setSortDir}

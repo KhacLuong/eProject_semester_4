@@ -13,13 +13,13 @@ import {
     NewsListPage,
     BookingListPage,
     RevenuePage,
-    SettingFormPage,
-    SettingListPage,
     TestimonialListPage,
+    TestimonialFormPage,
     UserFormPage,
     UserListPage,
     CoachCarListPage,
-    CustomerHomePage, CoachCarFormPage,
+    CustomerHomePage,
+    CoachCarFormPage,
 } from "../utils/import.jsx";
 
 export const dataRouters = [
@@ -92,24 +92,6 @@ export const dataRouters = [
                 isAuthentication: true,
             },
             {
-                path: "display-settings",
-                page: SettingListPage,
-                isIndex: false,
-                isAuthentication: true
-            },
-            {
-                path: "display-settings/create",
-                page: SettingFormPage,
-                isIndex: false,
-                isAuthentication: true
-            },
-            {
-                path: "display-settings/edit",
-                page: SettingFormPage,
-                isIndex: false,
-                isAuthentication: true
-            },
-            {
                 path: "coaches/list",
                 page: CoachCarListPage,
                 isIndex: false,
@@ -148,6 +130,18 @@ export const dataRouters = [
             {
                 path: "users/testimonials",
                 page: TestimonialListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "users/testimonials/create",
+                page: TestimonialFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "users/testimonials/edit",
+                page: TestimonialFormPage,
                 isIndex: false,
                 isAuthentication: true
             },

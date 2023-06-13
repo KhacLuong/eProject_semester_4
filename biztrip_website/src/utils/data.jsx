@@ -68,6 +68,12 @@ export const dataSidebarAdmin = [
                 url: `${FINAL_URL_ADMIN}/coaches/utilities`,
                 icon: <></>,
             },
+            {
+                name: "Nhận xét",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/feedbacks`,
+                icon: <></>,
+            },
         ]
     },
     {
@@ -83,7 +89,7 @@ export const dataSidebarAdmin = [
                 icon: <></>,
             },
             {
-                name: "Phản hồi",
+                name: "Lời chứng thực",
                 isSubcategory: true,
                 url: `${FINAL_URL_ADMIN}/users/testimonials`,
                 icon: <></>,
@@ -96,24 +102,24 @@ export const dataSidebarAdmin = [
         url: `${FINAL_URL_ADMIN}/news`,
         icon: BiNews,
     },
-    {
-        name: "Cài đặt",
-        isSubcategory: false,
-        url: "",
-        icon: <></>,
-    },
-    {
-        name: "Chính sách",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/policies`,
-        icon: MdOutlinePolicy,
-    },
-    {
-        name: "Thông tin",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/display-settings`,
-        icon: GrServices,
-    },
+    // {
+    //     name: "Cài đặt",
+    //     isSubcategory: false,
+    //     url: "",
+    //     icon: <></>,
+    // },
+    // {
+    //     name: "Chính sách",
+    //     isSubcategory: true,
+    //     url: `${FINAL_URL_ADMIN}/policies`,
+    //     icon: MdOutlinePolicy,
+    // },
+    // {
+    //     name: "Thông tin",
+    //     isSubcategory: true,
+    //     url: `${FINAL_URL_ADMIN}/display-settings`,
+    //     icon: GrServices,
+    // },
 ]
 export const tbodyActionDefault = ['edit', 'delete']
 export const tbodyActionSpecial = ['view', 'edit', 'delete']
@@ -141,8 +147,14 @@ export const formBreadCrumb = (id, name, path) => {
             path: `${FINAL_URL_ADMIN}/${path}`
         },
         {
-            name: !id ? "Thêm mới" : "Sửa",
+            name: !id ? "Thêm mới" : "Cập nhật",
             path: ""
         }
     ]
+}
+
+const bookingSeat = {
+    userId: 1,
+    coachId: 1,
+    scheduleId: 1,
 }
