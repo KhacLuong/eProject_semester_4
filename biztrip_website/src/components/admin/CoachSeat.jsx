@@ -38,22 +38,6 @@ const CoachSeat = ({setListSeat}) => {
         }
         test()
     }, [])
-    const handleSaveSeat = (e) => {
-        e.preventDefault();
-        const updatedLayout = [...coachLayout];
-        updatedLayout[selectedBox[0]][selectedBox[1]] = {
-            type: boxType,
-            seatCode: boxType === 'seat' ? seatCode : null,
-            ticketId: boxType === 'seat' ? ticketId : 0,
-        };
-
-        setCoachLayout(updatedLayout);
-        setSelectedBox(null);
-        setBoxType(null)
-        setTicketId(0);
-        setSeatCode('');
-        setBoxId(null)
-    };
     const handleBoxClick = (rowIndex, columnIndex) => {
         const selectedBoxData = coachLayout[rowIndex][columnIndex];
         setSelectedBox([rowIndex, columnIndex]);
@@ -62,6 +46,22 @@ const CoachSeat = ({setListSeat}) => {
         setSeatCode(selectedBoxData.seatCode || '');
         setTicketId(selectedBoxData.ticketId || 0);
     };
+    const handleSaveSeat = (e) => {
+        e.preventDefault();
+        const updatedLayout = [...coachLayout];
+        updatedLayout[selectedBox[0]][selectedBox[1]] = {
+            type: boxType,
+            seatCode: boxType === 'seat' ? seatCode : null,
+            ticketId: boxType === 'seat' ? ticketId : 0,
+        };
+        setCoachLayout(updatedLayout);
+        setSelectedBox(null);
+        setBoxType(null)
+        setTicketId(0);
+        setSeatCode('');
+        setBoxId(null)
+    };
+
     const handleSaveAllSeat = (e) => {
         e.preventDefault();
         const dataToSend = coachLayout.flatMap((row, rowIndex) =>
@@ -117,7 +117,7 @@ const CoachSeat = ({setListSeat}) => {
                 columns.push(
                     <div
                         key={`${row}-${column}`}
-                        className={`border-2 w-16 h-16 cursor-pointer text-sm hover:bg-primaryColor hover:text-white transition-all duration-300 ease-in-out mr-1.5 last:mr-0 relative ${position.type} ${(row * maxBoxesPerRow + column + 1) === boxId ? 'bg-primaryColor text-white' : 'bg-white'}`}
+                        className={`border-2 rounded-xl w-16 h-16 cursor-pointer text-sm hover:bg-primaryColor hover:text-white transition-all duration-300 ease-in-out mr-1.5 last:mr-0 relative ${position.type} ${(row * maxBoxesPerRow + column + 1) === boxId ? 'bg-primaryColor text-white' : 'bg-white'}`}
                         onClick={() => handleBoxClick(row, column)}
                     >
                         <span className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}>
@@ -152,7 +152,7 @@ const CoachSeat = ({setListSeat}) => {
     };
 
     return (
-        <div className={`overflow-x-auto h-max`}>
+        <div className={`relative`}>
             <div className={`inline-block min-w-full align-middle`}>
                 <div className="grid grid-cols-2 gap-6 mb-1.5">
                     <div className={`col-span-1 flex justify-center`}>
@@ -164,11 +164,19 @@ const CoachSeat = ({setListSeat}) => {
                             {renderCoachLayout()}
                         </div>
                     </div>
-                    <div className={`col-span-1 h-full flex flex-col`}>
+                    {/*<div className={`col-span-1 flex justify-center`}>*/}
+                    {/*    <div className={`w-max bg-white shadow-xl relative rounded-xl px-10 pb-8 pt-20`}>*/}
+                    {/*            <span*/}
+                    {/*                className={`absolute bg-gray-300 w-full h-14 top-0 right-0 left-0 rounded-t-xl text-center`}>*/}
+                    {/*                <p className={`mt-2.5 text-black text-xl font-semibold`}>Sơ đồ xe</p>*/}
+                    {/*            </span>*/}
+                    {/*        {renderCoachLayout()}*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <div className={`col-span-1 h-full flex flex-col relative`}>
                         {
                             selectedBox !== null && (
-                                <div
-                                    className="sticky top-24 bg-white shadow-xl p-4 rounded-xl">
+                                <div className="sticky w-96 top-24 right-0 bg-white shadow-xl p-4 rounded-xl">
                                     <div className={`flex flex-col mb-4`}>
                                         <label htmlFor={`position`} className={`block mb-2 text-sm font-medium text-gray-900`}>Vị trí</label>
                                         <input id={`position`}
@@ -227,7 +235,8 @@ const CoachSeat = ({setListSeat}) => {
                                         </button>
                                     </div>
                                 </div>
-                            )}
+                            )
+                        }
                     </div>
                 </div>
             </div>
@@ -244,4 +253,5 @@ const Icon = ({type}) => {
     return <div>{type === 'seat' ? <MdEventSeat className={`w-8 h-8`}/> :
         <TbSteeringWheel className={`w-8 h-8`}/>}</div>;
 };
+
 export default CoachSeat

@@ -7,12 +7,12 @@ import {
 } from "react-icons/all.js";
 
 
-const ElementSidebar = ({item, Icon}) => {
+const ElementSidebar = ({item, Icon, path}) => {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
-        const isChildPage = location.pathname.startsWith(`/admin/v1/cms/${item.key}`);
+        const isChildPage = location.pathname.startsWith(`${path}/${item.key}`);
         setIsOpen(isChildPage);
     }, [location]);
     const toggleMenu = () => {
@@ -21,8 +21,8 @@ const ElementSidebar = ({item, Icon}) => {
     return (
         <>
             {
-                item.url ?
-                    <NavLink to={item.url}
+                item.url
+                    ? <NavLink to={item.url}
                              className={({isActive}) => `${isActive ? 'text-primaryColor' : 'text-black'} flex justify-between items-center py-2.5 px-4 text-base font-normal rounded-lg hover:bg-gray-200 group transition-all duration-300`}>
                         <div className={`flex items-center`}>
                             <div
@@ -39,8 +39,8 @@ const ElementSidebar = ({item, Icon}) => {
                                     className={`text-sm bg-dangerColor-hover_2 rounded-md w-6 h-6 flex items-center justify-center text-white font-semibold`}>20</span>
                                 : <></>
                         }
-                    </NavLink> :
-                    <div onClick={toggleMenu}
+                    </NavLink>
+                    : <div onClick={toggleMenu}
                          className={`flex justify-between items-center py-2.5 px-4 text-base font-normal rounded-lg hover:bg-gray-200 group transition-all duration-300 text-black cursor-pointer`}>
                         <div className={`flex items-center`}>
                             <div
