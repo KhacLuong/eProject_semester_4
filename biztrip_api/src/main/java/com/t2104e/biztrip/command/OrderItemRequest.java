@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangePasswordRequest {
-    private long id;
-    private String oldPassword;
-    private String newPassword;
+public class OrderItemRequest {
+    private long ticketId;
+    private Double subAmount;
 }

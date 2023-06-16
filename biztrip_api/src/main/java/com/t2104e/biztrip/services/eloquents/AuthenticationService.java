@@ -7,6 +7,7 @@ import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.RoleEntity;
 import com.t2104e.biztrip.entities.UserEntity;
 import com.t2104e.biztrip.repositories.UserRepository;
+import com.t2104e.biztrip.services.interfaces.IEmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final EmailImplService eMailImplService;
+    private final IEmailService eMailService;
 
     public ResponseDTO<?> register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -47,7 +48,7 @@ public class AuthenticationService {
                 .verifyToken(createRandomToken())
                 .createdAt(new Date())
                 .build();
-        eMailImplService.sendSimpleMessage(
+        eMailService.sendSimpleMessage(
                 user.getEmail(),
                 "Xác thực tài khoản",
                 "Bấm vào đường dẫn này:\n" +
@@ -77,7 +78,7 @@ public class AuthenticationService {
                 .verifyToken(createRandomToken())
                 .createdAt(new Date())
                 .build();
-        eMailImplService.sendSimpleMessage(
+        eMailService.sendSimpleMessage(
                 user.getEmail(),
                 "Xác thực tài khoản",
                 "Bấm vào đường dẫn này:\n" +

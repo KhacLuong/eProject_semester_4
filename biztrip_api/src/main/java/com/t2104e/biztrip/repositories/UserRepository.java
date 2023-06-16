@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
     @Query("SELECT u from users u where concat(u.email, u.phoneNumber) like %?1%")
     Page<UserEntity> findByKeyword(String Keyword, Pageable pageable);

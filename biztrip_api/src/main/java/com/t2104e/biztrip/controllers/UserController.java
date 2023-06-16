@@ -2,9 +2,9 @@ package com.t2104e.biztrip.controllers;
 
 import com.t2104e.biztrip.command.ChangePasswordRequest;
 import com.t2104e.biztrip.command.ResetPasswordRequest;
-import com.t2104e.biztrip.services.eloquents.UserImplService;
+import com.t2104e.biztrip.services.interfaces.IUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserImplService userImplService;
+    private final IUserService iuserService;
 
     @GetMapping("")
     public ResponseEntity<?> index(
@@ -26,13 +26,13 @@ public class UserController {
     ) {
         if (keyword != null && !keyword.isEmpty())
         {
-            var data = userImplService.getListUsersByKeyword(pageNumber, perPage, sortField, sortDir, keyword);
+            var data = iuserService.getListUsersByKeyword(pageNumber, perPage, sortField, sortDir, keyword);
             return new ResponseEntity<>(
                     data,
                     HttpStatusCode.valueOf(data.getCode())
             );
         }
-        var data = userImplService.getListUsers(pageNumber, perPage, sortField, sortDir);
+        var data = iuserService.getListUsers(pageNumber, perPage, sortField, sortDir);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())
@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping(value = "/verify")
     public ResponseEntity<?> verify(@RequestParam(value = "token") String token){
-        var data = userImplService.verifyAccount(token);
+        var data = iuserService.verifyAccount(token);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())
@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping(value = "/forget-password")
     public ResponseEntity<?> forgetPassword(@RequestParam(value = "email") String email){
-        var data = userImplService.forgetPassword(email);
+        var data = iuserService.forgetPassword(email);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())
@@ -59,7 +59,7 @@ public class UserController {
 
     @PostMapping(value = "/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request){
-        var data = userImplService.resetPassword(request);
+        var data = iuserService.resetPassword(request);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())
@@ -68,7 +68,7 @@ public class UserController {
 
     @PutMapping(value = "/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
-        var data = userImplService.changePassword(request);
+        var data = iuserService.changePassword(request);
         return new ResponseEntity<>(
                 data,
                 HttpStatusCode.valueOf(data.getCode())
