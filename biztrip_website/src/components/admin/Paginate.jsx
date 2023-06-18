@@ -43,13 +43,23 @@ const Paginate = ({
         <div
             className={`items-center p-4 my-4 mx-4 bg-white rounded-2xl shadow-xl shadow-gray-200 sm:flex sm:justify-between`}>
             <div className={`flex items-center mb-4 sm:mb-0`}>
-                <span className={`text-sm font-normal text-gray-500 flex`}>
-                    Hiển thị từ <span
-                    className={`font-semibold text-gray-900 flex items-center mx-1`}>{firstItemPerPage}
-                    <HiOutlineArrowNarrowRight
-                        className={`mx-1`}/> {totalItems <= perPage ? totalItems : lastItemPerPage}</span> / <span
-                    className={`font-semibold text-gray-900 mx-1`}>{totalItems}</span> kết quả
+                {
+                    totalItems === 1
+                        ? <span className={`text-sm font-normal text-gray-500 flex`}>
+                            Hiển thị
+                            <span className={`font-semibold text-gray-900 mx-1`}>1/1</span>
+                            kết quả
+                        </span>
+                        : <span className={`text-sm font-normal text-gray-500 flex`}>
+                            Hiển thị từ
+                            <span
+                                className={`font-semibold text-gray-900 flex items-center mx-1`}>{firstItemPerPage}
+                                <HiOutlineArrowNarrowRight
+                                    className={`mx-1`}/> {totalItems <= perPage ? totalItems : lastItemPerPage}</span> / <span
+                            className={`font-semibold text-gray-900 mx-1`}>{totalItems}</span> kết quả
                 </span>
+                }
+
             </div>
             <ReactPaginate pageCount={totalPages}
                            nextLabel={<div className={`flex items-center`}>Sau <MdKeyboardArrowRight

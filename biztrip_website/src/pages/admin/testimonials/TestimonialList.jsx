@@ -15,7 +15,7 @@ import moment from "moment";
 import {listBreadcrumb, tbodyActionDefault} from "../../../utils/data.jsx";
 
 const TestimonialList = () => {
-    useDocumentTitle("Quản lý chứng thực", true)
+    useDocumentTitle("Quản lý nhận xét", true)
     const theadData = [
         '#',
         {field: 'avatarPath', name: 'Ảnh đại diện'},
@@ -73,8 +73,8 @@ const TestimonialList = () => {
 
     return (
         <>
-            <Banner dataBreadcrumb={listBreadcrumb("Quản lý chứng thực")}
-                    title={"Danh sách lời chứng thực"}
+            <Banner dataBreadcrumb={listBreadcrumb("Quản lý nhận xét")}
+                    title={"Danh sách lời nhận xét"}
                     pathCreate={"create"}
                     perPage={perPage}
                     sortField={sortField}

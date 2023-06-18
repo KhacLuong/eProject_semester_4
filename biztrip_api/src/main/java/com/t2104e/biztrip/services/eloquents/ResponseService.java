@@ -25,7 +25,9 @@ public class ResponseService {
     public static <T> ResponseDTO<T> created(T data, String message) {
         return new ResponseDTO<>(HttpStatus.CREATED.value(), "Created", message, data);
     }
-
+    public static <T> ResponseDTO<T> updated(String message) {
+        return new ResponseDTO<>(HttpStatus.CREATED.value(), "Updated", message);
+    }
     public static <T> ResponseDTO<T> noContent(String message) {
         return new ResponseDTO<>(HttpStatus.NO_CONTENT.value(), "No Content", message);
     }

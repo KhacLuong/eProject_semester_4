@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Sidebar from "../../layouts/admin/Sidebar.jsx";
 import Navbar from "../../layouts/admin/Navbar.jsx";
 import {Outlet} from "react-router-dom";
-import AOS from "aos";
 import "aos/dist/aos.css"
 import useDocumentTitle from "../../hooks/useDocumentTitle.jsx";
 import {ADMIN_DOCUMENT_TITLE} from "../../utils/data.jsx";
@@ -17,7 +16,7 @@ const AdminHomePage = () => {
             </nav>
             <div className={`flex overflow-hidden bg-white pt-16 h-screen`}>
                 <aside id={`sidebar`}
-                       className={`flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 w-64 h-full duration-200 lg:flex transition-width lg:w-64 ps hidden`}
+                       className={`flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 w-64 h-full duration-200 lg:flex transition-width lg:w-64 hidden`}
                        aria-label={`Sidebar`}>
                     <Sidebar/>
                 </aside>

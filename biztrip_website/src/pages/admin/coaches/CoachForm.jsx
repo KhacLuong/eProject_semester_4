@@ -198,12 +198,13 @@ const CoachForm = () => {
                                     indicatorProps={{
                                         className: "bg-transparent border-b-2 border-primaryColor shadow-none mt-4 rounded-none",
                                     }}>
-                            {dataTab.map(({label, value}) => (
-                                <Tab key={value} value={value}
-                                     className={`before:content[''] before:inline-block before:absolute before:w-0 before:bg-primaryColor before:h-[2px] before:bottom-[-16px] hover:before:w-full hover:before:duration-300 `}>
-                                    {label}
-                                </Tab>
-                            ))}
+                            {
+                                dataTab.map(({label, value}) => (
+                                    <Tab key={value} value={value}
+                                         className={`before:content[''] before:inline-block before:absolute before:w-0 before:bg-primaryColor before:h-[2px] before:bottom-[-16px] hover:before:w-full hover:before:duration-300 `}>
+                                        {label}
+                                    </Tab>
+                                ))}
                         </TabsHeader>
                         <TabsBody className={`overflow-visible`} animate={{
                             initial: {y: 250},

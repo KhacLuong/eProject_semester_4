@@ -13,13 +13,13 @@ const Sidebar = () => {
                                 const Icon = item.icon
                                 if (item.isSubcategory) {
                                     return (
-                                        <li key={`navbar-item-${index}`}>
-                                            <ElementSidebar item={item} Icon={Icon}/>
+                                        <li key={`sidebar-item-${index}`}>
+                                            <ElementSidebar item={item} Icon={Icon} path={`/admin/v1/cms`}/>
                                         </li>
                                     )
                                 } else {
                                     return (
-                                        <li key={`navbar-item-${index}`} className="w-full mt-4 mb-3">
+                                        <li key={`sidebar-item-${index}`} className="w-full mt-4 mb-3">
                                             <h6 className="pl-4 font-bold leading-tight uppercase text-xs opacity-60">{item.name}</h6>
                                         </li>
                                     )

@@ -54,6 +54,20 @@ export const fetchCustomerRegister = createAsyncThunk('auth/customerRegister', a
         console.error(err)
     }
 })
+export const fetchForgetPassword = createAsyncThunk('user/forgetPassword', async ({email}) => {
+    try {
+        return await instance.get(`users/forget-password?email=${email}`)
+    } catch (err) {
+        console.error(err)
+    }
+})
+export const fetchResetPassword = createAsyncThunk('user/resetPassword', async ({data}) => {
+    try {
+        return await instance.post(`users/reset-password`, data)
+    } catch (err) {
+        console.error(err)
+    }
+})
 export const userSlice = createSlice({
     name: 'User',
     initialState,

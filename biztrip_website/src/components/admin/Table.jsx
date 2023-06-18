@@ -131,12 +131,6 @@ const Table = ({
                                                                         <td key={`td-${index}`}
                                                                             className={`px-6 py-3 text-successColor`}>{item} VNĐ</td>
                                                                     )
-                                                                } else if (typeof item === "boolean") {
-                                                                    return item === true ?
-                                                                        <td key={`td-${index}`}
-                                                                            className={`px-6 py-3 text-successColor`}>Active</td> :
-                                                                        <td key={`td-${index}`}
-                                                                            className={`px-6 py-3 text-dangerColor-default_2`}>Disable</td>
                                                                 } else {
                                                                     if (item?.content) {
                                                                         return (<td key={`td-${index}`}
@@ -144,6 +138,11 @@ const Table = ({
                                                                                 {item.content}
                                                                             </td>
                                                                         )
+                                                                    } else if (item?.msg) {
+                                                                        return <td key={`td-${index}`}
+                                                                                   className={`px-6 py-3 ${item?.status ? 'text-successColor' : 'text-dangerColor-default_2'}`}>
+                                                                            {item?.msg}
+                                                                        </td>
                                                                     }
 
                                                                     return <td key={`td-${index}`}

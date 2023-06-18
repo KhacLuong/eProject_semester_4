@@ -31,7 +31,7 @@ instance.interceptors.response.use((response) => {
     return response && response.data ? response.data : response;
 }, async function (error) {
     const originalRequest = error.config;
-    if (error.response.status === 401) {
+    if (error.response.status === 401 || error.response.status === 500) {
         const res = await store.dispatch(fetchRefreshToken()).unwrap()
         if (res && res.code === 200) {
             instance.defaults.headers.common["Authorization"] = `Bearer ${res.data.access_token}`

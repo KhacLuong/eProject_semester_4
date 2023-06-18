@@ -20,6 +20,8 @@ import {
     CoachCarListPage,
     CustomerHomePage,
     CoachCarFormPage,
+    ResetPasswordPage,
+    ContactListPage,
 } from "../utils/import.jsx";
 
 export const dataRouters = [
@@ -30,8 +32,14 @@ export const dataRouters = [
         isAuthentication: false,
     },
     {
-        path: "admin/v1/cms/sign-in",
-        page: SignInPage,
+        path: "v1/users/reset-password",
+        page: ResetPasswordPage,
+        isIndex: false,
+        isAuthentication: false,
+    },
+    {
+        path: "v1/users/verify",
+        page: ResetPasswordPage,
         isIndex: false,
         isAuthentication: false,
     },
@@ -48,6 +56,12 @@ export const dataRouters = [
                 isAuthentication: true,
             }
         ]
+    },
+    {
+        path: "admin/v1/cms/sign-in",
+        page: SignInPage,
+        isIndex: false,
+        isAuthentication: false,
     },
     {
         path: "admin/v1/cms",
@@ -85,12 +99,12 @@ export const dataRouters = [
                 isIndex: false,
                 isAuthentication: true,
             },
-            {
+     /*       {
                 path: ":slug/:id/danh-sach-xe",
                 page: CoachCarListPage,
                 isIndex: false,
                 isAuthentication: true,
-            },
+            },*/
             {
                 path: "coaches/list",
                 page: CoachCarListPage,
@@ -142,6 +156,12 @@ export const dataRouters = [
             {
                 path: "users/testimonials/edit",
                 page: TestimonialFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "users/contacts",
+                page: ContactListPage,
                 isIndex: false,
                 isAuthentication: true
             },
@@ -205,6 +225,7 @@ export const dataRouters = [
                 isIndex: false,
                 isAuthentication: true
             },
+
         ]
     },
 ]

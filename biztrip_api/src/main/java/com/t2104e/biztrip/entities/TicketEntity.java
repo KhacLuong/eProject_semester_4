@@ -16,7 +16,7 @@ public class TicketEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private long id;
+    private long id; 
     @Basic
     @Column(name = "title", nullable = false)
     private String title;

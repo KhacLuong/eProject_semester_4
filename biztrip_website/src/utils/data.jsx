@@ -1,17 +1,45 @@
 export const ADMIN_DOCUMENT_TITLE = "CMS - BizTrip"
 export const CUSTOMER_DOCUMENT_TITLE = "BizTrip"
 
-import {MdOutlineSpaceDashboard, MdOutlinePolicy} from "react-icons/md";
+import {MdOutlineSpaceDashboard, MdContactSupport, MdOutlinePolicy, MdOutlineContactMail} from "react-icons/md";
 import {FiUsers} from "react-icons/fi";
-import {BiDollarCircle, BiNews, BiCommentDetail} from "react-icons/bi";
+import {BiDollarCircle, BiNews, BiCommentDetail, BiHomeSmile} from "react-icons/bi";
 import {HiOutlineTicket} from "react-icons/hi";
 import {TbBus, TbRoad} from "react-icons/tb";
-import {GrServices} from "react-icons/gr";
+import {GrServices, GrContactInfo} from "react-icons/gr";
 import {AiOutlineLike} from "react-icons/ai";
 import {RiBillLine} from "react-icons/ri"
 import {BsPersonVcard} from "react-icons/bs"
+import {FaRegNewspaper} from "react-icons/fa"
 
 const FINAL_URL_ADMIN = "/admin/v1/cms"
+const FINAL_URL_CUSTOMER = "/v1"
+export const dataSidebarCustomer = [
+    {
+        name: "Trang chủ",
+        isSubcategory: true,
+        url: `${FINAL_URL_CUSTOMER}`,
+        icon: BiHomeSmile,
+    },
+    {
+        name: "Tin tức",
+        isSubcategory: true,
+        url: `${FINAL_URL_CUSTOMER}/news`,
+        icon: FaRegNewspaper
+    },
+    {
+        name: "Contact",
+        isSubcategory: true,
+        url: `${FINAL_URL_CUSTOMER}/news`,
+        icon: MdOutlineContactMail
+    },
+    {
+        name: "Về chúng tôi",
+        isSubcategory: true,
+        url: `${FINAL_URL_CUSTOMER}/about-us`,
+        icon: GrContactInfo
+    }
+]
 
 export const dataSidebarAdmin = [
     {
@@ -69,11 +97,17 @@ export const dataSidebarAdmin = [
                 icon: <></>,
             },
             {
-                name: "Nhận xét",
+                name: "Đánh giá",
                 isSubcategory: true,
                 url: `${FINAL_URL_ADMIN}/coaches/feedbacks`,
                 icon: <></>,
             },
+            {
+                name: "Địa điểm",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/coaches/locations`,
+                icon: <></>,
+            }
         ]
     },
     {
@@ -89,19 +123,25 @@ export const dataSidebarAdmin = [
                 icon: <></>,
             },
             {
-                name: "Lời chứng thực",
+                name: "Nhận xét",
                 isSubcategory: true,
                 url: `${FINAL_URL_ADMIN}/users/testimonials`,
                 icon: <></>,
             },
+            {
+                name: "Liên hệ",
+                isSubcategory: true,
+                url: `${FINAL_URL_ADMIN}/users/contacts`,
+                icon: <></>
+            }
         ]
     },
-    {
-        name: "Tin tức",
-        isSubcategory: true,
-        url: `${FINAL_URL_ADMIN}/news`,
-        icon: BiNews,
-    },
+    // {
+    //     name: "Tin tức",
+    //     isSubcategory: true,
+    //     url: `${FINAL_URL_ADMIN}/news`,
+    //     icon: BiNews,
+    // },
     // {
     //     name: "Cài đặt",
     //     isSubcategory: false,
@@ -151,10 +191,4 @@ export const formBreadCrumb = (id, name, path) => {
             path: ""
         }
     ]
-}
-
-const bookingSeat = {
-    userId: 1,
-    coachId: 1,
-    scheduleId: 1,
 }

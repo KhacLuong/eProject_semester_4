@@ -60,7 +60,10 @@ const UtilityList = () => {
                             {
                                 content: item?.description || ""
                             },
-                            item?.status,
+                            {
+                                msg: item?.status ? "Active" : "Disable",
+                                status: item?.status,
+                            },
                             item?.createdAt ? moment(item?.createdAt).format("DD/MM/YYYY HH:mm:ss") : "",
                             item?.updatedAt ? moment(item?.updatedAt).format("DD/MM/YYYY HH:mm:ss") : ""
                         ]

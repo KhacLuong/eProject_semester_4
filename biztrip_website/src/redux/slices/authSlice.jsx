@@ -10,12 +10,11 @@ export const fetchLogin = createAsyncThunk('auth/login', async ({data}) => {
 })
 export const fetchLogout = createAsyncThunk('auth/logout', async () => {
     try {
-        return await instance.get(`auth/logout`)
+        return await instance.post(`auth/logout`)
     } catch (err) {
         console.error(err)
     }
 })
-
 
 export const fetchRefreshToken = createAsyncThunk('auth/refreshToken', async () => {
     try {

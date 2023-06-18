@@ -2,6 +2,7 @@ import React, {Suspense} from 'react';
 import {Route, Routes} from "react-router-dom";
 import PrivateRoute from "./privateRoute.jsx";
 import {dataRouters} from "./dataRouters.jsx";
+import {log} from "react-smooth/lib/util.js";
 
 const RenderRouter = () => {
     const RecursiveRouter = (routers) => {

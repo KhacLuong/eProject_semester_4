@@ -4,17 +4,21 @@ export const message = {
             isInvalid: 'Email không hợp lệ!',
             isEmpty: 'Vui lòng nhập email!'
         },
+        phoneNumber: {
+            isInvalid: 'Số điện thoại không hợp lệ!',
+            isEmpty: 'Vui lòng nhập số điện thoại!'
+        },
         password: {
-            confirm_password: 'Mật khẩu nhập lại không đúng',
+            confirm_password: 'Mật khẩu nhập lại không đúng!',
             isEmpty: 'Vui lòng nhập mật khẩu!',
-            isShort: 'Mật khẩu bắt buộc phải nhiều hơn 6 ký tự!'
+            isShort: 'Mật khẩu bắt buộc phải nhiều hơn 6 ký tự!',
         },
         name: {
-            isInvalid: 'Tên không hợp lệ',
-            isEmpty: 'Vui lòng nhập tên'
+            isInvalid: 'Tên không hợp lệ!',
+            isEmpty: 'Vui lòng nhập tên!'
         },
         title: {
-            isEmpty: 'Vui lòng nhập tiêu đề',
+            isEmpty: 'Vui lòng nhập tiêu đề!',
         },
         status: {
             isEmpty: 'Vui lòng chọn trạng thái!'
@@ -22,7 +26,7 @@ export const message = {
         file: {
             isEmpty: 'Vui lòng chọn ảnh!',
             max: 'Dung lượng ảnh không được vượt quá 5MB!',
-            notAllowed: 'File không hợp lệ'
+            notAllowed: 'File không hợp lệ!'
         },
         plateNumber: {
             isEmpty: 'Vui lòng nhập biển số xe!'
@@ -31,11 +35,14 @@ export const message = {
             isEmpty: 'Vui lòng nhập giá vé!'
         },
         job: {
-            isEmpty: "Vui lòng nhập nghề nghiệp"
+            isEmpty: "Vui lòng nhập nghề nghiệp!"
         },
         content: {
-            isEmpty: "Vui lòng nhập nội dung",
+            isEmpty: "Vui lòng nhập nội dung!",
             invalidLength: (min, max)=> `Nội dung phải trong giới hạn cho phép (min: ${min}, max: ${max})`
+        },
+        role: {
+            isEmpty: "Vui lòng chọn vai trò!",
         }
     },
     success: 'Successfully added new'

@@ -10,6 +10,7 @@ import avatar from "../../assets/image/avatar/me.jpg"
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {fetchLogout} from "../../redux/slices/authSlice.jsx";
+import {toast} from "react-toastify";
 
 const Navbar = () => {
     const dispatch = useDispatch()
@@ -44,8 +45,8 @@ const Navbar = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const res = await dispatch(fetchLogout()).unwrap()
-                console.log(res)
                 navigate("/admin/v1/cms/sign-in")
+                toast.success(res.message)
             }
         })
     }

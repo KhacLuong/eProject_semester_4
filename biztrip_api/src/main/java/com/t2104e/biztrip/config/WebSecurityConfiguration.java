@@ -41,6 +41,7 @@ public class WebSecurityConfiguration {
 //                                "/swagger-ui/**",
 //                                "/webjars/**",
 //                                "/swagger-ui.html",
+//                                "/api/v1/contact",
 //                                "/api/v1/users/verify").permitAll()
 //                        .anyRequest().authenticated()
 //                );
