@@ -21,3 +21,5 @@ export const TicketListPage = lazy(() => import("../pages/admin/tickets/TicketLi
 export const TicketFormPage = lazy(() => import("../pages/admin/tickets/TicketForm.jsx"))
 export const PolicyListPage = lazy(() => import("../pages/admin/policies/PolicyList.jsx"))
 export const CustomerHomePage = lazy(() => import("../pages/customer/CustomerHomePage.jsx"))
+export const ResetPasswordPage = lazy(() => import("../pages/ResetPassword.jsx"))
+export const ContactListPage = lazy(() => import("../pages/admin/contact/ContactList.jsx"))

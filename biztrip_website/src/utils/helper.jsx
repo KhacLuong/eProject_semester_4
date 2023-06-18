@@ -22,6 +22,12 @@ export const validateForm = (formData, validationRules) => {
     });
     return errors;
 }
+export const validateConfirmPassword = (password, confirmPassword) => {
+    if (confirmPassword === password) {
+        return null
+    }
+    return message.error.password.confirm_password
+}
 export const validateEmpty = (value) => {
     return value.trim() !== ""
 }
@@ -61,9 +67,11 @@ export const validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
-export const validateName = (name) => {
+export const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\d{10}$/; // Regex pattern for 10-digit phone number
+    return phoneRegex.test(phoneNumber);
+};
 
-}
 export const handleChangeImage = (e, setImageDefault, setImageName, setErrMsg) => {
     setErrMsg("")
     const fileObj = e.target.files && e.target.files[0];

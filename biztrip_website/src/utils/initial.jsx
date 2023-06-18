@@ -4,6 +4,14 @@ export const initialState = {
     totalItems: 0,
     status: 'idle',
 }
+export const initialUserFormState = {
+    email: "",
+    phoneNumber: "",
+    fullName: "",
+    password: "",
+    confirmPassword: "",
+    role: ""
+}
 export const initialCoachFormState = {
     plateNumber: "",
     totalSeats: "",

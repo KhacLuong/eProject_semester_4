@@ -12,14 +12,14 @@ import {useEditor} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
-import {validateFile, validateForm, validateLengthOfString} from "../../../utils/helper.jsx";
+import {handleOpenFileInput, validateFile, validateForm, validateLengthOfString} from "../../../utils/helper.jsx";
 import {formTestimonialValidateRules} from "../../../utils/validationRules.jsx";
 import {toast} from "react-toastify";
 import {fetchCreateFile} from "../../../redux/slices/fileSlice.jsx";
 
 const TestimonialForm = () => {
     const id = useLocation().state?.id
-    useDocumentTitle(id ? "Sửa lời chứng thực" : "Thêm mới lời chứng thực", true)
+    useDocumentTitle(id ? "Sửa nhận xét" : "Thêm mới nhận xét", true)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [disableButton, setDisableButton] = useState(false)
@@ -77,9 +77,7 @@ const TestimonialForm = () => {
         setSelectedFile(file);
         setFileError("")
     };
-    const handleImageClick = () => {
-        fileInputRef.current.click();
-    };
+
     const handleSelectChange = (event) => {
         const {name, value} = event.target
         setFormState((preState) => ({
@@ -157,8 +155,8 @@ const TestimonialForm = () => {
             <div data-aos="fade-up"
                  data-aos-delay="100"
                  className={`flex flex-col p-4 mx-4 mt-4 mb-6 rounded-2xl shadow-xl shadow-gray-200`}>
-                <Breadcrumb dataBreadcrumb={formBreadCrumb(id, "Quản lý chứng thực", "users/testimonials")}/>
-                <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa lời chứng thực" : "Thêm mới lời chứng thực"}</h1>
+                <Breadcrumb dataBreadcrumb={formBreadCrumb(id, "Quản lý nhận xét", "users/testimonials")}/>
+                <h1 className={`text-xl font-semibold text-gray-900 sm:text-2xl`}>{id ? "Sửa lời nhận xét" : "Thêm mới nhận xét"}</h1>
             </div>
             <div data-aos="fade-right"
                  data-aos-delay="300"
@@ -264,7 +262,7 @@ const TestimonialForm = () => {
                                  className="aspect-square rounded-md w-1/2 h-1/2 bg-gray-50 shadow-xl shadow-gray-200"
                                  src={selectedFile ? window.URL.createObjectURL(selectedFile) : imageDefault}
                                  alt="Ảnh đại diện"
-                                 onClick={handleImageClick}/>
+                                 onClick={() => handleOpenFileInput(fileInputRef)}/>
                         </div>
                         {
                             fileError &&

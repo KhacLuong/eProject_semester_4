@@ -25,7 +25,7 @@ public class TestimonialImplService implements ITestimonialService {
         var page = testimonialRepository.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
         long totalItems = page.getTotalElements();
         int totalPages = page.getTotalPages();
-        return ResponseService.ok(page.getContent(), "Lấy danh", pageNumber, perPage, totalItems, totalPages, sortField, sortDir);
+        return ResponseService.ok(page.getContent(), "Lấy danh sách thành công", pageNumber, perPage, totalItems, totalPages, sortField, sortDir);
     }
 
     @Override
