@@ -21,8 +21,8 @@ public class OrderItemEntity {
     @Column(name = "sub_amount")
     private Double subAmount;
     @Basic
-    @Column(name = "ticket_id")
-    private long ticketId;
+    @Column(name = "booking_ticket_id")
+    private long bookingTicketId;
     @Basic
     @Column(name = "order_id")
     private long orderId;

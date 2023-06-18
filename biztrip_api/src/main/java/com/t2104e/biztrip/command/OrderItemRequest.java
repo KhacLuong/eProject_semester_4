@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItemRequest {
-    private long ticketId;
+    private long bookingTicketId;
     private Double subAmount;
 }

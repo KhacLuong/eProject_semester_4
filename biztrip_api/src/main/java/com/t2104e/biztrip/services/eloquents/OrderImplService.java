@@ -71,7 +71,7 @@ public class OrderImplService implements IOrderService {
         for (OrderItemRequest orderItemRequest: orderRequest.getOrderItemRequests()) {
             var orderItem = OrderItemEntity.builder()
                     .orderId(savedOrder.getId())
-                    .ticketId(orderItemRequest.getTicketId())
+                    .bookingTicketId(orderItemRequest.getBookingTicketId())
                     .subAmount(orderItemRequest.getSubAmount())
                     .build();
             orderItemRepository.save(orderItem);
