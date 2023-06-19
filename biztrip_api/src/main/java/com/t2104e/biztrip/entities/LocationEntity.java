@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.entities.nkl;
+package com.t2104e.biztrip.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -31,6 +31,13 @@ public class LocationEntity {
     private String name;
 
     @Basic
+    @NotEmpty(message = "this field is mandatory")
+    @NotNull(message = "this field is mandatory")
+    @Column(name = "parent_id", unique = true)
+    private String parentId;
+
+
+    @Basic
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
@@ -40,10 +47,4 @@ public class LocationEntity {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
-
-
-    @ManyToMany(mappedBy = "locations",cascade = {CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
-    @JsonBackReference
-    private Set<ScheduleEntity> schedules;
-
 }

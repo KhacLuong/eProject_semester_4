@@ -2,7 +2,7 @@ package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.command.LocationRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
+import com.t2104e.biztrip.entities.LocationEntity;
 import com.t2104e.biztrip.repositories.LocationRepository;
 import com.t2104e.biztrip.services.interfaces.ILocationService;
 import com.t2104e.biztrip.utils.Helper;
@@ -96,6 +96,9 @@ public class LocationImpIService implements ILocationService {
             if(checkDubName(request.getName())){
                 return ResponseService.conflict("Trong danh sách  tồn tại tên: "+ request.getName());
             }
+            if (!checkExistLocationById(request.getParentId())){
+                return ResponseService.conflict("Trong danh sách  khong: "+ request.getName());
+            }
             location.setCreatedAt(new Date());
             location.setUpdatedAt(new Date());
         } else {
@@ -130,6 +133,12 @@ public class LocationImpIService implements ILocationService {
         if (location != null && !location.isEmpty()) {
             return true;
         }
+        return false;
+    }
+    public boolean checkExistLocationById(long id){
+        LocationEntity location = locationRepo.findById(id).orElse(null);
+        if (location!=null)
+            return true;
         return false;
     }
 

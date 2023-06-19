@@ -1,17 +1,12 @@
 package com.t2104e.biztrip.dto;
 
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.Nullable;
 
 import java.util.Date;
-import java.util.Set;
 
 @Getter
 @Setter

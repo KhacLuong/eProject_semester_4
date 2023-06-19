@@ -1,11 +1,10 @@
 package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.dto.ScheduleResponse;
 import com.t2104e.biztrip.command.ScheduleRequest;
 import com.t2104e.biztrip.command.ScheduleUpdateRequest;
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
-import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
+import com.t2104e.biztrip.entities.LocationEntity;
+import com.t2104e.biztrip.entities.ScheduleEntity;
 import com.t2104e.biztrip.repositories.ScheduleRepository;
 import com.t2104e.biztrip.services.interfaces.IScheduleService;
 import com.t2104e.biztrip.utils.Helper;

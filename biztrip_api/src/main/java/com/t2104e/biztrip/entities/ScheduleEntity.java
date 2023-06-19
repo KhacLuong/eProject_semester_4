@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.entities.nkl;
+package com.t2104e.biztrip.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,20 +24,14 @@ public class ScheduleEntity {
 
     @Basic
     @NotEmpty(message = "this field is mandatory")
-    @Column(name = "departure", nullable = false)
-    private String departure;
-
-
-    @Basic
-    @Column(name = "stopover", nullable = true)
-    private String stopOver;
-
+    @Column(name = "departure_id", nullable = false)
+    private long departureId;
 
 
     @Basic
     @NotEmpty(message = "this field is mandatory")
-    @Column(name = "destination", nullable = false)
-    private String destination;
+    @Column(name = "destination_id", nullable = false)
+    private long destinationId;
 
 
     @Basic
@@ -68,11 +62,11 @@ public class ScheduleEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
-    @JoinTable(
-            name = "schedule_location",
-            joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
-    private Set<LocationEntity> locations;
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
+//    @JoinTable(
+//            name = "schedule_location",
+//            joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
+//    private Set<LocationEntity> locations;
 
 }
