@@ -15,5 +15,8 @@ public interface IScheduleService {
     ResponseDTO<?> delete(long id);
 
     ResponseDTO<?> getScheduleById(long id);
+//    boolean checkExistScheduleByLocationId(long locastionId);
+
+//    ResponseDTO<?> getListSchedules();
 
 }

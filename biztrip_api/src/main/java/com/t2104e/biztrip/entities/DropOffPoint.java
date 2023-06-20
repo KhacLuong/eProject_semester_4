@@ -2,11 +2,20 @@ package com.t2104e.biztrip.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class ScheduleDropOffPoint {
+
+@Builder
+@Getter // rút gọn getter
+@Setter // rút gọn setter
+@NoArgsConstructor // thay thế constructor không tham số
+@AllArgsConstructor // thay thế constructor có tham số
+@Entity(name = "schedule_drop_off_point")
+@Table(name = "schedule_drop_off_point", schema = "biztrip_database", catalog = "")
+public class DropOffPoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

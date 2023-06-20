@@ -33,4 +33,13 @@ public class ResponseDTO<T> {
         this.message = message;
         this.data = data;
     }
+
+    public ResponseDTO(int code, String status, String message, String sortField, String sortDir, T data) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+        this.sortField = sortField;
+        this.sortDir = sortDir;
+        this.data = data;
+    }
 }

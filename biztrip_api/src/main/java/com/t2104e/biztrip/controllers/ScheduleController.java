@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.controllers.nkl;
+package com.t2104e.biztrip.controllers;
 
 
 import com.t2104e.biztrip.command.ScheduleRequest;
@@ -33,6 +33,15 @@ public class ScheduleController {
         var data = scheduleService.getListSchedules(pageNumber, perPage, sortField, sortDir, keyword);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
+
+//    @GetMapping("")
+//    public ResponseEntity<?> index(
+//                                   @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField,
+//                                   @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+//                                   @RequestParam(value = "keyword", required = false) String keyword) {
+//        var data = scheduleService.getListSchedules();
+//        return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
+//    }
 
 
     @GetMapping("/{id}")

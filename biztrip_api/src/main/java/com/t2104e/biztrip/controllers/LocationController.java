@@ -1,4 +1,4 @@
-package com.t2104e.biztrip.controllers.nkl;
+package com.t2104e.biztrip.controllers;
 
 
 import com.t2104e.biztrip.command.LocationRequest;
@@ -27,12 +27,11 @@ public class LocationController {
     private ResponseDTO RESPONSE_DTO;
 
     @GetMapping("")
-    public ResponseEntity<?> index(@RequestParam("pageNumber") int pageNumber,
-                                   @RequestParam("perPage") int perPage,
-                                   @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField,
-                                   @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
-                                   @RequestParam(value = "keyword", required = false) String keyword) {
-        var data = locationService.getListLocations(pageNumber, perPage, sortField, sortDir, keyword);
+    public ResponseEntity<?> index(
+            @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField,
+            @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        var data = locationService.getListLocations(sortField, sortDir, keyword);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
 
@@ -42,6 +41,7 @@ public class LocationController {
         var data = locationService.save(location, result);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> detail(@PathVariable(name = "id") long id) {
         var data = locationService.getLocationById(id);
@@ -54,7 +54,6 @@ public class LocationController {
         var data = locationService.delete(id);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
-
 
 
 }

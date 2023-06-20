@@ -1,49 +1,45 @@
 package com.t2104e.biztrip.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.Set;
-
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "locations")
-@Table(name = "locations", schema = "biztrip_database", catalog = "")
-public class LocationEntity {
-
+@Entity(name = "coach_schedule")
+@Table(name = "coach_schedule", schema = "biztrip_database", catalog = "")
+public class CoachSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private long id;
 
     @Basic
-    @NotEmpty(message = "this field is mandatory")
-    @NotNull(message = "this field is mandatory")
-    @Column(name = "location_name", unique = true)
-    private String name;
+    @Column(name = "schedule_id", nullable = false)
+    private long scheduleId;
 
     @Basic
-    @Column(name = "parent_id", nullable = true)
-    private long parentId;
-
+    @Column(name = "coach_id", nullable = false)
+    private long coachId;
 
     @Basic
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
-
-
     @Basic
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

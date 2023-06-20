@@ -23,6 +23,9 @@ public class CoachEntity {
     @Id
     @Column(name = "id")
     private long id;
+
+    @Column(name = "name")
+    private String name;
     @Basic
     @Column(name = "image_path", nullable = false)
     private String imagePath;
@@ -32,7 +35,7 @@ public class CoachEntity {
     private String plateNumber;
     @Basic
     @Column(name = "total_seats")
-    private String totalSeats;
+    private long totalSeats;
     @Basic()
     @Column(name = "description", columnDefinition = "text")
     private String description;
@@ -47,17 +50,7 @@ public class CoachEntity {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "coach_utilities",
-            joinColumns={@JoinColumn(name = "coach_id")},
-            inverseJoinColumns={@JoinColumn(name = "utility_id")})
-    private List<UtilityEntity> utilities;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "coach_id")
-    private List<SeatEntity> seats;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "coach_id")
-    private List<ThumbnailEntity> thumbnails;
+
 }

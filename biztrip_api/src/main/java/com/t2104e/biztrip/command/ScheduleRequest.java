@@ -2,6 +2,8 @@ package com.t2104e.biztrip.command;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -18,34 +20,29 @@ public class ScheduleRequest {
 
     private long id;
 
-    @NotEmpty(message = "this field is mandatory")
-    private String departure;
-
-    private String stopOver;
-
-    @NotEmpty(message = "this field is mandatory")
-    private String destination;
+//    @NotEmpty(message = "this field is mandatory")
+//    @NotNull(message = "this field is mandatory")
+    @Min(value = 0, message = "Giá trị không hợp lệ")
+    private long departureId;
 
 
+
+//    @NotEmpty(message = "this field is mandatory")
+//    @NotNull(message = "this field is mandatory")
+    @Min(value = 0, message = "Giá trị không hợp lệ")
+    private long destinationId;
+
+
+    @Max(value = 8, message = "Giá trị  không hợp lệ")
+    @Min(value = 2, message = "Giá trị không hợp lệ")
+    private int  day;
+
+
+    @NotEmpty(message = "trường này không được để trống")
+    private String  startTime;
+
+    @NotEmpty(message = "trường này không được để trống")
+    private String  endTime;
     private String status;
-//    @NotNull(message = "this field is mandatory")
-//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-//    private Date startTime;
-//
-//    @NotNull(message = "this field is mandatory")
-//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-//    private Date endTime;
-    @Nullable
-    private Set<Long> location_ids;
-
-    @Nullable
-    public Set<Long> getLocation_ids() {
-        return location_ids;
-    }
-
-    public void setLocation_ids(@Nullable Set<Long> location_ids) {
-        this.location_ids = location_ids;
-    }
-
 
 }
