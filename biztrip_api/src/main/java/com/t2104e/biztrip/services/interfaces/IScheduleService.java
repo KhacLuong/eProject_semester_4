@@ -1,9 +1,8 @@
 package com.t2104e.biztrip.services.interfaces;
 
 import com.t2104e.biztrip.command.ScheduleRequest;
-import com.t2104e.biztrip.command.ScheduleUpdateRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
+import com.t2104e.biztrip.entities.ScheduleEntity;
 import org.springframework.validation.BindingResult;
 
 public interface IScheduleService {
@@ -16,5 +15,8 @@ public interface IScheduleService {
     ResponseDTO<?> delete(long id);
 
     ResponseDTO<?> getScheduleById(long id);
+//    boolean checkExistScheduleByLocationId(long locastionId);
+
+//    ResponseDTO<?> getListSchedules();
 
 }

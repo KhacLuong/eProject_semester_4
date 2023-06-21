@@ -13,5 +13,7 @@ public interface CoachRepository extends JpaRepository<CoachEntity, Long> {
     @Query("SELECT c from coaches c where concat(c.plateNumber, c.totalSeats, c.description, c.status, c.createdAt, c.updatedAt) like %?1%")
     public Page<CoachEntity> findByKeyword(String keyword, Pageable pageable);
 
+    boolean existsByPlateNumber(String plateNumber);
+    boolean existsByPlateNumberAndIdNot(String plateNumber, long id);
     public CoachEntity getCoachEntitiesById(@Param("id") long id);
 }

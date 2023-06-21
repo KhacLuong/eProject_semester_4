@@ -2,12 +2,12 @@ package com.t2104e.biztrip.services.interfaces;
 
 import com.t2104e.biztrip.command.LocationRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
+import com.t2104e.biztrip.entities.LocationEntity;
 import org.springframework.validation.BindingResult;
 
 public interface ILocationService {
 
-    ResponseDTO<?> getListLocations(int pageNumber, int perPage, String sortField, String sortDir, String keyword);
+    ResponseDTO<?> getListLocations( String sortField, String sortDir, String keyword);
 
     ResponseDTO<?> getLocationById(long id);
 
@@ -16,7 +16,7 @@ public interface ILocationService {
     ResponseDTO<?> delete(long id);
 
     ResponseDTO<?> save(LocationRequest location, BindingResult result);
-
+    public boolean checkExistLocationById(long id);
 
     boolean checkDubName(String name);
 

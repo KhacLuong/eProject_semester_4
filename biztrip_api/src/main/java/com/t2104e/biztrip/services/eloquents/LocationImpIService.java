@@ -1,10 +1,13 @@
 package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.command.LocationRequest;
+import com.t2104e.biztrip.command.ScheduleRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
+import com.t2104e.biztrip.entities.LocationEntity;
 import com.t2104e.biztrip.repositories.LocationRepository;
+import com.t2104e.biztrip.repositories.ScheduleRepository;
 import com.t2104e.biztrip.services.interfaces.ILocationService;
+import com.t2104e.biztrip.services.interfaces.IScheduleService;
 import com.t2104e.biztrip.utils.Helper;
 import com.t2104e.biztrip.utils.ValidationHandle;
 import jakarta.transaction.Transactional;
@@ -35,19 +38,19 @@ public class LocationImpIService implements ILocationService {
     private LocationRepository locationRepo;
 
     @Autowired
+    private ScheduleRepository scheduleRepo;
+
+    @Autowired
     protected ModelMapper modelMapper;
 
     @Autowired
     private ValidationHandle validationHandle;
 
-    public ResponseDTO<?> getListLocations(int pageNumber, int perPage, String sortField, String sortDir, String keyword) {
+    public ResponseDTO<?> getListLocations( String sortField, String sortDir, String keyword) {
         Sort sort = Helper.sortQuery(sortField, sortDir);
-        Pageable pageable = PageRequest.of(pageNumber - 1, perPage, sort);
-        var page = locationRepo.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
-        long totalItems = page.getTotalElements();
-        int totalPages = page.getTotalPages();
-        if (page != null && totalItems > 0) {
-            return ResponseService.ok(page.getContent(), "Lấy danh sách Locations thành công.", pageNumber, perPage, totalItems, totalPages, sortField, sortDir);
+        List<LocationEntity> locationEntities = locationRepo.findByKeyword(Objects.requireNonNullElse(keyword, ""),sort);
+        if (!locationEntities.isEmpty()) {
+            return ResponseService.ok(locationEntities, "Lấy danh sách Locations thành công.", sortField, sortDir);
         } else {
             return ResponseService.noContent("Không có dữ liệu.");
         }
@@ -73,13 +76,17 @@ public class LocationImpIService implements ILocationService {
     @Override
     public ResponseDTO<?> delete(long id) {
         Optional<LocationEntity> optional = locationRepo.findById(id);
-        if (optional.isPresent()) {
-            locationRepo.deleteScheduleLocationByIdLocation(id);
 
+        if (optional.isPresent()) {
+            if(scheduleRepo.findFirstByDepartureIdOrDestinationId(id, id).isPresent()){
+                return ResponseService.conflict("Không thể xóa vì có liên kết bảng khác với  location id = " + id);
+            }
+            locationRepo.deleteScheduleLocationByIdLocation(id);
             locationRepo.deleteById(id);
             return ResponseService.ok(null, "Xóa thành công");
+
         }
-        return ResponseService.notFound("Không timg thấy location id = " + id);
+        return ResponseService.notFound("Không tìm thấy location id = " + id);
     }
 
 
@@ -96,15 +103,23 @@ public class LocationImpIService implements ILocationService {
             if(checkDubName(request.getName())){
                 return ResponseService.conflict("Trong danh sách  tồn tại tên: "+ request.getName());
             }
+            if (request.getParentId()>0&&!checkExistLocationById(request.getParentId())){
+                return ResponseService.conflict("Trong danh sách  không tồn tại vị trí có id = : "+ request.getParentId());
+            }
+            location.setParentId(request.getParentId());
             location.setCreatedAt(new Date());
             location.setUpdatedAt(new Date());
         } else {
             Optional<LocationEntity> optional = locationRepo.findById(id);
             if (optional.isEmpty()) {
-                return ResponseService.notFound("Không timg thấy location id = " + id);
+                return ResponseService.notFound("Không tìm thấy location id = " + id);
+            }
+            if (request.getId()==request.getParentId()){
+                return ResponseService.badRequest("id và parentId không được phép trùng nhau");
+
             }
             if(checkDubName(request.getName(), id)){
-                return ResponseService.conflict("Trong danh sách  tồn tại tên: "+ request.getName());
+                return ResponseService.conflict("Trong danh sách đã tồn tại tên: "+ request.getName());
             }
             location.setCreatedAt(locationRepo.findById(id).get().getCreatedAt());
             location.setUpdatedAt(new Date());
@@ -130,6 +145,12 @@ public class LocationImpIService implements ILocationService {
         if (location != null && !location.isEmpty()) {
             return true;
         }
+        return false;
+    }
+    public boolean checkExistLocationById(long id){
+        LocationEntity location = locationRepo.findById(id).orElse(null);
+        if (location!=null)
+            return true;
         return false;
     }
 

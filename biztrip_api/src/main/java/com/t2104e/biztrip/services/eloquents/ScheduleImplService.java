@@ -1,11 +1,9 @@
 package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.dto.ScheduleResponse;
 import com.t2104e.biztrip.command.ScheduleRequest;
-import com.t2104e.biztrip.command.ScheduleUpdateRequest;
-import com.t2104e.biztrip.entities.nkl.LocationEntity;
-import com.t2104e.biztrip.entities.nkl.ScheduleEntity;
+import com.t2104e.biztrip.dto.ScheduleDetailDto;
+import com.t2104e.biztrip.entities.ScheduleEntity;
 import com.t2104e.biztrip.repositories.ScheduleRepository;
 import com.t2104e.biztrip.services.interfaces.IScheduleService;
 import com.t2104e.biztrip.utils.Helper;
@@ -48,23 +46,31 @@ public class ScheduleImplService implements IScheduleService {
         var page = scheduleRepo.findByKeyword(Objects.requireNonNullElse(keyword, ""), pageable);
         long totalItems = page.getTotalElements();
         int totalPages = page.getTotalPages();
-        if (page != null && totalItems > 0) {
-            return ResponseService.ok(page.getContent(), "lấy danh schedule thành công.", pageNumber, perPage, totalItems, totalPages, sortField, sortDir);
+        if (page != null) {
+            return ResponseService.ok(page.getContent(), "lấy danh sách  tuyến đường thành công.", pageNumber, perPage, totalItems, totalPages, sortField, sortDir);
         } else {
             return ResponseService.noContent("Không có dữ liệu.");
         }
     }
+//    @Override
+//    public ResponseDTO<?> getListSchedules() {
+//        var scheduleDtoList =scheduleRepo.getAllSchedules();
+//        return ResponseService.ok(scheduleDtoList, "lấy danh sách  tuyến đường thành công.");
+//    }
 
 
     @Override
     public ResponseDTO<?> getScheduleById(long id) {
 
-        Optional<ScheduleEntity> optional = scheduleRepo.findById(id);
+        Optional<ScheduleDetailDto> optional = scheduleRepo.findDetailById(id);
         if (optional.isPresent()) {
             return ResponseService.ok(optional.get(), "lấy thành công");
         }
         return ResponseService.notFound("Không tìm thấy schedule id = " + id);
     }
+
+
+
 
     @Override
     public ResponseDTO<?> save(ScheduleRequest request, BindingResult result) {
@@ -74,40 +80,32 @@ public class ScheduleImplService implements IScheduleService {
         if (valid != null && !valid.isEmpty()) {
             return ResponseService.badRequest(valid.get(0));
         }
+        if (!locationImpIService.checkExistLocationById(request.getDepartureId())){
+            return ResponseService.badRequest("Không tìm thấy điểm xuất phát  có id = " + request.getDepartureId());
+        }
+        if (!locationImpIService.checkExistLocationById(request.getDestinationId())){
+            return ResponseService.badRequest("Không tìm thấy điểm kết thúc có id = " + request.getDestinationId());
+        }
 
         long id = request.getId();
         if (id == 0) {
             schedule = convertDtoToEntity(request);
-            schedule.setLocations(new HashSet<>());
-            if (request.getLocation_ids() != null) {
-                for (long id2 : request.getLocation_ids()) {
-                    LocationEntity location = locationImpIService.findLocationById(id2);
-                    if (location != null)
-                        schedule.getLocations().add(location);
-                }
-            }
+
             schedule.setCreatedAt(new Date());
             schedule.setUpdatedAt(new Date());
         } else {
 
             schedule = findScheduleById(id);
             if (schedule == null) {
-                return ResponseService.badRequest("Không tìm thấy schedule có id = " + id);
+                return ResponseService.badRequest("Không tìm thấy tuyến đường có id = " + id);
+            }
 
-            }
-            schedule.getLocations().clear();
-            if (request.getLocation_ids() != null) {
-                for (long id2 : request.getLocation_ids()) {
-                    LocationEntity location = locationImpIService.findLocationById(id2);
-                    if (location != null)
-                        schedule.getLocations().add(location);
-                }
-            }
-            schedule.setDeparture(request.getDeparture());
-            schedule.setStopOver(request.getStopOver());
-            schedule.setDestination(request.getDestination());
+            schedule.setDepartureId(request.getDepartureId());
+            schedule.setDestinationId(request.getDestinationId());
+            schedule.setDay(request.getDay());
             schedule.setStatus(request.getStatus());
-//            schedule.setStartTime(request.getStartTime());
+            schedule.setStartTime(request.getStartTime());
+            schedule.setEndTime(request.getEndTime());
             schedule.setUpdatedAt(new Date());
         }
         var data = scheduleRepo.save(schedule);
@@ -127,13 +125,10 @@ public class ScheduleImplService implements IScheduleService {
             scheduleRepo.deleteById(id);
             return ResponseService.ok(null, "Xóa thành công");
         }
-        return ResponseService.notFound("Không timg thấy schedule id = " + id);
+        return ResponseService.notFound("Không timg thấy tuyến đường có id = " + id);
     }
 
 
-//    private ScheduleEntity convertDtoToEntity(ScheduleResponse scheduleResponse) {
-//        return modelMapper.map(scheduleResponse, ScheduleEntity.class);
-//    }
 
     private ScheduleEntity convertDtoToEntity(ScheduleRequest scheduleDto) {
         Converter<String, Date> stringToDateConverter = context -> {
@@ -152,21 +147,8 @@ public class ScheduleImplService implements IScheduleService {
         return scheduleEntity;
     }
 
-    private ScheduleEntity convertDtoToEntity(ScheduleUpdateRequest scheduleDto) {
-        Converter<String, Date> stringToDateConverter = context -> {
-            String dateString = context.getSource();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            try {
-                return dateFormat.parse(dateString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
-            }
-        };
-        modelMapper.addConverter(stringToDateConverter);
 
-        ScheduleEntity scheduleEntity = modelMapper.map(scheduleDto, ScheduleEntity.class);
-        return scheduleEntity;
-    }
+
+
 
 }

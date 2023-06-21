@@ -21,6 +21,15 @@ public class ResponseService {
                 data
                 );
     }
+    public static <T> ResponseDTO<T> ok(
+            @Nullable T data, String message,
+            String sortField, String sortDir) {
+        return new ResponseDTO<>(
+                HttpStatus.OK.value(), "Success", message,
+                sortField, sortDir,
+                data
+        );
+    }
 
     public static <T> ResponseDTO<T> created(T data, String message) {
         return new ResponseDTO<>(HttpStatus.CREATED.value(), "Created", message, data);
