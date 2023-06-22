@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Repository
 public interface ContactRepository extends JpaRepository<ContactEntity, Long> {
-    @Query("SELECT c from contacts c where concat(c.firstName, c.lastName, c.status, c.phoneNumber, c.phoneNumber, c.createdAt, c.content) LIKE %?1%")
+    @Query("SELECT c from contacts c where concat(c.fullName, c.title, c.status, c.phoneNumber, c.phoneNumber, c.createdAt, c.content) LIKE %?1%")
     public Page<ContactEntity> findByKeyword(String keyword, Pageable pageable);
 
     @Modifying
