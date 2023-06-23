@@ -22,6 +22,8 @@ import {
     CoachCarFormPage,
     ResetPasswordPage,
     ContactListPage,
+    LocationListPage,
+    LocationFormPage
 } from "../utils/import.jsx";
 
 export const dataRouters = [
@@ -216,6 +218,24 @@ export const dataRouters = [
             {
                 path: "coaches/tickets/edit",
                 page: TicketFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/locations",
+                page: LocationListPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/locations/create",
+                page: LocationFormPage,
+                isIndex: false,
+                isAuthentication: true
+            },
+            {
+                path: "coaches/locations/edit",
+                page: LocationFormPage,
                 isIndex: false,
                 isAuthentication: true
             },

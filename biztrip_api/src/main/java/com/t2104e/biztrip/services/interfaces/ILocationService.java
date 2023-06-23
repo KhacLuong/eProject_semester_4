@@ -7,8 +7,8 @@ import org.springframework.validation.BindingResult;
 
 public interface ILocationService {
 
-    ResponseDTO<?> getListLocations( String sortField, String sortDir, String keyword);
-
+    ResponseDTO<?> getListLocations(int pageNumber, int perPage, String sortField, String sortDir, String keyword);
+    ResponseDTO<?> getAllLocations(String sortField, String sortDir, String keyword);
     ResponseDTO<?> getLocationById(long id);
 
     LocationEntity findLocationById(long id);

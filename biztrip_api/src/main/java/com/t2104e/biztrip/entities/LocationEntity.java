@@ -28,22 +28,27 @@ public class LocationEntity {
     @Basic
     @NotEmpty(message = "this field is mandatory")
     @NotNull(message = "this field is mandatory")
-    @Column(name = "location_name", unique = true)
+    @Column(name = "location_name")
     private String name;
 
     @Basic
-    @Column(name = "parent_id", nullable = true)
+    @Column(name = "parent_id")
     private long parentId;
-
+    @Basic
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
     @Basic
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date createdAt;
 
-
     @Basic
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
+
+    public boolean getStatus() {
+        return this.status;
+    }
 }

@@ -1,11 +1,14 @@
 package com.t2104e.biztrip.command;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,5 +18,9 @@ public class LocationRequest {
     @NotEmpty(message = "this field is mandatory")
     private String name;
     private long parentId;
+    private boolean status;
 
+    public boolean getStatus() {
+        return this.status;
+    }
 }
