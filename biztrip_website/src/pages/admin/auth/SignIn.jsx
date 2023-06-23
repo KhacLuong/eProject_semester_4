@@ -41,7 +41,6 @@ const SignIn = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-
         if (isOpenForgetPassword) {
             const res = await dispatch(fetchForgetPassword({email})).unwrap()
             if (res && res.code === 200) {
@@ -60,8 +59,12 @@ const SignIn = () => {
             }
             const res = await dispatch(fetchLogin({data})).unwrap()
             if (res && res.code === 200) {
-                toast.success(res.message)
-                navigate('/admin/v1/cms')
+                if (res.data.role === "ADMIN") {
+                    toast.success(res.message)
+                    navigate('/admin/v1/cms')
+                } else {
+                    toast.error("Tài khoản không có quyển truy cập")
+                }
             } else {
                 toast.error(res.message)
             }

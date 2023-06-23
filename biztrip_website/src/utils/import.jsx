@@ -23,3 +23,6 @@ export const PolicyListPage = lazy(() => import("../pages/admin/policies/PolicyL
 export const CustomerHomePage = lazy(() => import("../pages/customer/CustomerHomePage.jsx"))
 export const ResetPasswordPage = lazy(() => import("../pages/ResetPassword.jsx"))
 export const ContactListPage = lazy(() => import("../pages/admin/contact/ContactList.jsx"))
+
+export const LocationListPage = lazy(() => import("../pages/admin/locations/LocationList.jsx"))
+export const LocationFormPage = lazy(() => import("../pages/admin/locations/LocationForm.jsx"))

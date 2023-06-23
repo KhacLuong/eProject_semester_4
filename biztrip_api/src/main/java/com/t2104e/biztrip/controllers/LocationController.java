@@ -20,24 +20,15 @@ public class LocationController {
     @Autowired
     private ILocationService locationService;
 
-    @Autowired
-    private ValidationHandle validationHandle;
-
-
-    private ResponseDTO RESPONSE_DTO;
-
     @GetMapping("")
-    public ResponseEntity<?> index(
-            @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField,
-            @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
-            @RequestParam(value = "keyword", required = false) String keyword) {
-        var data = locationService.getListLocations(sortField, sortDir, keyword);
+    public ResponseEntity<?> index(@RequestParam(value = "pageNumber") int pageNumber, @RequestParam(value = "perPage") int perPage, @RequestParam(value = "sortField", defaultValue = "updatedAt") String sortField, @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir, @RequestParam(value = "keyword", required = false) String keyword) {
+        var data = locationService.getListLocations(pageNumber, perPage, sortField, sortDir, keyword);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
 
 
     @PostMapping("")
-    public ResponseEntity<?> create(@Valid @RequestBody LocationRequest location, BindingResult result) {
+    public ResponseEntity<?> save(@Valid @RequestBody LocationRequest location, BindingResult result) {
         var data = locationService.save(location, result);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
@@ -55,5 +46,11 @@ public class LocationController {
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
 
-
+    @GetMapping("/get-all-location")
+    public ResponseEntity<?> getAllLocation( @RequestParam(value = "sortField", defaultValue = "name") String sortField,
+                                             @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
+                                             @RequestParam(value = "keyword", required = false) String keyword) {
+        var data = locationService.getAllLocations(sortField, sortDir, keyword);
+        return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
+    }
 }

@@ -2,9 +2,9 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import instance from "../../config/axiosConfig.jsx";
 import {initialState} from "../../utils/initial.jsx";
 
-export const fetchAllLocation = createAsyncThunk('location/getAllLocation', async () => {
+export const fetchGetAllLocation = createAsyncThunk('getAllLocation', async ({sortField = '', sortDir = '', keyword = ''}) => {
     try {
-        return await instance.get(`schedules/get-all-location`)
+        return await instance.get(`locations/get-all-location?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}`)
     } catch (err) {
         console.error(err)
     }

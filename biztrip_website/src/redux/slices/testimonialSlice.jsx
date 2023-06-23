@@ -49,7 +49,6 @@ export const testimonialSlice = createSlice({
             })
             .addCase(fetchAllTestimonial.fulfilled, (state, action) => {
                 if (action.payload && action.payload.code === 200) {
-                    console.log(action.payload)
                     state.list = action.payload.data
                     state.totalItems = action.payload.totalItems
                     state.totalPages = action.payload.totalPages

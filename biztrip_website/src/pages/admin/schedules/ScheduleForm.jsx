@@ -5,7 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import useDocumentTitle from "../../../hooks/useDocumentTitle.jsx";
 import {useDispatch} from "react-redux";
 import {initialScheduleFormState} from "../../../utils/initial.jsx";
-import {fetchAllLocation, fetchGetScheduleById} from "../../../redux/slices/scheduleSlice.jsx";
+import {fetchGetAllLocation, fetchGetScheduleById} from "../../../redux/slices/scheduleSlice.jsx";
 import Breadcrumb from "../../../components/admin/Breadcrumb.jsx";
 import {formBreadCrumb} from "../../../utils/data.jsx";
 import {BiPlus, IoIosRemoveCircle} from "react-icons/all.js";
@@ -53,7 +53,7 @@ const ScheduleForm = () => {
         }
     }, [id])
     const handleGetListLocation = async () => {
-        const res = await dispatch(fetchAllLocation()).unwrap()
+        const res = await dispatch(fetchGetAllLocation()).unwrap()
         console.log(res)
         if (res && res.code === 200) {
             setLocation(res.data)

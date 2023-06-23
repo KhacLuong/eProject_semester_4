@@ -21,6 +21,7 @@ import authSlice from "./slices/authSlice.jsx";
 import userSlice from "./slices/userSlice.jsx";
 import testimonialSlice from "./slices/testimonialSlice.jsx";
 import contactSlice from "./slices/contactSlice.jsx";
+import locationSlice from "./slices/locationSlice.jsx";
 
 const authPersistConfig = {
     key: 'auth',
@@ -40,6 +41,7 @@ export const store = configureStore({
         schedule: scheduleSlice,
         testimonial: testimonialSlice,
         contact: contactSlice,
+        location: locationSlice,
         user: userSlice,
         auth: rootReducerWithPersistence
     },
