@@ -35,51 +35,22 @@ public class ScheduleEntity {
     @Column(name = "destination_id",nullable = false)
     private long destinationId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "startpoint_id")
-//    private Location startpoint;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "endpoint_id")
-//    private Location endpoint;
+
 
     @Basic
     @Column(name = "day", nullable = false)
     private int  day;
-
-    @Basic
-    @NotEmpty(message = "this field is mandatory")
-    @Column(name = "start_time", nullable = false)
-    private String  startTime;
-    @Basic
-    @NotEmpty(message = "this field is mandatory")
-    @Column(name = "end_time", nullable = false)
-    private String  endTime;
 
 
     @Basic
     @Column(name = "status")
     private String status;
 
+    @Basic
+    @Column(name = "is_popular")
+    private boolean isPopular;
 
 
-//    @OneToMany(mappedBy="schedule")
-//    private List<SchedulePickUpPoint> schedulePickUpPoints;
-
-
-
-//    @Basic
-////    @NotNull(message = "this field is mandatory")
-//    @Column(name = "start_time", nullable = true)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-//    private Date startTime;
-
-
-//    @Basic
-////    @NotNull(message = "this field is mandatory")
-//    @Column(name = "end_time", nullable = true)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
-//    private Date endTime;
 
 
     @Basic
@@ -93,11 +64,6 @@ public class ScheduleEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
-//    @JoinTable(
-//            name = "schedule_location",
-//            joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
-//    private Set<LocationEntity> locations;
+
 
 }

@@ -1,19 +1,14 @@
 package com.t2104e.biztrip.services.eloquents;
 
-import com.t2104e.biztrip.command.PickUpRequest;
 import com.t2104e.biztrip.command.ThumbnailRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.dto.SchedulePickUpDto;
-import com.t2104e.biztrip.entities.PickUpPointEntity;
 import com.t2104e.biztrip.entities.ThumbnailEntity;
 import com.t2104e.biztrip.repositories.*;
 import com.t2104e.biztrip.services.interfaces.IThumbnailService;
-import com.t2104e.biztrip.utils.Helper;
 import com.t2104e.biztrip.utils.ValidationHandle;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -65,7 +60,7 @@ public class ThumbnailService implements IThumbnailService {
             return ResponseService.notFound("Không tìm thấy");
         }
     }
-
+    @Transactional
     @Override
     public ResponseDTO<?> saveList(@NotNull long coachId, @NotNull List<ThumbnailRequest> requests, BindingResult result) {
         List<ThumbnailEntity> models = new ArrayList<>();

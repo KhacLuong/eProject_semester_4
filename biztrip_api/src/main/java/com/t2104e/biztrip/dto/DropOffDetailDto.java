@@ -4,16 +4,18 @@ import com.t2104e.biztrip.entities.LocationEntity;
 import com.t2104e.biztrip.entities.ScheduleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-public class SchedulePickUpDetailDto {
+public class DropOffDetailDto {
+
     private long id;
 
     private ScheduleEntity schedule;

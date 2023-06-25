@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity(name = "coach_schedule")
 @Table(name = "coach_schedule", schema = "biztrip_database", catalog = "")
-public class CoachSchedule {
+public class CoachScheduleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

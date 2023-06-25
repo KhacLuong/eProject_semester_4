@@ -24,12 +24,9 @@ public class ScheduleDetailDto {
 
     private int  day;
 
-
-    private String  startTime;
-
-    private String  endTime;
-
     private String status;
+
+    private boolean isPopular;
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")

@@ -1,8 +1,5 @@
 package com.t2104e.biztrip.dto;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class SchedulePickUpDto {
+public class DropOffDto {
 
     private long id;
-
-
 
     private String locationName;
 

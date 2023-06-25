@@ -31,16 +31,9 @@ public class ScheduleDto {
 
     private int  day;
 
-
-    private String  startTime;
-
-    private String  endTime;
-
-
-
     private String status;
 
-
+    private boolean isPopular;
 
 
 
@@ -52,13 +45,12 @@ public class ScheduleDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd H:m:s")
     private Date updatedAt;
 
-    public ScheduleDto(long id, String departure, String destination, int day, String startTime, String endTime, String status) {
+    public ScheduleDto(long id, String departure, String destination, int day,  String status) {
         this.id = id;
         this.departure = departure;
         this.destination = destination;
         this.day = day;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.status = status;
     }
+
 }

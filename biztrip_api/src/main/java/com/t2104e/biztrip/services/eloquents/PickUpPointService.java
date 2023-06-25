@@ -2,8 +2,8 @@ package com.t2104e.biztrip.services.eloquents;
 
 import com.t2104e.biztrip.command.PickUpRequest;
 import com.t2104e.biztrip.dto.ResponseDTO;
-import com.t2104e.biztrip.dto.SchedulePickUpDetailDto;
-import com.t2104e.biztrip.dto.SchedulePickUpDto;
+import com.t2104e.biztrip.dto.PickUpDetailDto;
+import com.t2104e.biztrip.dto.PickUpDto;
 import com.t2104e.biztrip.entities.PickUpPointEntity;
 import com.t2104e.biztrip.repositories.LocationRepository;
 import com.t2104e.biztrip.repositories.PickUpRepository;
@@ -30,7 +30,7 @@ import java.util.*;
 public class PickUpPointService implements IPickUpPointService {
 
     @Autowired
-    PickUpRepository schedulePickUpRepo;
+    PickUpRepository pickUpRepo;
 
     @Autowired
     LocationRepository locationRepo;
@@ -46,12 +46,12 @@ public class PickUpPointService implements IPickUpPointService {
     @Override
     public ResponseDTO<?> getListPickUpPointByScheduleId(long scheduleId, String sortField, String sortDir, String keyword) {
         Sort sort = Helper.sortQuery(sortField, sortDir);
-        List<SchedulePickUpDto> pickUpDtoList = schedulePickUpRepo.findByKeyword(scheduleId, Objects.requireNonNullElse(keyword, ""), sort);
-        if (!pickUpDtoList.isEmpty()) {
+        List<PickUpDto> pickUpDtoList = pickUpRepo.findByKeyword(scheduleId, Objects.requireNonNullElse(keyword, ""), sort);
+//        if (!pickUpDtoList.isEmpty()) {
             return ResponseService.ok(pickUpDtoList, "Lấy danh sách điểm đón thành công.", sortField, sortDir);
-        } else {
-            return ResponseService.noContent("Không có dữ liệu.");
-        }
+//        } else {
+//            return ResponseService.noContent("Không có dữ liệu.");
+//        }
     }
 
 
@@ -80,7 +80,7 @@ public class PickUpPointService implements IPickUpPointService {
             model.setUpdatedAt(new Date());
         } else {
 
-            model = schedulePickUpRepo.findById(id).orElse(null);
+            model = pickUpRepo.findById(id).orElse(null);
             if (model == null) {
                 return ResponseService.badRequest("Không tìm thấy điểm đón có id = " + id);
             }
@@ -92,7 +92,7 @@ public class PickUpPointService implements IPickUpPointService {
 
             model.setUpdatedAt(new Date());
         }
-        var data = schedulePickUpRepo.save(model);
+        var data = pickUpRepo.save(model);
         return ResponseService.created(data, id == 0 ? "Tạo mới thành công" : "Cập nhật thành công");
     }
 
@@ -119,12 +119,12 @@ public class PickUpPointService implements IPickUpPointService {
             model.setUpdatedAt(new Date());
             pickUpPointEntityList.add(model);
         }
-        List<PickUpPointEntity> models = schedulePickUpRepo.saveAll(pickUpPointEntityList);
+        List<PickUpPointEntity> models = pickUpRepo.saveAll(pickUpPointEntityList);
         return ResponseService.created(models, "Thanh cong");
     }
     @Override
     public ResponseDTO<?> delete(long id) {
-        Optional<PickUpPointEntity> optional = schedulePickUpRepo.findById(id);
+        Optional<PickUpPointEntity> optional = pickUpRepo.findById(id);
         if (optional.isPresent()) {
             scheduleRepo.deleteById(id);
             return ResponseService.ok(null, "Xóa thành công");
@@ -135,7 +135,7 @@ public class PickUpPointService implements IPickUpPointService {
     @Override
     public ResponseDTO<?> getDetail(long id) {
 
-        Optional<SchedulePickUpDetailDto> optional = schedulePickUpRepo.findDetailById(id);
+        Optional<PickUpDetailDto> optional = pickUpRepo.findDetailById(id);
         if (optional.isPresent()) {
             return ResponseService.ok(optional.get(), "lấy thành công");
         }

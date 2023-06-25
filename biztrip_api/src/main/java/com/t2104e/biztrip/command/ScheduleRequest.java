@@ -20,15 +20,10 @@ public class ScheduleRequest {
 
     private long id;
 
-//    @NotEmpty(message = "this field is mandatory")
-//    @NotNull(message = "this field is mandatory")
+
     @Min(value = 0, message = "Giá trị không hợp lệ")
     private long departureId;
 
-
-
-//    @NotEmpty(message = "this field is mandatory")
-//    @NotNull(message = "this field is mandatory")
     @Min(value = 0, message = "Giá trị không hợp lệ")
     private long destinationId;
 
@@ -37,12 +32,8 @@ public class ScheduleRequest {
     @Min(value = 2, message = "Giá trị không hợp lệ")
     private int  day;
 
-
-    @NotEmpty(message = "trường này không được để trống")
-    private String  startTime;
-
-    @NotEmpty(message = "trường này không được để trống")
-    private String  endTime;
     private String status;
+
+    private boolean isPopular;
 
 }

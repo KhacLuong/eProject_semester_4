@@ -7,6 +7,7 @@ import com.t2104e.biztrip.dto.ResponseDTO;
 import com.t2104e.biztrip.entities.CoachEntity;
 import com.t2104e.biztrip.entities.UtilityEntity;
 import com.t2104e.biztrip.services.eloquents.CoachImplService;
+import com.t2104e.biztrip.services.eloquents.CoachScheduleService;
 import com.t2104e.biztrip.services.eloquents.ThumbnailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class CoachController {
 
     @Autowired
     private ThumbnailService thumbnailService;
+
+    @Autowired
+    private CoachScheduleService coachScheduleService;
 
     @GetMapping("")
     public ResponseEntity<?> index(@RequestParam("pageNumber") int pageNumber,
@@ -52,14 +56,14 @@ public class CoachController {
     }
 
 
-// Thumbnail
+// Coach_Thumbnail
 
     @GetMapping("/{id}/thumbnails")
-    public ResponseEntity<?> getThumbnails(@PathVariable(name = "id") long id) {
+    public ResponseEntity<?> getAllThumbnail(@PathVariable(name = "id") long id) {
         var data = thumbnailService.getListThumbnailsByCoachId(id);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
-    @PostMapping("{id}/save_thumbnails")
+    @PostMapping("{id}/save_list_thumbnails")
     public ResponseEntity<?> saveListThumbnails(@PathVariable(name = "id") long id, @Valid @RequestBody List<ThumbnailRequest> request, BindingResult result) {
         var data = thumbnailService.saveList(id, request, result);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
@@ -72,12 +76,38 @@ public class CoachController {
 
 
     @DeleteMapping("{id}/delete_thumbnail/")
-    public ResponseEntity<?> delete(@RequestParam("id") long id, @RequestParam("thumbnail_id") long thumbnailId) {
+    public ResponseEntity<?> deleteThumbnail(@RequestParam("id") long id, @RequestParam("thumbnail_id") long thumbnailId) {
         var data = thumbnailService.delete(thumbnailId);
         return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
     }
 
+// Coach_Schedule
 
+
+    @GetMapping("/{id}/schedules")
+    public ResponseEntity<?> getAllSchedule(@PathVariable(name = "id") long coachId) {
+        var data = coachScheduleService.getListScheduleByCoachId(coachId);
+        return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
+    }
+
+
+    @PostMapping("{id}/save_schedule")
+    public ResponseEntity<?> saveSchedule(@PathVariable(name = "id") long id,@Valid  @RequestParam long scheduleId) {
+        var data = coachScheduleService.save(id, scheduleId);
+        return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
+    }
+
+    @PostMapping("{id}/save_List_schedule")
+    public ResponseEntity<?> saveListSchedule(@PathVariable(name = "id") long id,@Valid  @RequestParam List<Long> scheduleIds) {
+        var data = coachScheduleService.saveList(id, scheduleIds);
+        return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
+    }
+
+    @DeleteMapping("{id}/delete_schedule/")
+    public ResponseEntity<?> deleteSchedule(@RequestParam("id") long id, @RequestParam long coachScheduleId) {
+        var data =coachScheduleService.delete(coachScheduleId);
+        return new ResponseEntity<>(data, HttpStatusCode.valueOf(data.getCode()));
+    }
 
 //    @DeleteMapping("")
 //    public ResponseEntity<?> delete(@RequestParam("id") long id) {

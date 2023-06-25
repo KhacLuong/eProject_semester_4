@@ -104,8 +104,7 @@ public class ScheduleImplService implements IScheduleService {
             schedule.setDestinationId(request.getDestinationId());
             schedule.setDay(request.getDay());
             schedule.setStatus(request.getStatus());
-            schedule.setStartTime(request.getStartTime());
-            schedule.setEndTime(request.getEndTime());
+            schedule.setPopular(request.isPopular());
             schedule.setUpdatedAt(new Date());
         }
         var data = scheduleRepo.save(schedule);

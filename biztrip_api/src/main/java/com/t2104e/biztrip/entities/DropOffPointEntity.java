@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor // thay thế constructor có tham số
 @Entity(name = "schedule_drop_off_point")
 @Table(name = "schedule_drop_off_point", schema = "biztrip_database", catalog = "")
-public class DropOffPoint {
+public class DropOffPointEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
